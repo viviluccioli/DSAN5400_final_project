@@ -1,0 +1,189 @@
+---
+title: "Tone Analysis of Fox News Coverage"
+author: "Kristin Lloyd"
+format: 
+  html:
+    embed-resources: true
+    code-fold: true
+---
+
+## 📥 Data Import and Cleaning
+
+```{python}
+import pandas as pd
+import glob
+
+# Load all fox CSV files
+csv_files = glob.glob("../data/fox/fox*.csv")
+df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+# Select relevant columns
+columns_of_interest = [
+    "parsed_date", "url", "headline_from_url",
+    "V2Themes", "V2Locations", "V2Persons",
+    "V2Organizations", "V2Tone"
+]
+df = df[columns_of_interest]
+
+# Convert parsed_date to datetime
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce")
+
+# Preview structure and missing values
+df.info()
+df.isnull().sum()
+df.sample(5)
+
+```
+
+```{python}
+
+# Split V2Tone into tone, positive_score, and negative_score
+tone_split = df["V2Tone"].str.split(",", expand=True)
+df["tone"] = pd.to_numeric(tone_split[0], errors="coerce")
+df["positive_score"] = pd.to_numeric(tone_split[1], errors="coerce")
+df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
+
+# Descriptive stats
+df["tone"].describe()
+df["positive_score"].describe()
+df["negative_score"].describe()
+
+```
+
+```{python}
+
+import matplotlib.pyplot as plt
+
+# Create year-month column and compute trends
+df["year_month"] = df["parsed_date"].dt.to_period("M")
+tone_trend = df.groupby("year_month")["tone"].mean().reset_index()
+tone_trend["year_month"] = pd.to_datetime(tone_trend["year_month"].astype(str))
+tone_trend["rolling_avg"] = tone_trend["tone"].rolling(window=3, center=True).mean()
+
+# Plot tone trend
+plt.figure(figsize=(14, 6))
+plt.plot(tone_trend["year_month"], tone_trend["tone"], alpha=0.3, label='Monthly Average')
+plt.plot(tone_trend["year_month"], tone_trend["rolling_avg"], color='red', label='3-Month Rolling Avg', linewidth=2)
+plt.title("Average Tone Over Time (Monthly, with Smoothing)", fontsize=14)
+plt.xlabel("Month")
+plt.ylabel("Average Tone")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+```
+
+The monthly average shows short-term tone shifts, while the 3-month rolling average smooths out volatility and reveals broader sentiment trends.
+
+## Election Influence on Media Tone
+
+U.S. elections can shape media tone dramatically due to increased political coverage and polarization.
+
+2016 Presidential: Highly divisive race may have driven negative coverage.
+
+2018 Midterms: Conflict-heavy narratives around congressional power shifts.
+
+2020 Presidential: COVID, mail-in voting, and election denial dominated tone.
+
+2022 Midterms: Continued division and debate over policy issues.
+
+2024 Presidential: Early campaign portrayals of Trump likely influenced tone.
+
+## COVID Influence
+
+```{python}
+
+import matplotlib.dates as mdates
+
+# Mark key U.S. elections
+election_events = {
+    "2016 Presidential": "2016-11-08",
+    "2018 Midterms": "2018-11-06",
+    "2020 Presidential": "2020-11-03",
+    "2022 Midterms": "2022-11-08",
+    "2024 Presidential": "2024-11-05",
+    "COVID": "2020-03-10"
+}
+event_dates = {label: pd.to_datetime(date) for label, date in election_events.items()}
+
+# Plot with election overlays
+plt.figure(figsize=(14, 6))
+plt.plot(tone_trend["year_month"], tone_trend["tone"], alpha=0.3, label='Monthly Average')
+plt.plot(tone_trend["year_month"], tone_trend["rolling_avg"], color='red', label='3-Month Rolling Avg', linewidth=2)
+
+# Draw election lines
+for label, date in event_dates.items():
+    plt.axvline(date, color='blue', linestyle='--', alpha=0.7)
+    plt.text(date, tone_trend["tone"].min() + 0.2, label, rotation=90, verticalalignment='bottom', fontsize=8)
+
+plt.title("Average Tone Over Time (Monthly, with Elections Overlayed)", fontsize=14)
+plt.xlabel("Month")
+plt.ylabel("Average Tone")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+```
+
+###
+
+```{python}
+import pandas as pd
+
+# Ensure parsed_date is datetime and timezone-naive
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+
+# Define U.S. election dates
+election_dates = {
+    "2016 Presidential": pd.to_datetime("2016-11-08"),
+    "2018 Midterms": pd.to_datetime("2018-11-06"),
+    "2020 Presidential": pd.to_datetime("2020-11-03"),
+    "2022 Midterms": pd.to_datetime("2022-11-08"),
+    "2024 Presidential": pd.to_datetime("2024-11-05")
+}
+
+# Analyze tone before vs. after each election
+results = []
+for label, date in election_dates.items():
+    pre = df[(df["parsed_date"] >= date - pd.DateOffset(months=3)) & (df["parsed_date"] < date)]
+    post = df[(df["parsed_date"] >= date) & (df["parsed_date"] < date + pd.DateOffset(months=3))]
+
+    results.append({
+        "election": label,
+        "pre_avg_tone": pre["tone"].mean(),
+        "post_avg_tone": post["tone"].mean(),
+        "tone_shift": post["tone"].mean() - pre["tone"].mean()
+    })
+
+# Create results DataFrame
+tone_shift_df = pd.DataFrame(results)
+print(tone_shift_df)
+
+```
+
+```{python}
+
+plt.figure(figsize=(10, 6))
+bars1 = plt.bar(x - width/2, tone_shift_df["pre_avg_tone"], width, label='3 Months Before')
+bars2 = plt.bar(x + width/2, tone_shift_df["post_avg_tone"], width, label='3 Months After')
+
+plt.ylabel("Average Tone")
+plt.title("Average Tone Before vs. After U.S. Elections")
+plt.xticks(x, labels, rotation=45, ha="right")
+plt.axhline(0, color='black', linewidth=0.5)
+plt.legend()
+plt.grid(axis='y', linestyle='--', alpha=0.5)
+
+# Annotate tone shift on top
+for i in range(len(x)):
+    shift = tone_shift_df["tone_shift"].iloc[i]
+    plt.text(x[i], max(tone_shift_df["pre_avg_tone"].iloc[i], tone_shift_df["post_avg_tone"].iloc[i]) + 0.1,
+             f"+{shift:.2f}" if shift > 0 else f"{shift:.2f}", 
+             ha='center', fontsize=9, color='green' if shift > 0 else 'red')
+
+plt.tight_layout()
+plt.show()
+
+```
