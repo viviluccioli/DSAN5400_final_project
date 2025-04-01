@@ -22,6 +22,6 @@ dependencies:
   - scikit-learn
   - pandas
   - matplotlib
-  - bigquery
+  - google-cloud-bigquery
   - os
   - datetime
