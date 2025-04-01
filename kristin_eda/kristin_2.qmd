@@ -165,6 +165,14 @@ print(tone_shift_df)
 
 ```{python}
 
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Setup for bar plot
+labels = tone_shift_df["election"]
+x = np.arange(len(labels))
+width = 0.35
+
 plt.figure(figsize=(10, 6))
 bars1 = plt.bar(x - width/2, tone_shift_df["pre_avg_tone"], width, label='3 Months Before')
 bars2 = plt.bar(x + width/2, tone_shift_df["post_avg_tone"], width, label='3 Months After')
@@ -185,5 +193,24 @@ for i in range(len(x)):
 
 plt.tight_layout()
 plt.show()
+
+```
+
+The tone values in GDELT typically range from –10 to +10, but most news content clusters between –5 and +1.
+
+Your tone mean is around –2.7, so a +0.3 shift is a ~11% relative change, which is meaningful in sentiment analysis terms — especially across tens of thousands of articles.
+
+All 5 elections showed a positive shift — even if modest, that pattern suggests a reliable directional trend, not random fluctuation.
+
+```{python}
+
+from scipy.stats import ttest_ind
+
+for label, date in election_dates.items():
+    pre = df[(df["parsed_date"] >= date - pd.DateOffset(months=3)) & (df["parsed_date"] < date)]["tone"].dropna()
+    post = df[(df["parsed_date"] >= date) & (df["parsed_date"] < date + pd.DateOffset(months=3))]["tone"].dropna()
+    
+    t_stat, p_val = ttest_ind(post, pre, equal_var=False)
+    print(f"{label}: p = {p_val:.4f}")
 
 ```
