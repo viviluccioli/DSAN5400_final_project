@@ -214,3 +214,162 @@ for label, date in election_dates.items():
     print(f"{label}: p = {p_val:.4f}")
 
 ```
+
+```{python}
+
+from collections import Counter
+
+# Drop missing themes and split by semicolon
+themes_series = df["V2Themes"].dropna().str.split(";")
+
+# Flatten the list of all theme entries
+all_themes = [theme.split(",")[0] for sublist in themes_series for theme in sublist if theme]
+
+# Count the most frequent themes
+theme_counts = Counter(all_themes).most_common(20)
+
+# Print top themes
+print("Top 20 Most Common Themes:")
+for theme, count in theme_counts:
+    print(f"{theme}: {count}")
+
+```
+
+###
+
+```{python}
+import pandas as pd
+
+election_dates = {
+    "2016 Presidential": pd.Timestamp("2016-11-08"),
+    "2018 Midterms": pd.Timestamp("2018-11-06"),
+    "2020 Presidential": pd.Timestamp("2020-11-03"),
+    "2022 Midterms": pd.Timestamp("2022-11-08"),
+    "2024 Presidential": pd.Timestamp("2024-11-05"),
+}
+```
+
+```{python}
+
+from collections import Counter
+
+# Function to get theme counts in a specific date range
+def get_theme_counts(start_date, end_date):
+    mask = (df["parsed_date"] >= start_date) & (df["parsed_date"] <= end_date)
+    themes_series = df.loc[mask, "V2Themes"].dropna().str.split(";")
+    all_themes = [theme.split(",")[0] for sublist in themes_series for theme in sublist if theme]
+    return Counter(all_themes)
+
+# Analyze themes before and after each election
+theme_shift_analysis = {}
+
+for election, date in election_dates.items():
+    pre_start = date - pd.DateOffset(months=3)
+    pre_end = date - pd.DateOffset(days=1)
+    post_start = date + pd.DateOffset(days=1)
+    post_end = date + pd.DateOffset(months=3)
+
+    pre_counts = get_theme_counts(pre_start, pre_end)
+    post_counts = get_theme_counts(post_start, post_end)
+
+    # Calculate the difference in theme frequencies
+    theme_diff = {theme: post_counts[theme] - pre_counts.get(theme, 0) for theme in post_counts}
+
+    # Sort themes by the magnitude of change
+    sorted_theme_diff = sorted(theme_diff.items(), key=lambda item: abs(item[1]), reverse=True)
+
+    theme_shift_analysis[election] = sorted_theme_diff[:10]  # Top 10 themes with the most change
+
+# Display the results
+for election, changes in theme_shift_analysis.items():
+    print(f"\nTop Theme Changes for {election}:")
+    for theme, change in changes:
+        print(f"{theme}: {'+' if change > 0 else ''}{change}")
+
+
+```
+
+```{python}
+# Full theme mapping from your earlier pasted output with cleaner names
+theme_name_mapping = {
+    "LEADER": "Leaders",
+    "TAX_FNCACT_PRESIDENT": "Presidents",
+    "USPEC_POLITICS_GENERAL1": "General Politics",
+    "IMMIGRATION": "Immigration",
+    "WB_2769_JOBS_STRATEGIES": "Job Strategies",
+    "WB_2837_IMMIGRATION": "Immigration (WB)",
+    "WB_2836_MIGRATION_POLICIES_AND_JOBS": "Migration Policies",
+    "WB_2670_JOBS": "Jobs",
+    "EPU_CATS_MIGRATION_FEAR_MIGRATION": "Migration Fear",
+    "GENERAL_GOVERNMENT": "Government",
+    "BORDER": "Border",
+    "CRISISLEX_CRISISLEXREC": "Crisis Reporting",
+    "NATURAL_DISASTER_HURRICANE": "Hurricanes",
+    "TAX_WORLDMAMMALS_FOX": "Fox News (Self)",
+    "EPU_POLICY_GOVERNMENT": "Government Policy",
+    "TAX_FNCACT_POLICE": "Police",
+    "UNGP_CRIME_VIOLENCE": "Crime & Violence",
+    "HEALTH_VACCINATION": "Vaccination",
+    "WB_639_REPRODUCTIVE_MATERNAL_AND_CHILD_HEALTH": "Reproductive & Child Health",
+    "WB_642_CHILD_HEALTH": "Child Health",
+    "WB_1459_IMMUNIZATIONS": "Immunizations",
+    "UNGP_HEALTHCARE": "Healthcare (UNGP)",
+    "TAX_FNCACT_NOMINEE": "Nominees",
+    "MEDIA_SOCIAL": "Social Media",
+    "ELECTION": "Election",
+    "ECON_INFLATION": "Inflation",
+    "WB_1104_MACROECONOMIC_VULNERABILITY_AND_DEBT": "Macro Vulnerability & Debt",
+    "WB_442_INFLATION": "Inflation (WB)",
+    "TAX_POLITICAL_PARTY_DEMOCRATS": "Democrats",
+    "TAX_FNCACT_QUEEN": "Queen",
+    "TAX_FNCACT_VICE_PRESIDENT": "Vice Presidents",
+    "CRISISLEX_C07_SAFETY": "Safety",
+    "MANMADE_DISASTER_IMPLIED": "Manmade Disaster",
+    "WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE": "Conflict & Fragility"
+}
+
+# Apply renaming to your theme DataFrame
+theme_df["Theme"] = theme_df["Theme"].replace(theme_name_mapping)
+
+# Show cleaned theme list
+theme_df.head(10)
+```
+
+```{python}
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Reuse existing cleaned `theme_df` and plot the heatmap without redefining themes
+pivot_df = theme_df.pivot(index="Theme", columns="Election", values="Tone Shift").fillna(0)
+
+plt.figure(figsize=(12, 10))
+sns.heatmap(pivot_df, cmap="RdBu_r", center=0, annot=True, fmt=".0f", linewidths=0.5)
+plt.title("Theme Tone Shift Across Elections")
+plt.ylabel("Theme")
+plt.xlabel("Election")
+plt.tight_layout()
+plt.show()
+
+```
+
+```{python}
+
+# Create a separate heatmap for each election from the existing cleaned theme_df
+
+# Loop through each unique election and plot individual heatmaps
+unique_elections = theme_df["Election"].unique()
+
+for election in unique_elections:
+    single_df = theme_df[theme_df["Election"] == election].pivot(index="Theme", columns="Election", values="Tone Shift").fillna(0)
+    
+    plt.figure(figsize=(6, 10))
+    sns.heatmap(single_df, cmap="RdBu_r", center=0, annot=True, fmt=".0f", linewidths=0.5)
+    plt.title(f"Theme Tone Shift – {election}")
+    plt.xlabel("Election")
+    plt.ylabel("Theme")
+    plt.tight_layout()
+    plt.show()
+
+
+```
