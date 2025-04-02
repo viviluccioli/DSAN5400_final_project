@@ -9,6 +9,10 @@ format:
     toc-depth: 3
     toc-title: "Analysis Contents"
     number-sections: true
+execute:
+  jupyter: python3
+  python: "/opt/anaconda3/envs/dsan5400/bin/python"
+  notebook-output: false
 ---
 
 # Introduction
