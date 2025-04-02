@@ -1,0 +1,942 @@
+---
+title: "Media Tone Analysis: MSNBC News Coverage of U.S. Elections"
+author: "Ria Sonawane"
+format: 
+  html:
+    embed-resources: true
+    code-fold: true
+    toc: true
+    toc-depth: 3
+    toc-title: "Analysis Contents"
+    number-sections: true
+---
+
+# Introduction
+
+This analysis examines Fox News coverage patterns across multiple U.S. election cycles, focusing on tone changes and thematic shifts. Using GDELT's Global Knowledge Graph data, we analyze:
+
+1. How media tone fluctuates before and after elections
+2. Which themes dominate coverage during electoral periods
+3. How thematic focus shifts from pre- to post-election periods
+4. Long-term trends in news sentiment across years of political coverage
+
+## Data Overview
+
+The dataset contains Fox News coverage from GDELT's database, including articles from five election cycles:
+- 2016 Presidential Election
+- 2018 Midterm Elections
+- 2020 Presidential Election
+- 2022 Midterm Elections
+- 2024 Presidential Election
+
+# Data Processing and Preparation
+
+## Data Import and Initial Cleaning
+
+```{python}
+import pandas as pd
+import glob
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+from collections import Counter
+from scipy.stats import ttest_ind
+import matplotlib.dates as mdates
+
+# Set consistent styling for all plots
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+
+# Load all fox CSV files
+csv_files = glob.glob("../data/msnbc/msnbc*.csv")
+df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+# Select relevant columns
+columns_of_interest = [
+    "parsed_date", "url", "headline_from_url",
+    "V2Themes", "V2Locations", "V2Persons",
+    "V2Organizations", "V2Tone"
+]
+df = df[columns_of_interest]
+
+# Convert parsed_date to datetime and ensure it's timezone-naive
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+
+# Preview structure and missing values
+print("DataFrame structure:")
+df.info()
+print("\nMissing values count:")
+print(df.isnull().sum())
+print("\nSample data:")
+print(df.sample(5))
+```
+
+## Tone Extraction and Processing
+
+GDELT's V2Tone field contains three comma-separated values:
+1. Overall tone score (ranges from -10 to +10)
+2. Positive tone component
+3. Negative tone component
+
+We extract these components for our analysis:
+
+```{python}
+# Split V2Tone into tone, positive_score, and negative_score
+tone_split = df["V2Tone"].str.split(",", expand=True)
+df["tone"] = pd.to_numeric(tone_split[0], errors="coerce")
+df["positive_score"] = pd.to_numeric(tone_split[1], errors="coerce")
+df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
+
+# Descriptive statistics for tone components
+tone_stats = pd.DataFrame({
+    "Tone": df["tone"].describe(),
+    "Positive Score": df["positive_score"].describe(),
+    "Negative Score": df["negative_score"].describe()
+})
+
+print("Tone metrics descriptive statistics:")
+print(tone_stats)
+
+# Create a histogram of tone distribution
+plt.figure(figsize=(10, 6))
+plt.hist(df["tone"].dropna(), bins=30, alpha=0.7, color='steelblue')
+plt.axvline(df["tone"].mean(), color='red', linestyle='dashed', linewidth=1, label=f'Mean: {df["tone"].mean():.2f}')
+plt.axvline(0, color='black', linestyle='solid', linewidth=1, label='Neutral Tone')
+plt.title("Distribution of MSNBC News Tone Scores", fontsize=14, fontweight='bold')
+plt.xlabel("Tone Score")
+plt.ylabel("Frequency")
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+Note: GDELT tone scores typically range from -10 (extremely negative) to +10 (extremely positive), but most news content falls between -5 and +1. MSNBC'S range falls between -27 and 20. MSNBC News coverage has a mean tone around -2.7, reflecting the generally negative tone common in news media.
+
+## Define Key Election Dates
+
+```{python}
+# Define key U.S. elections and COVID emergence
+election_events = {
+    "2016 Presidential": "2016-11-08",
+    "2018 Midterms": "2018-11-06",
+    "2020 Presidential": "2020-11-03",
+    "2022 Midterms": "2022-11-08",
+    "2024 Presidential": "2024-11-05",
+    "COVID": "2020-03-10"
+}
+event_dates = {label: pd.to_datetime(date) for label, date in election_events.items()}
+
+# Create a dictionary without COVID for analyses that only need election dates
+election_dates = {k: v for k, v in event_dates.items() if k != "COVID"}
+```
+
+## Theme Name Mapping
+
+GDELT uses technical theme codes that we convert to more readable names:
+
+```{python}
+# Theme name mapping for readability
+theme_name_mapping = {
+    "LEADER": "Leaders",
+    "TAX_FNCACT_PRESIDENT": "Presidents",
+    "USPEC_POLITICS_GENERAL1": "General Politics",
+    "IMMIGRATION": "Immigration",
+    "WB_2769_JOBS_STRATEGIES": "Job Strategies",
+    "WB_2837_IMMIGRATION": "Immigration (WB)",
+    "WB_2836_MIGRATION_POLICIES_AND_JOBS": "Migration Policies",
+    "WB_2670_JOBS": "Jobs",
+    "EPU_CATS_MIGRATION_FEAR_MIGRATION": "Migration Fear",
+    "GENERAL_GOVERNMENT": "Government",
+    "BORDER": "Border",
+    "CRISISLEX_CRISISLEXREC": "Crisis Reporting",
+    "NATURAL_DISASTER_HURRICANE": "Hurricanes",
+    "TAX_WORLDMAMMALS_FOX": "Fox News (Self)",
+    "EPU_POLICY_GOVERNMENT": "Government Policy",
+    "TAX_FNCACT_POLICE": "Police",
+    "UNGP_CRIME_VIOLENCE": "Crime & Violence",
+    "HEALTH_VACCINATION": "Vaccination",
+    "WB_639_REPRODUCTIVE_MATERNAL_AND_CHILD_HEALTH": "Reproductive & Child Health",
+    "WB_642_CHILD_HEALTH": "Child Health",
+    "WB_1459_IMMUNIZATIONS": "Immunizations",
+    "UNGP_HEALTHCARE": "Healthcare (UNGP)",
+    "TAX_FNCACT_NOMINEE": "Nominees",
+    "MEDIA_SOCIAL": "Social Media",
+    "ELECTION": "Election",
+    "ECON_INFLATION": "Inflation",
+    "WB_1104_MACROECONOMIC_VULNERABILITY_AND_DEBT": "Macro Vulnerability & Debt",
+    "WB_442_INFLATION": "Inflation (WB)",
+    "TAX_POLITICAL_PARTY_DEMOCRATS": "Democrats",
+    "TAX_FNCACT_QUEEN": "Queen",
+    "TAX_FNCACT_VICE_PRESIDENT": "Vice Presidents",
+    "CRISISLEX_C07_SAFETY": "Safety",
+    "MANMADE_DISASTER_IMPLIED": "Manmade Disaster",
+    "WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE": "Conflict & Fragility"
+}
+```
+
+# Tone Analysis
+
+## Tone Trends Over Time
+
+```{python}
+# Create year-month column and compute trends
+df["year_month"] = df["parsed_date"].dt.to_period("M")
+tone_trend = df.groupby("year_month")["tone"].mean().reset_index()
+tone_trend["year_month"] = pd.to_datetime(tone_trend["year_month"].astype(str))
+tone_trend["rolling_avg"] = tone_trend["tone"].rolling(window=3, center=True).mean()
+
+# Plot tone trend
+plt.figure(figsize=(14, 6))
+plt.plot(tone_trend["year_month"], tone_trend["tone"], alpha=0.3, label='Monthly Average')
+plt.plot(tone_trend["year_month"], tone_trend["rolling_avg"], color='red', label='3-Month Rolling Avg', linewidth=2)
+plt.title("MSNBC News Coverage Tone Over Time", fontsize=16, fontweight='bold')
+plt.xlabel("Year", fontsize=12)
+plt.ylabel("Average Tone Score", fontsize=12)
+plt.grid(True, alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
+The visualization reveals temporal patterns in Fox News coverage tone:
+
+- The monthly averages (light blue) show considerable volatility, reflecting rapid shifts in news sentiment
+- The 3-month rolling average (red line) reveals smoother long-term trends
+- Overall, tone scores remain primarily negative throughout the period, consistent with media's tendency to focus on problems and conflicts. Other than a large spike around 2018, there is a decreasing trend throughout the time horizon. 
+
+## Tone Patterns Around Election Events
+
+```{python}
+# Plot with election and COVID overlays
+plt.figure(figsize=(14, 6))
+plt.plot(tone_trend["year_month"], tone_trend["tone"], alpha=0.3, label='Monthly Average')
+plt.plot(tone_trend["year_month"], tone_trend["rolling_avg"], color='red', label='3-Month Rolling Avg', linewidth=2)
+
+# Draw event lines with improved styling
+for label, date in event_dates.items():
+    color = 'blue' if 'COVID' not in label else 'darkgreen'
+    plt.axvline(date, color=color, linestyle='--', alpha=0.7)
+    y_pos = tone_trend["tone"].min() + 0.3 if 'COVID' not in label else tone_trend["tone"].min() + 0.6
+    plt.text(date, y_pos, label, rotation=90, verticalalignment='bottom', fontsize=10, fontweight='bold')
+
+plt.title("Media Tone With Key Events Highlighted", fontsize=16, fontweight='bold')
+plt.xlabel("Year", fontsize=12)
+plt.ylabel("Average Tone Score", fontsize=12)
+plt.grid(True, alpha=0.3)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+Key observations from the timeline:
+
+- **Election Effects**: Each election appears to correspond with shifts in media tone
+- **COVID Impact**: The pandemic's onset coincides with a notable drop in tone, suggesting increased negative coverage
+- **Presidential vs. Midterms**: Presidential elections (2016, 2020, 2024) show more pronounced tone fluctuations than midterms (2018, 2022)
+
+## Election Tone Shift Analysis
+
+```{python}
+# Analyze tone before vs. after each election
+results = []
+for label, date in election_dates.items():
+    pre = df[(df["parsed_date"] >= date - pd.DateOffset(months=3)) & (df["parsed_date"] < date)]
+    post = df[(df["parsed_date"] >= date) & (df["parsed_date"] < date + pd.DateOffset(months=3))]
+
+    results.append({
+        "election": label,
+        "pre_avg_tone": pre["tone"].mean(),
+        "post_avg_tone": post["tone"].mean(),
+        "tone_shift": post["tone"].mean() - pre["tone"].mean(),
+        "pre_articles": len(pre),
+        "post_articles": len(post)
+    })
+
+# Create results DataFrame
+tone_shift_df = pd.DataFrame(results)
+print("Tone shifts before and after elections:")
+print(tone_shift_df)
+
+# Setup for bar plot
+labels = tone_shift_df["election"]
+x = np.arange(len(labels))
+width = 0.35
+
+plt.figure(figsize=(12, 7))
+bars1 = plt.bar(x - width/2, tone_shift_df["pre_avg_tone"], width, label='3 Months Before', color='#3274A1')
+bars2 = plt.bar(x + width/2, tone_shift_df["post_avg_tone"], width, label='3 Months After', color='#E1812C')
+
+plt.ylabel("Average Tone Score", fontsize=12)
+plt.title("News Tone Before vs. After U.S. Elections", fontsize=16, fontweight='bold')
+plt.xticks(x, labels, rotation=45, ha="right", fontsize=11)
+plt.axhline(0, color='black', linewidth=0.5)
+plt.legend(fontsize=11)
+plt.grid(axis='y', linestyle='--', alpha=0.5)
+
+# Annotate tone shift on top with improved formatting
+for i in range(len(x)):
+    shift = tone_shift_df["tone_shift"].iloc[i]
+    y_pos = max(tone_shift_df["pre_avg_tone"].iloc[i], tone_shift_df["post_avg_tone"].iloc[i]) + 0.15
+    plt.text(x[i], y_pos,
+             f"+{shift:.2f}" if shift > 0 else f"{shift:.2f}", 
+             ha='center', fontsize=11, fontweight='bold',
+             color='green' if shift > 0 else 'red')
+
+# Add article count annotation
+for i, bars in enumerate([(bars1, tone_shift_df["pre_articles"]), (bars2, tone_shift_df["post_articles"])]):
+    bar_collection, counts = bars
+    for j, bar in enumerate(bar_collection):
+        plt.text(bar.get_x() + bar.get_width()/2, -3.1,
+                 f"n={counts.iloc[j]:,}", ha='center', va='bottom',
+                 fontsize=8, rotation=90, color='dimgrey')
+
+plt.ylim(bottom=-3)
+plt.tight_layout()
+plt.show()
+```
+
+**Key Finding**: All five elections showed a positive tone shift in the three months following the election compared to the three months before. This suggests a consistent pattern where post-election coverage tends to be less negative than pre-election coverage.
+
+### Statistical Significance Testing
+
+```{python}
+# Perform t-tests for statistical significance
+significance_results = []
+for label, date in election_dates.items():
+    pre = df[(df["parsed_date"] >= date - pd.DateOffset(months=3)) & (df["parsed_date"] < date)]["tone"].dropna()
+    post = df[(df["parsed_date"] >= date) & (df["parsed_date"] < date + pd.DateOffset(months=3))]["tone"].dropna()
+    
+    t_stat, p_val = ttest_ind(post, pre, equal_var=False)
+    significance_results.append({
+        "Election": label,
+        "t-statistic": round(t_stat, 4),
+        "p-value": round(p_val, 4),
+        "Significant": "Yes" if p_val < 0.05 else "No"
+    })
+
+# Convert to DataFrame for cleaner display
+sig_df = pd.DataFrame(significance_results)
+print("Statistical significance of tone shifts (t-test):")
+print(sig_df)
+```
+
+**Interpretation**: A p-value < 0.05 indicates the tone shift is statistically significant (not due to random chance). The t-statistic magnitude shows the strength of the difference, with higher absolute values indicating stronger effects.
+
+# Theme Analysis
+
+## Overall Theme Distribution
+
+```{python}
+# Drop missing themes and split by semicolon
+themes_series = df["V2Themes"].dropna().str.split(";")
+
+# Flatten the list of all theme entries
+all_themes = [theme.split(",")[0] for sublist in themes_series for theme in sublist if theme]
+
+# Count the most frequent themes
+theme_counts = Counter(all_themes).most_common(20)
+
+# Map to friendly names
+friendly_counts = [(theme_name_mapping.get(theme, theme), count) for theme, count in theme_counts]
+
+# Create a visually appealing bar chart
+theme_df = pd.DataFrame(friendly_counts, columns=['Theme', 'Count'])
+theme_df = theme_df.sort_values('Count', ascending=False)
+
+plt.figure(figsize=(12, 8))
+bars = plt.barh(theme_df['Theme'], theme_df['Count'], color=plt.cm.viridis(np.linspace(0, 0.8, len(theme_df))))
+
+# Add count labels
+for bar in bars:
+    width = bar.get_width()
+    plt.text(width + (width * 0.01), bar.get_y() + bar.get_height()/2, 
+            f'{width:,.0f}', ha='left', va='center', fontsize=10, 
+            fontweight='bold', color='dimgrey')
+
+plt.title("Top 20 Themes in MSNBC News Coverage", fontsize=16, fontweight='bold')
+plt.xlabel('Frequency', fontsize=12)
+plt.grid(axis='x', linestyle='--', alpha=0.7, color='lightgrey')
+plt.gca().spines['right'].set_visible(False)
+plt.gca().spines['top'].set_visible(False)
+plt.tight_layout()
+plt.show()
+```
+
+The visualization shows MSNBC News' dominant themes across the full dataset period:
+
+- **Political Focus**: Presidential coverage, leadership, and general politics dominate
+- **Partisan Focus**: A consistently significant theme in MSNBC News coverage
+- **Other Notable Themes**: Political processes, partisan tax/policy, justice and governance, and broader social issues
+
+## Pre-Election Theme Analysis
+
+```{python}
+# Create visualization for themes 3 months before each election
+# Define a professional color palette
+palette = plt.cm.viridis(np.linspace(0, 0.9, 10))
+
+# Create subplot grid with adjusted layout
+fig, axes = plt.subplots(len(election_dates), 1, figsize=(14, 5*len(election_dates)))
+fig.subplots_adjust(hspace=0.5)
+
+# Handle single-election case
+if len(election_dates) == 1:
+    axes = [axes]
+
+# For each election, get the most common themes in the 3 months before
+for i, (election, date) in enumerate(election_dates.items()):
+    pre_start = date - pd.DateOffset(months=3)
+    pre_end = date - pd.DateOffset(days=1)
+    
+    # Get themes for this time period
+    election_window = (df["parsed_date"] >= pre_start) & (df["parsed_date"] <= pre_end)
+    pre_election_themes = df.loc[election_window, "V2Themes"].dropna().str.split(";")
+    
+    # Extract and count themes
+    theme_counts = [theme.split(",")[0] for sublist in pre_election_themes for theme in sublist if theme]
+    top_themes = Counter(theme_counts).most_common(10)
+    
+    # Map to friendly names
+    friendly_themes = [(theme_name_mapping.get(theme, theme), count) for theme, count in top_themes]
+    
+    # Create DataFrame for this election
+    theme_df = pd.DataFrame(friendly_themes, columns=['Theme', 'Count'])
+    theme_df = theme_df.sort_values('Count')
+    
+    # Plot horizontal bar chart
+    ax = axes[i]
+    bars = ax.barh(theme_df['Theme'], theme_df['Count'], color=palette, height=0.7)
+    
+    # Add count labels
+    for bar in bars:
+        width = bar.get_width()
+        ax.text(width + (width * 0.01), bar.get_y() + bar.get_height()/2, 
+                f'{width:,.0f}', ha='left', va='center', fontsize=10, 
+                fontweight='bold', color='dimgrey')
+    
+    # Set titles and labels
+    ax.set_title(f"Top Media Themes: 3 Months Before {election}", 
+                fontsize=16, fontweight='bold', pad=20)
+    ax.set_xlabel('Frequency', fontsize=12)
+    ax.set_ylabel('')
+    ax.invert_yaxis()
+    
+    # Improve styling
+    ax.grid(axis='x', linestyle='--', alpha=0.7, color='lightgrey')
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    
+    # Annotate the date range
+    date_range = f"({pre_start.strftime('%b %d, %Y')} - {pre_end.strftime('%b %d, %Y')})"
+    ax.text(0.5, 1.05, date_range, transform=ax.transAxes, 
+            ha='center', fontsize=12, fontstyle='italic', color='grey')
+
+plt.suptitle("Pre-Election Media Focus: MSNBC News Themes Before Each Election", 
+             fontsize=20, y=1.02, fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+```
+
+**Key Observations**:
+- Presidential themes dominate coverage in presidential election years
+- Partisan focus and social issues appear consistently across multiple election cycles
+- Some themes are election-specific (e.g., the prominence of healthcare in certain cycles)
+
+## Post-Election Theme Analysis (3 Months)
+
+```{python}
+# Create visualization for themes 3 months after each election
+fig, axes = plt.subplots(len(election_dates), 1, figsize=(14, 5*len(election_dates)))
+fig.subplots_adjust(hspace=0.5)
+
+# Handle single-election case
+if len(election_dates) == 1:
+    axes = [axes]
+
+# For each election, get the most common themes in the 3 months after
+for i, (election, date) in enumerate(election_dates.items()):
+    post_start = date + pd.DateOffset(days=1)
+    post_end = date + pd.DateOffset(months=3)
+    
+    # Get themes for this time period
+    election_window = (df["parsed_date"] >= post_start) & (df["parsed_date"] <= post_end)
+    post_election_themes = df.loc[election_window, "V2Themes"].dropna().str.split(";")
+    
+    # Extract and count themes
+    theme_counts = [theme.split(",")[0] for sublist in post_election_themes for theme in sublist if theme]
+    top_themes = Counter(theme_counts).most_common(10)
+    
+    # Map to friendly names
+    friendly_themes = [(theme_name_mapping.get(theme, theme), count) for theme, count in top_themes]
+    
+    # Create DataFrame for this election
+    theme_df = pd.DataFrame(friendly_themes, columns=['Theme', 'Count'])
+    theme_df = theme_df.sort_values('Count')
+    
+    # Plot horizontal bar chart
+    ax = axes[i]
+    bars = ax.barh(theme_df['Theme'], theme_df['Count'], color=palette, height=0.7)
+    
+    # Add count labels
+    for bar in bars:
+        width = bar.get_width()
+        ax.text(width + (width * 0.01), bar.get_y() + bar.get_height()/2, 
+                f'{width:,.0f}', ha='left', va='center', fontsize=10, 
+                fontweight='bold', color='dimgrey')
+    
+    # Set titles and labels
+    ax.set_title(f"Top Media Themes: 3 Months After {election}", 
+                fontsize=16, fontweight='bold', pad=20)
+    ax.set_xlabel('Frequency', fontsize=12)
+    ax.set_ylabel('')
+    ax.invert_yaxis()
+    
+    # Improve styling
+    ax.grid(axis='x', linestyle='--', alpha=0.7, color='lightgrey')
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    
+    # Annotate the date range
+    date_range = f"({post_start.strftime('%b %d, %Y')} - {post_end.strftime('%b %d, %Y')})"
+    ax.text(0.5, 1.05, date_range, transform=ax.transAxes, 
+            ha='center', fontsize=12, fontstyle='italic', color='grey')
+
+plt.suptitle("Post-Election Media Focus: MSNBC News Themes After Each Election", 
+             fontsize=20, y=1.02, fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+```
+
+**Post-Election Media Focus**:
+- The President/Presidential themes often remain dominant immediately after elections
+- Government administration policies become more prominent in the post-election period
+- Some campaign-related themes decrease in prominence
+
+## Extended Post-Election Coverage (6 Months)
+
+```{python}
+# Create visualization for themes 6 months after each election
+fig, axes = plt.subplots(len(election_dates), 1, figsize=(14, 5*len(election_dates)))
+fig.subplots_adjust(hspace=0.5)
+
+# Handle single-election case
+if len(election_dates) == 1:
+    axes = [axes]
+
+# For each election, get the most common themes in the 6 months after
+for i, (election, date) in enumerate(election_dates.items()):
+    post_start = date + pd.DateOffset(days=1)
+    post_end = date + pd.DateOffset(months=6)
+    
+    # Get themes for this time period
+    election_window = (df["parsed_date"] >= post_start) & (df["parsed_date"] <= post_end)
+    post_election_themes = df.loc[election_window, "V2Themes"].dropna().str.split(";")
+    
+    # Extract and count themes
+    theme_counts = [theme.split(",")[0] for sublist in post_election_themes for theme in sublist if theme]
+    top_themes = Counter(theme_counts).most_common(10)
+    
+    # Map to friendly names
+    friendly_themes = [(theme_name_mapping.get(theme, theme), count) for theme, count in top_themes]
+    
+    # Create DataFrame for this election
+    theme_df = pd.DataFrame(friendly_themes, columns=['Theme', 'Count'])
+    theme_df = theme_df.sort_values('Count')
+    
+    # Plot horizontal bar chart
+    ax = axes[i]
+    bars = ax.barh(theme_df['Theme'], theme_df['Count'], color=palette, height=0.7)
+    
+    # Add count labels
+    for bar in bars:
+        width = bar.get_width()
+        ax.text(width + (width * 0.01), bar.get_y() + bar.get_height()/2, 
+                f'{width:,.0f}', ha='left', va='center', fontsize=10, 
+                fontweight='bold', color='dimgrey')
+    
+    # Set titles and labels
+    ax.set_title(f"Top Media Themes: 6 Months After {election}", 
+                fontsize=16, fontweight='bold', pad=20)
+    ax.set_xlabel('Frequency', fontsize=12)
+    ax.set_ylabel('')
+    ax.invert_yaxis()
+    
+    # Improve styling
+    ax.grid(axis='x', linestyle='--', alpha=0.7, color='lightgrey')
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    
+    # Annotate the date range
+    date_range = f"({post_start.strftime('%b %d, %Y')} - {post_end.strftime('%b %d, %Y')})"
+    ax.text(0.5, 1.05, date_range, transform=ax.transAxes, 
+            ha='center', fontsize=12, fontstyle='italic', color='grey')
+
+plt.suptitle("Extended Post-Election Coverage: 6-Month Fox News Themes", 
+             fontsize=20, y=1.02, fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+```
+
+**Extended Coverage Patterns**:
+- Over a 6-month post-election period, coverage shows a broader range of themes
+- Governance and policy themes become more prominent compared to immediate post-election coverage
+- Emerging issues often rise in prominence, diluting election-specific themes
+
+## Theme Shifts Before vs. After Elections
+
+```{python}
+# Function to get theme counts in a specific date range
+def get_theme_counts(start_date, end_date):
+    mask = (df["parsed_date"] >= start_date) & (df["parsed_date"] <= end_date)
+    themes_series = df.loc[mask, "V2Themes"].dropna().str.split(";")
+    all_themes = [theme.split(",")[0] for sublist in themes_series for theme in sublist if theme]
+    return Counter(all_themes)
+
+# Analyze themes before and after each election
+theme_shift_analysis = {}
+theme_shift_data = []  # Create a list to store data for the DataFrame
+
+for election, date in election_dates.items():
+    pre_start = date - pd.DateOffset(months=3)
+    pre_end = date - pd.DateOffset(days=1)
+    post_start = date + pd.DateOffset(days=1)
+    post_end = date + pd.DateOffset(months=3)
+
+    pre_counts = get_theme_counts(pre_start, pre_end)
+    post_counts = get_theme_counts(post_start, post_end)
+
+    # Calculate the difference in theme frequencies
+    theme_diff = {theme: post_counts[theme] - pre_counts.get(theme, 0) for theme in post_counts}
+
+    # Sort themes by the magnitude of change
+    sorted_theme_diff = sorted(theme_diff.items(), key=lambda item: abs(item[1]), reverse=True)
+    
+    # Store top 10 themes with the most change
+    theme_shift_analysis[election] = sorted_theme_diff[:10]
+    
+    # Add to the data list for DataFrame
+    for theme, shift in sorted_theme_diff[:10]:
+        theme_shift_data.append({
+            "Election": election,
+            "Theme": theme,
+            "Tone Shift": shift
+        })
+
+# Create theme_df from the collected data
+theme_df = pd.DataFrame(theme_shift_data)
+
+# Apply theme name mapping
+theme_df["Theme"] = theme_df["Theme"].map(lambda x: theme_name_mapping.get(x, x))
+```
+
+### Direct Theme Comparison Visualizations
+
+```{python}
+# Create a visualization comparing top themes before and after each election
+for election, date in election_dates.items():
+    # Define time periods
+    pre_start = date - pd.DateOffset(months=3)
+    pre_end = date - pd.DateOffset(days=1)
+    post_start = date + pd.DateOffset(days=1)
+    post_end = date + pd.DateOffset(months=3)
+    
+    # Get pre-election themes
+    pre_window = (df["parsed_date"] >= pre_start) & (df["parsed_date"] <= pre_end)
+    pre_themes = df.loc[pre_window, "V2Themes"].dropna().str.split(";")
+    pre_counts = [theme.split(",")[0] for sublist in pre_themes for theme in sublist if theme]
+    pre_top = dict(Counter(pre_counts).most_common(15))
+    
+    # Get post-election themes
+    post_window = (df["parsed_date"] >= post_start) & (df["parsed_date"] <= post_end)
+    post_themes = df.loc[post_window, "V2Themes"].dropna().str.split(";")
+    post_counts = [theme.split(",")[0] for sublist in post_themes for theme in sublist if theme]
+    post_top = dict(Counter(post_counts).most_common(15))
+    
+    # Get all unique themes
+    all_themes = set(pre_top.keys()) | set(post_top.keys())
+    
+    # Create dataframe with both periods
+    comparison_data = []
+    for theme in all_themes:
+        friendly_name = theme_name_mapping.get(theme, theme)
+        comparison_data.append({
+            'Theme': friendly_name,
+            'Pre-Election': pre_top.get(theme, 0),
+            'Post-Election': post_top.get(theme, 0),
+            'Difference': post_top.get(theme, 0) - pre_top.get(theme, 0)
+        })
+    
+    # Create DataFrame and sort by absolute difference
+    comp_df = pd.DataFrame(comparison_data)
+    comp_df = comp_df.sort_values('Difference', key=abs, ascending=False).head(12)
+    
+    # Calculate percentages for better comparison
+    total_pre = sum(pre_top.values())
+    total_post = sum(post_top.values())
+    comp_df['Pre %'] = comp_df['Pre-Election'] / total_pre * 100
+    comp_df['Post %'] = comp_df['Post-Election'] / total_post * 100
+    comp_df['% Change'] = comp_df['Post %'] - comp_df['Pre %']
+    
+    # Create figure with multiple subplots
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 10), gridspec_kw={'width_ratios': [3, 1]})
+    
+    # Plot 1: Side-by-side bar chart of counts
+    comp_df = comp_df.sort_values('Theme')  # Sort alphabetically for this chart
+    x = np.arange(len(comp_df))
+    width = 0.35
+    
+    # Plot bars
+    pre_bars = ax1.barh(x - width/2, comp_df['Pre-Election'], width, 
+                      label='Pre-Election', color='#3274A1', alpha=0.8)
+    post_bars = ax1.barh(x + width/2, comp_df['Post-Election'], width,
+                       label='Post-Election', color='#E1812C', alpha=0.8)
+    
+    # Add labels and styling
+    ax1.set_yticks(x)
+    ax1.set_yticklabels(comp_df['Theme'])
+    ax1.invert_yaxis()
+    ax1.legend(loc='upper right')
+    ax1.set_title(f'Theme Frequency Comparison for {election}', fontsize=16, fontweight='bold')
+    ax1.set_xlabel('Count', fontsize=12)
+    
+    # Add count labels
+    for bars, counts in [(pre_bars, comp_df['Pre-Election']), 
+                         (post_bars, comp_df['Post-Election'])]:
+        for bar, count in zip(bars, counts):
+            if count > 0:
+                ax1.text(count + 50, bar.get_y() + bar.get_height()/2, 
+                       f'{count:,.0f}', ha='left', va='center', fontsize=9)
+    
+    # Plot 2: Net change (waterfall chart alternative)
+    comp_df = comp_df.sort_values('Difference')  # Sort by difference for this chart
+    colors = ['#E15759' if x < 0 else '#4E79A7' for x in comp_df['Difference']]
+    
+    # Plot the differences
+    diff_bars = ax2.barh(comp_df['Theme'], comp_df['Difference'], color=colors)
+    
+    # Add a vertical line at zero
+    ax2.axvline(x=0, color='black', linestyle='-', alpha=0.3)
+    
+    # Add labels
+    for bar in diff_bars:
+        width = bar.get_width()
+        label_x_pos = width + np.sign(width) * 50
+        if width > 0:
+            ha = 'left'
+        else:
+            ha = 'right'
+        ax2.text(label_x_pos, bar.get_y() + bar.get_height()/2, 
+                f'{width:+,.0f}', ha=ha, va='center', fontsize=9)
+    
+    ax2.set_title('Net Change in Theme Frequency', fontsize=16, fontweight='bold')
+    ax2.set_xlabel('Difference (Post - Pre)', fontsize=12)
+    ax2.set_yticklabels([])  # Hide y-labels as they're in the first plot
+    
+    # Add overall title and subtitles
+    plt.suptitle(f'Media Focus Shift: Before vs. After {election}', fontsize=20, fontweight='bold', y=0.98)
+    pre_range = f"Pre: {pre_start.strftime('%b %d, %Y')} - {pre_end.strftime('%b %d, %Y')}"
+    post_range = f"Post: {post_start.strftime('%b %d, %Y')} - {post_end.strftime('%b %d, %Y')}"
+    fig.text(0.5, 0.91, f"{pre_range} | {post_range}", ha='center', fontsize=12, fontstyle='italic')
+    
+    # Add explanatory notes
+    fig.text(0.5, 0.03, 
+            "Note: Blue bars in the right panel indicate themes that gained prominence after the election, while red bars show declining themes.",
+            ha='center', fontsize=10, fontstyle='italic')
+    
+    plt.tight_layout()
+    plt.subplots_adjust(top=0.88)
+    plt.show()
+```
+
+**Key Insights**: 
+- Each election shows distinctive shifts in thematic focus
+- Some themes consistently gain prominence after elections (e.g., Presidential coverage)
+- Campaign-specific themes often decline after elections
+- The right panel clearly indicates which themes gain (blue) or lose (red) prominence
+
+## Theme-Specific Tone Analysis
+
+```{python}
+# Create a heatmap visualization of theme tone shifts across elections
+# Create pivot table for heatmap
+pivot_df = theme_df.pivot(index="Theme", columns="Election", values="Tone Shift").fillna(0)
+
+# Overall heatmap
+plt.figure(figsize=(12, 10))
+sns.heatmap(pivot_df, cmap="RdBu_r", center=0, annot=True, fmt=".0f", linewidths=0.5)
+plt.title("Theme Frequency Shifts Across Elections", fontsize=16, fontweight='bold')
+plt.ylabel("Theme", fontsize=12)
+plt.xlabel("Election", fontsize=12)
+plt.tight_layout()
+plt.show()
+
+# Individual election heatmaps for clearer detail
+unique_elections = theme_df["Election"].unique()
+
+for election in unique_elections:
+    # Filter for this election and create a pivot table
+    election_df = theme_df[theme_df["Election"] == election]
+    single_df = election_df.pivot(index="Theme", columns="Election", values="Tone Shift").fillna(0)
+    
+    plt.figure(figsize=(8, 10))
+    sns.heatmap(single_df, cmap="RdBu_r", center=0, annot=True, fmt=".0f", linewidths=0.5)
+    plt.title(f"Theme Frequency Shifts – {election}", fontsize=16, fontweight='bold')
+    plt.xlabel("Election")
+    plt.ylabel("Theme")
+    plt.tight_layout()
+    plt.show()
+```
+
+**Understanding the Heatmap**:
+
+- **Rows (Y-axis)**: Each theme extracted from MSNBC News coverage
+- **Columns (X-axis)**: Different election cycles
+- **Colors**:
+  - Red = Increased theme frequency after the election
+  - Blue = Decreased theme frequency after the election
+  - White = No significant change
+- **Numbers**: The raw count difference between post-election and pre-election periods
+
+## Theme Evolution Timeline
+
+```{python}
+
+# Create a timeline visualization showing how key themes evolved across all elections
+
+# Select important themes to track over time
+key_themes = ['TAX_POLITICAL_PARTY_REPUBLICAN', 'General Politics']
+theme_codes = {v: k for k, v in theme_name_mapping.items() if v in key_themes}
+theme_codes.update({k: k for k in key_themes if k not in theme_name_mapping.values()})
+
+# Get monthly data for these themes
+monthly_data = []
+
+# Convert min and max years to integers explicitly
+min_year = int(df['parsed_date'].dt.year.min())
+max_year = int(df['parsed_date'].dt.year.max() + 1)
+
+# Create timeline with monthly data points
+for year in range(min_year, max_year):
+    for month in range(1, 13):
+        start_date = pd.Timestamp(f"{year}-{month:02d}-01")
+        if month == 12:
+            end_date = pd.Timestamp(f"{year+1}-01-01") - pd.Timedelta(days=1)
+        else:
+            end_date = pd.Timestamp(f"{year}-{month+1:02d}-01") - pd.Timedelta(days=1)
+        
+        # Skip dates outside our dataset
+        if start_date < df['parsed_date'].min() or start_date > df['parsed_date'].max():
+            continue
+        
+        # Get themes for this month
+        mask = (df["parsed_date"] >= start_date) & (df["parsed_date"] <= end_date)
+        if df.loc[mask].shape[0] == 0:  # Skip months with no data
+            continue
+            
+        month_themes = df.loc[mask, "V2Themes"].dropna().str.split(";")
+        all_month_themes = [theme.split(",")[0] for sublist in month_themes for theme in sublist if theme]
+        theme_counter = Counter(all_month_themes)
+        
+        # Get counts for our key themes
+        for display_name, code in theme_codes.items():
+            monthly_data.append({
+                'date': start_date,
+                'theme': display_name,
+                'count': theme_counter.get(code, 0)
+            })
+
+# Convert to DataFrame
+timeline_df = pd.DataFrame(monthly_data)
+
+# Normalize by total monthly theme counts to get percentage
+monthly_totals = timeline_df.groupby('date')['count'].sum().reset_index()
+monthly_totals.columns = ['date', 'total']
+timeline_df = timeline_df.merge(monthly_totals, on='date')
+timeline_df['percentage'] = (timeline_df['count'] / timeline_df['total'] * 100).round(2)
+
+# Plot the theme timeline
+plt.figure(figsize=(20, 10))
+
+# Get unique themes and assign colors
+unique_themes = timeline_df['theme'].unique()
+colors = plt.cm.Dark2(np.linspace(0, 1, len(unique_themes)))
+theme_colors = dict(zip(unique_themes, colors))
+
+# Create separate trend line for each theme
+for theme in unique_themes:
+    theme_data = timeline_df[timeline_df['theme'] == theme]
+    plt.plot(theme_data['date'], theme_data['percentage'], 
+             label=theme, linewidth=2.5, color=theme_colors[theme],
+             marker='o', markersize=3)
+
+# First create the plot so the y-axis limits are established
+plt.xlabel('Date', fontsize=14)
+plt.ylabel('Percentage of Monthly Coverage', fontsize=14)
+plt.title('Evolution of Key Media Themes Over Time', fontsize=20, fontweight='bold')
+plt.grid(True, alpha=0.3)
+
+# Get y-axis limits *after* the plot is created
+y_lim = plt.gca().get_ylim()
+
+# Add election markers with fixed y-position
+for election, date in election_dates.items():
+    plt.axvline(x=date, color='black', linestyle='--', alpha=0.5)
+    # Calculate y position based on current y-axis limits
+    y_pos = y_lim[1] * 0.95
+    plt.text(date, y_pos, election, rotation=90, ha='right', fontsize=10)
+
+plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=len(unique_themes), fontsize=12, frameon=True)
+
+# Format x-axis date labels
+plt.gcf().autofmt_xdate()
+plt.tight_layout()
+plt.show()
+
+
+```
+
+**Longitudinal Theme Analysis**:
+
+This visualization tracks key themes as a percentage of total coverage over time, revealing:
+
+- How media focus evolves before, during, and after election periods
+- Seasonal patterns in thematic coverage
+- Long-term trends in media priorities
+- The relationship between certain themes and specific elections
+
+# Conclusion
+
+## Key Findings
+
+Our analysis of MSNBC News coverage across five election cycles reveals several significant patterns:
+
+1. **Tone Shifts**: All five elections showed a positive tone shift in the post-election period compared to pre-election coverage.
+
+2. **Thematic Evolution**: Election coverage transitions from campaign-focused themes before elections to governance and policy themes afterward.
+
+3. **Consistent Themes**: Presidential leadership, political parties, and general government operations persist as dominant themes across all periods.
+
+4. **Temporal Patterns**: Media tone shows clear cyclical patterns aligned with election cycles, suggesting electoral politics significantly influences news sentiment.
+
+## Methodological Notes
+
+- GDELT's tone scores range from -10 (extremely negative) to +10 (extremely positive)
+- Most news content clusters between -5 and +1, with Fox News averaging around -2.7
+- Theme extraction uses GDELT's thematic coding system, mapped to reader-friendly names
+- Statistical significance was assessed using two-sample t-tests with unequal variances
+
+## Future Research Directions
+
+This analysis could be extended by:
+
+- Comparing MSNBC News with other media outlets
+- Examining coverage of specific politicians or policies across electoral periods
+- Analyzing article-level data for more granular insights
+- Incorporating textual analysis techniques to explore narrative framing
+- Tracking international or domestic shifts
+
