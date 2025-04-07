@@ -1,0 +1,221 @@
+---
+title: "Sample Page"
+author: "Kristin Lloyd"
+format: 
+  html:
+    embed-resources: true
+    code-fold: true
+    toc: true
+    toc-depth: 3
+    toc-title: "Analysis Contents"
+    number-sections: true
+---
+
+## Data Import and Initial Cleaning
+
+```{python}
+
+#| echo: false
+
+import pandas as pd
+import glob
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+from collections import Counter
+from scipy.stats import ttest_ind
+import matplotlib.dates as mdates
+
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+
+```
+
+```{python}
+
+#| echo: false
+
+import glob
+import pandas as pd
+
+csv_files = (
+    glob.glob("../data/fox/fox*.csv") +
+    glob.glob("../data/abc/abc*.csv") +
+    glob.glob("../data/msnbc/msnbc*.csv")
+)
+
+df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+```
+
+```{python}
+
+#| echo: false
+
+columns_of_interest = [
+    "parsed_date", "url", "headline_from_url",
+    "V2Themes", "V2Locations", "V2Persons",
+    "V2Organizations", "V2Tone"
+]
+df = df[columns_of_interest]
+
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+
+```
+
+```{python}
+
+#| echo: false
+
+tone_split = df["V2Tone"].str.split(",", expand=True)
+df["tone"] = pd.to_numeric(tone_split[0], errors="coerce")
+df["positive_score"] = pd.to_numeric(tone_split[1], errors="coerce")
+df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
+
+# Descriptive statistics for tone components
+tone_stats = pd.DataFrame({
+    "Tone": df["tone"].describe(),
+    "Positive Score": df["positive_score"].describe(),
+    "Negative Score": df["negative_score"].describe()
+})
+
+```
+
+## Tone Analysis Across News Networks
+
+In this section, we analyze and compare the tone metrics across Fox News, ABC News, and MSNBC to identify potential differences in how these networks present news content.
+
+### Comparative Boxplot Analysis
+
+```{python}
+#| label: fig-tone-boxplot
+#| fig-cap: "Tone distribution boxplot comparison between networks"
+
+plt.figure(figsize=(12, 8))
+sns.boxplot(x='network', y='tone', data=df, palette='Set2')
+plt.axhline(y=0, color='black', linestyle='--', alpha=0.7, label='Neutral Tone')
+plt.title('Tone Score Distribution (Box Plot)', fontsize=16, fontweight='bold')
+plt.xlabel('News Network', fontsize=12)
+plt.ylabel('Tone Score', fontsize=12)
+plt.grid(axis='y', alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
+### Positive vs Negative Score Analysis
+
+```{python}
+#| label: fig-pos-neg-comparison
+#| fig-cap: "Comparison of average positive and negative scores by network"
+
+# Calculate average positive and negative scores by network
+avg_scores = df.groupby('network')[['positive_score', 'negative_score']].mean().reset_index()
+
+plt.figure(figsize=(12, 8))
+bar_width = 0.35
+x = np.arange(len(avg_scores))
+
+plt.bar(x - bar_width/2, avg_scores['positive_score'], bar_width, label='Positive Score', color='forestgreen', alpha=0.7)
+plt.bar(x + bar_width/2, avg_scores['negative_score'], bar_width, label='Negative Score', color='firebrick', alpha=0.7)
+
+plt.xticks(x, avg_scores['network'], fontsize=12)
+plt.title('Average Positive vs Negative Scores by Network', fontsize=16, fontweight='bold')
+plt.xlabel('News Network', fontsize=12)
+plt.ylabel('Average Score', fontsize=12)
+plt.legend()
+plt.grid(axis='y', alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+### Statistical Summary and Significance Testing
+
+```{python}
+#| label: tbl-tone-stats
+#| tbl-cap: "Tone analysis summary statistics by network"
+
+# Create a summary statistics table
+tone_stats = df.groupby('network')['tone'].agg(['mean', 'std', 'median', 'min', 'max']).round(2)
+pos_stats = df.groupby('network')['positive_score'].agg(['mean', 'std']).round(2)
+neg_stats = df.groupby('network')['negative_score'].agg(['mean', 'std']).round(2)
+
+# Combine the statistics
+summary_stats = pd.DataFrame({
+    'Mean Tone': tone_stats['mean'],
+    'Median Tone': tone_stats['median'],
+    'Tone Std Dev': tone_stats['std'],
+    'Min Tone': tone_stats['min'],
+    'Max Tone': tone_stats['max'],
+    'Mean Positive Score': pos_stats['mean'],
+    'Mean Negative Score': neg_stats['mean']
+})
+
+summary_stats
+```
+
+```{python}
+# Calculate article count by network
+article_counts = df.groupby('network').size()
+print("\nNumber of Articles Analyzed by Network:")
+display(article_counts)
+
+# Statistical Significance Testing
+print("\nStatistical Significance Testing (t-test for tone differences):")
+networks = df['network'].unique()
+for i in range(len(networks)):
+    for j in range(i+1, len(networks)):
+        network1 = networks[i]
+        network2 = networks[j]
+        tone1 = df[df['network'] == network1]['tone']
+        tone2 = df[df['network'] == network2]['tone']
+        
+        t_stat, p_val = ttest_ind(tone1, tone2, equal_var=False)
+        
+        print(f"{network1} vs {network2}:")
+        print(f"  t-statistic: {t_stat:.4f}")
+        print(f"  p-value: {p_val:.4f}")
+        print(f"  Statistically significant difference: {'Yes' if p_val < 0.05 else 'No'}")
+        print()
+```
+```
+
+## Interpretation and Discussion
+
+This section would include your analysis of the visualizations, discussing:
+
+1. **Overall Tone Comparison**: 
+   - Which network tends to use more positive/negative language?
+   - How centered or skewed is each network's tone distribution?
+
+2. **Content Valence Analysis**:
+   - Do networks differ more in their positive or negative language usage?
+   - Are there networks that show more extreme tone values in either direction?
+
+3. **Temporal Patterns**:
+   - Are there periods where network tone diverges significantly?
+   - Do any events coincide with significant tone shifts across networks?
+
+4. **Statistical Significance**:
+   - Interpret the statistical tests - are the observed differences significant?
+   - What might explain the differences in tone between networks?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

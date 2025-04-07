@@ -1,0 +1,309 @@
+---
+title: "News Network Tone Analysis"
+author: "Kristin Lloyd"
+format: 
+  html:
+    embed-resources: true
+    code-fold: true
+    toc: true
+    toc-depth: 3
+    toc-title: "Contents"
+    code-tools: true
+    error: false  
+---
+
+# Introduction
+
+This document analyzes tone differences across three major news networks: Fox News, ABC News, and MSNBC. Using data from multiple sources, we examine how tone metrics vary between networks and what this might tell us about their reporting styles.
+
+# Data Processing and Methodology
+
+## Data Import and Preparation
+
+```{python}
+#| echo: false
+
+import pandas as pd
+import glob
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+from collections import Counter
+from scipy.stats import ttest_ind
+import matplotlib.dates as mdates
+
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+
+# Import data files
+csv_files = (
+    glob.glob("../data/fox/fox*.csv") +
+    glob.glob("../data/abc/abc*.csv") +
+    glob.glob("../data/msnbc/msnbc*.csv")
+)
+
+df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+# Select relevant columns
+columns_of_interest = [
+    "parsed_date", "url", "headline_from_url",
+    "V2Themes", "V2Locations", "V2Persons",
+    "V2Organizations", "V2Tone"
+]
+df = df[columns_of_interest]
+
+# Convert date and extract network information
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+
+# Extract network source from URLs
+def extract_network(url):
+    if 'fox' in url.lower():
+        return 'Fox News'
+    elif 'abc' in url.lower():
+        return 'ABC News'
+    elif 'msnbc' in url.lower():
+        return 'MSNBC'
+    else:
+        return 'Unknown'
+
+# Add network column
+df['network'] = df['url'].apply(extract_network)
+```
+
+# Network Tone Analysis
+
+## Overview of Dataset
+
+why is msnbc missing so many???
+
+Before diving into tone analysis, let's examine our dataset composition by network:
+
+```{python}
+#| echo: false
+#| label: fig-article-count
+#| fig-cap: "Number of articles analyzed by network"
+
+article_counts = df.groupby('network').size()
+print("\nNumber of Articles Analyzed by Network:")
+display(article_counts)
+
+plt.figure(figsize=(10, 6))
+article_counts.plot(kind='bar', color='#64C1FF')
+plt.title('Number of Articles by News Network', fontsize=14, fontweight='bold')
+plt.xlabel('News Network')
+plt.ylabel('Number of Articles')
+plt.xticks(rotation=45)
+plt.grid(axis='y', alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+## Tone Score Distribution
+
+The following visualization compares the distribution of tone scores across the three networks:
+
+```{python}
+
+#| echo: false
+#| label: fig-pos-neg-comparison
+#| fig-cap: "Comparison of average positive and negative scores by network"
+
+if 'positive_score' not in df.columns or 'negative_score' not in df.columns:
+    tone_split = df["V2Tone"].str.split(",", expand=True)
+    df["tone"] = pd.to_numeric(tone_split[0], errors="coerce")
+    df["positive_score"] = pd.to_numeric(tone_split[1], errors="coerce")
+    df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
+
+df_filtered = df.dropna(subset=['positive_score', 'negative_score'])
+
+avg_scores = df_filtered.groupby('network')[['positive_score', 'negative_score']].mean().reset_index()
+
+```
+
+```{python}
+#| echo: false
+#| label: fig-tone-boxplot
+#| fig-cap: "Tone distribution boxplot comparison between networks"
+
+plt.figure(figsize=(12, 8))
+sns.boxplot(x='network', y='tone', data=df, palette='Set2')
+plt.axhline(y=0, color='black', linestyle='--', alpha=0.7, label='Neutral Tone')
+plt.title('Tone Score Distribution', fontsize=16, fontweight='bold')
+plt.xlabel('News Network', fontsize=12)
+plt.ylabel('Tone Score', fontsize=12)
+plt.grid(axis='y', alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
+## Positive vs Negative Component Analysis
+
+To better understand the tone composition, we analyze the positive and negative components separately: (can change this to our own sentiment analysis)
+
+```{python}
+#| echo: false
+#| label: fig-pos-neg-comparison
+#| fig-cap: "Comparison of average positive and negative scores by network"
+
+avg_scores = df.groupby('network')[['positive_score', 'negative_score']].mean().reset_index()
+
+plt.figure(figsize=(12, 8))
+bar_width = 0.35
+x = np.arange(len(avg_scores))
+
+plt.bar(x - bar_width/2, avg_scores['positive_score'], bar_width, label='Positive Score', color='forestgreen', alpha=0.7)
+plt.bar(x + bar_width/2, avg_scores['negative_score'], bar_width, label='Negative Score', color='firebrick', alpha=0.7)
+
+plt.xticks(x, avg_scores['network'], fontsize=12)
+plt.title('Average Positive vs Negative Scores by Network', fontsize=16, fontweight='bold')
+plt.xlabel('News Network', fontsize=12)
+plt.ylabel('Average Score', fontsize=12)
+plt.legend()
+plt.grid(axis='y', alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+# Statistical Analysis
+
+## Summary Statistics by Network
+
+```{python}
+#| echo: false
+#| label: tbl-tone-stats
+#| tbl-cap: "Tone analysis summary statistics by network"
+
+tone_stats = df.groupby('network')['tone'].agg(['mean', 'std', 'median', 'min', 'max']).round(2)
+pos_stats = df.groupby('network')['positive_score'].agg(['mean', 'std']).round(2)
+neg_stats = df.groupby('network')['negative_score'].agg(['mean', 'std']).round(2)
+
+summary_stats = pd.DataFrame({
+    'Mean Tone': tone_stats['mean'],
+    'Median Tone': tone_stats['median'],
+    'Tone Std Dev': tone_stats['std'],
+    'Min Tone': tone_stats['min'],
+    'Max Tone': tone_stats['max'],
+    'Mean Positive Score': pos_stats['mean'],
+    'Mean Negative Score': neg_stats['mean']
+})
+
+summary_stats
+```
+
+## Statistical Significance Testing
+
+```{python}
+#| echo: false
+#| label: tbl-significance-tests
+#| tbl-cap: "Statistical significance of tone differences between networks"
+
+print("Statistical Significance Testing (t-test for tone differences):")
+networks = df['network'].unique()
+
+significance_results = []
+
+for i in range(len(networks)):
+    for j in range(i+1, len(networks)):
+        network1 = networks[i]
+        network2 = networks[j]
+        tone1 = df[df['network'] == network1]['tone']
+        tone2 = df[df['network'] == network2]['tone']
+        
+        t_stat, p_val = ttest_ind(tone1, tone2, equal_var=False)
+        
+        # Add to results
+        significance_results.append({
+            'Comparison': f"{network1} vs {network2}",
+            't-statistic': round(t_stat, 4),
+            'p-value': round(p_val, 4),
+            'Significant': 'Yes' if p_val < 0.05 else 'No'
+        })
+
+significance_df = pd.DataFrame(significance_results)
+display(significance_df)
+```
+
+# Temporal Analysis
+
+Let's examine how tone varies over time for each network:
+
+```{python}
+
+#| echo: false
+#| label: fig-tone-time-series
+#| fig-cap: "Monthly average tone trends by news network"
+
+# Resample by month for each network
+df['month'] = df['parsed_date'].dt.to_period('M')
+
+# Calculate monthly average tone for each network
+monthly_tone = df.groupby(['month', 'network'])['tone'].mean().unstack()
+
+# Plot time series
+plt.figure(figsize=(14, 8))
+for column in monthly_tone.columns:
+    plt.plot(monthly_tone.index.astype(str), monthly_tone[column], marker='o', markersize=5, linewidth=2, label=column)
+
+# Convert index to strings for x-axis
+x_labels = monthly_tone.index.astype(str)
+
+# Create a list to store positions for tick marks (every 6 months)
+tick_positions = []
+tick_labels = []
+
+# Identify every 6th month for tick marks
+for i, date_str in enumerate(x_labels):
+    # Check if it's a January or July (months 1 or 7)
+    if date_str.endswith('-01') or date_str.endswith('-07'):
+        tick_positions.append(i)
+        tick_labels.append(date_str)
+
+plt.axhline(y=0, color='black', linestyle='--', alpha=0.5, label='Neutral Tone')
+plt.title('Monthly Average Tone by News Network', fontsize=16, fontweight='bold')
+plt.xlabel('Month', fontsize=12)
+plt.ylabel('Average Tone Score', fontsize=12)
+plt.grid(alpha=0.3)
+plt.legend()
+
+# Set tick positions and labels
+plt.xticks(tick_positions, tick_labels, rotation=45)
+plt.tight_layout()
+plt.show()
+
+```
+
+# Interpretation and Discussion
+
+## Key Findings
+
+Based on the statistical analysis and visualizations above, we can observe several key differences in tone across the three news networks:
+
+1. **Overall Tone Comparison**: 
+   - [Your interpretation about which network tends to use more positive/negative language]
+   - [Your observation about how centered or skewed each network's tone distribution is]
+
+2. **Content Valence Analysis**:
+   - [Your analysis of whether networks differ more in their positive or negative language usage]
+   - [Your observations about networks that show more extreme tone values in either direction]
+
+3. **Temporal Patterns**:
+   - [Your observations about periods where network tone diverges significantly]
+   - [Your analysis of any events that coincide with significant tone shifts across networks]
+
+4. **Statistical Significance**:
+   - All comparisons between networks show statistically significant differences in tone (p < 0.05).
+   - [Your explanation of what might explain these differences in tone between networks]
+
+## Limitations and Future Work
+
+[Discuss any limitations of your analysis and potential future research directions]
+
+# Conclusion
+
+[Summarize your findings and their implications]
+
+# References
+
+[Your references, if applicable]
