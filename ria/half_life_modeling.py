@@ -151,7 +151,7 @@ half_life_df.sort_values(by='half_life_days').head(10)
 half_life_df['year'] = half_life_df['first_date'].dt.year
 half_life_df.groupby(['source', 'year'])['half_life_days'].mean().unstack().T.plot()
 
-#agenda comparison
+#agenda comparison, could do this by topic
 tax_df = half_life_df[half_life_df['topic'].str.startswith('TAX')]
 sns.boxplot(data=tax_df, x='source', y='half_life_days')
 plt.title("Half-Life of 'TAX' Topics by Source")
@@ -160,3 +160,5 @@ plt.xlabel("Source")
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
+
+#also categorize topic by tone, group by source
