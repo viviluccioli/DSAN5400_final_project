@@ -1,0 +1,68 @@
+
+```{python}
+
+import pandas as pd
+import glob
+import os
+
+# Collect CSVs
+csv_files = (
+    glob.glob("../data/fox/fox*.csv") +
+    glob.glob("../data/abc/abc*.csv") +
+    glob.glob("../data/msnbc/msnbc*.csv")
+)
+
+# Load and combine all CSVs
+df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+# Focus on important columns and convert date
+columns_of_interest = [
+    "parsed_date", "url", "headline_from_url",
+    "V2Themes", "V2Locations", "V2Persons",
+    "V2Organizations", "V2Tone"
+]
+df = df[columns_of_interest]
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+
+# Extract source network
+def extract_network(url):
+    if 'fox' in url.lower():
+        return 'Fox News'
+    elif 'abc' in url.lower():
+        return 'ABC News'
+    elif 'msnbc' in url.lower():
+        return 'MSNBC'
+    else:
+        return 'Unknown'
+
+df['network'] = df['url'].apply(extract_network)
+
+# Basic stats
+print(f"\n✅ Total rows loaded: {len(df)}")
+print("✅ Rows per network:")
+print(df['network'].value_counts())
+
+print(f"\n⏳ Missing 'parsed_date': {df['parsed_date'].isna().sum()}")
+
+# Election date filtering
+election_date = pd.Timestamp('2020-11-03')
+month_before = election_date - pd.Timedelta(days=30)
+month_after = election_date + pd.Timedelta(days=30)
+
+election_df = df[(df['parsed_date'] >= month_before) & (df['parsed_date'] <= month_after)]
+election_df['period'] = 'Before Election'
+election_df.loc[election_df['parsed_date'] >= election_date, 'period'] = 'After Election'
+
+print(f"\n📅 Articles within ±30 days of election: {len(election_df)}")
+print(f"🔗 Unique URLs in election_df: {election_df['url'].nunique()}")
+
+# Check processed sentiment file if it exists
+sentiment_path = '../data/election_2020_sentiment_analysis.csv'
+if os.path.exists(sentiment_path):
+    existing_df = pd.read_csv(sentiment_path)
+    print(f"\n📁 Existing sentiment file: {len(existing_df)} rows")
+    print(f"✅ Unique processed URLs: {existing_df['url'].nunique()}")
+else:
+    print("\n📁 No existing sentiment file found.")
+
+```
