@@ -1,0 +1,43 @@
+2025-04-10 22:50:15,342 - INFO - Processing: 2016 - Before
+2025-04-10 22:52:37,301 - INFO - Processing: 2016 - Before
+2025-04-10 22:52:56,757 - INFO - Finished 2016 - Before: {'total': 2275, 'positive': np.int64(577), 'negative': np.int64(1698), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.9711220121556683), 'avg_model': np.float64(-0.47510008073115084), 'avg_afinn': np.float64(-9.943401384222328)}
+2025-04-10 22:52:56,757 - INFO - Processing: 2016 - After
+2025-04-10 22:53:14,565 - INFO - Finished 2016 - After: {'total': 2120, 'positive': np.int64(563), 'negative': np.int64(1557), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.7582483491059513), 'avg_model': np.float64(-0.4524673164734301), 'avg_afinn': np.float64(-9.248155277636409)}
+2025-04-10 22:53:14,565 - INFO - Processing: 2020 - Before
+2025-04-10 22:53:36,715 - INFO - Finished 2020 - Before: {'total': 2413, 'positive': np.int64(614), 'negative': np.int64(1799), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.610896323691171), 'avg_model': np.float64(-0.4728908827825547), 'avg_afinn': np.float64(-6.545282638548463)}
+2025-04-10 22:53:36,716 - INFO - Processing: 2020 - After
+2025-04-10 22:54:00,235 - INFO - Finished 2020 - After: {'total': 2616, 'positive': np.int64(755), 'negative': np.int64(1861), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.1411620123554354), 'avg_model': np.float64(-0.4092939747810728), 'avg_afinn': np.float64(-6.151236443351069)}
+2025-04-10 22:54:00,236 - INFO - Processing: 2024 - Before
+2025-04-10 22:54:25,055 - INFO - Finished 2024 - Before: {'total': 2613, 'positive': np.int64(677), 'negative': np.int64(1936), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.5522952067658515), 'avg_model': np.float64(-0.4647251692623003), 'avg_afinn': np.float64(-7.461845517734801)}
+2025-04-10 22:54:25,056 - INFO - Processing: 2024 - After
+2025-04-10 22:54:50,180 - INFO - Finished 2024 - After: {'total': 2768, 'positive': np.int64(835), 'negative': np.int64(1933), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.0570557966909098), 'avg_model': np.float64(-0.3780869244667836), 'avg_afinn': np.float64(-5.1033665801400545)}
+2025-04-11 17:06:58,146 - INFO - Processing: 2016 - Before
+2025-04-11 17:07:20,328 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-11 17:07:20,591 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-11 17:07:21,128 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-11 17:07:21,131 - INFO - Finished 2016 - Before: {'total': 2275, 'positive': np.int64(577), 'negative': np.int64(1698), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.9711220121556683), 'avg_model': np.float64(-0.47510008073115084), 'avg_afinn': np.float64(-9.943401384222328)}
+2025-04-11 17:07:21,131 - INFO - Processing: 2016 - After
+2025-04-11 17:07:40,472 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-11 17:07:40,739 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-11 17:07:41,270 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-11 17:07:41,273 - INFO - Finished 2016 - After: {'total': 2120, 'positive': np.int64(563), 'negative': np.int64(1557), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.7582483491059513), 'avg_model': np.float64(-0.4524673164734301), 'avg_afinn': np.float64(-9.248155277636409)}
+2025-04-11 17:07:41,276 - INFO - Processing: 2020 - Before
+2025-04-11 17:08:05,934 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2020.csv
+2025-04-11 17:08:06,174 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2020.csv
+2025-04-11 17:08:06,790 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2020.csv
+2025-04-11 17:08:06,792 - INFO - Finished 2020 - Before: {'total': 2413, 'positive': np.int64(614), 'negative': np.int64(1799), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.610896323691171), 'avg_model': np.float64(-0.4728908827825547), 'avg_afinn': np.float64(-6.545282638548463)}
+2025-04-11 17:08:06,792 - INFO - Processing: 2020 - After
+2025-04-11 17:08:31,224 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2020.csv
+2025-04-11 17:08:31,457 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2020.csv
+2025-04-11 17:08:32,082 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2020.csv
+2025-04-11 17:08:32,084 - INFO - Finished 2020 - After: {'total': 2616, 'positive': np.int64(755), 'negative': np.int64(1861), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.1411620123554354), 'avg_model': np.float64(-0.4092939747810728), 'avg_afinn': np.float64(-6.151236443351069)}
+2025-04-11 17:08:32,088 - INFO - Processing: 2024 - Before
+2025-04-11 17:08:57,529 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2024.csv
+2025-04-11 17:08:57,892 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2024.csv
+2025-04-11 17:08:58,599 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2024.csv
+2025-04-11 17:08:58,602 - INFO - Finished 2024 - Before: {'total': 2613, 'positive': np.int64(677), 'negative': np.int64(1936), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.5522952067658515), 'avg_model': np.float64(-0.4647251692623003), 'avg_afinn': np.float64(-7.461845517734801)}
+2025-04-11 17:08:58,602 - INFO - Processing: 2024 - After
+2025-04-11 17:09:25,231 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2024.csv
+2025-04-11 17:09:25,599 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2024.csv
+2025-04-11 17:09:26,293 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2024.csv
+2025-04-11 17:09:26,296 - INFO - Finished 2024 - After: {'total': 2768, 'positive': np.int64(835), 'negative': np.int64(1933), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.0570557966909098), 'avg_model': np.float64(-0.3780869244667836), 'avg_afinn': np.float64(-5.1033665801400545)}
