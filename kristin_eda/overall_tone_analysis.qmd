@@ -1,0 +1,483 @@
+---
+title: "News Network Tone Analysis"
+author: "Kristin Lloyd"
+format: 
+  html:
+    embed-resources: true
+    code-fold: true
+    toc: true
+    toc-depth: 3
+    toc-title: "Contents"
+    code-tools: true
+    error: false  
+---
+
+# Overall Tone Analysis (🔹GDELT Only)
+
+This section examines long-term sentiment trends across three major news networks (Fox News, MSNBC, and ABC News) using GDELT tone scores from 2015 to 2025. We analyze how tone varies over time, especially during key periods like elections and major events.
+
+## Data Processing
+
+```{python}
+#| echo: false
+
+import pandas as pd
+import glob
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+from collections import Counter
+from scipy.stats import ttest_ind
+import matplotlib.dates as mdates
+from matplotlib.ticker import MaxNLocator
+
+# Set visualization style
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+
+# Define network colors
+NETWORK_COLORS = {
+    'Fox News': '#E41A1C',    # Red for Fox
+    'MSNBC': '#377EB8',       # Blue for MSNBC
+    'ABC News': '#984EA3'     # Purple for ABC
+}
+
+# Import data files
+csv_files = (
+    glob.glob("../data/fox/fox*.csv") +
+    glob.glob("../data/abc/abc*.csv") +
+    glob.glob("../data/msnbc/msnbc*.csv")
+)
+
+df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+# Select relevant columns
+columns_of_interest = [
+    "parsed_date", "url", "headline_from_url",
+    "V2Themes", "V2Locations", "V2Persons",
+    "V2Organizations", "V2Tone"
+]
+df = df[columns_of_interest]
+
+# Convert date and extract network information
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+
+# Extract network source from URLs
+def extract_network(url):
+    if 'fox' in url.lower():
+        return 'Fox News'
+    elif 'abc' in url.lower():
+        return 'ABC News'
+    elif 'msnbc' in url.lower():
+        return 'MSNBC'
+    else:
+        return 'Unknown'
+
+# Add network column
+df['network'] = df['url'].apply(extract_network)
+
+# Extract tone components
+tone_split = df["V2Tone"].str.split(",", expand=True)
+df["tone"] = pd.to_numeric(tone_split[0], errors="coerce")
+df["positive_score"] = pd.to_numeric(tone_split[1], errors="coerce")
+df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
+
+# Create month and year columns for aggregation
+df['month'] = df['parsed_date'].dt.to_period('M')
+df['year'] = df['parsed_date'].dt.year
+df['month_year'] = df['parsed_date'].dt.strftime('%Y-%m')
+```
+
+## Understanding GDELT Tone Scores
+
+Before diving into the analysis, it's important to understand how GDELT tone scores are calculated:
+
+- **Tone Score**: A measure ranging typically from -10 (extremely negative) to +10 (extremely positive), with 0 representing neutral coverage.
+- **Calculation Method**: GDELT uses natural language processing to analyze the emotional tone of news articles, considering both positive and negative language.
+- **Composite Measure**: The overall tone score is derived from separate positive and negative components, which we'll examine separately later.
+
+Higher tone scores indicate more positive language, while lower scores indicate more negative language. These scores help us quantify and compare sentiment across different news sources over time.
+
+## Dataset Overview
+
+First, let's examine the number of articles analyzed per network:
+
+```{python}
+#| echo: false
+#| label: fig-article-count
+#| fig-cap: "Number of articles analyzed by network"
+
+article_counts = df.groupby('network').size()
+print("\nNumber of Articles Analyzed by Network:")
+display(article_counts)
+
+plt.figure(figsize=(10, 6))
+bars = plt.bar(article_counts.index, article_counts.values, color=[NETWORK_COLORS[network] for network in article_counts.index])
+
+plt.title('Number of Articles by News Network', fontsize=14, fontweight='bold')
+plt.xlabel('News Network')
+plt.ylabel('Number of Articles')
+plt.xticks(rotation=0)
+plt.grid(axis='y', alpha=0.3)
+
+# Add count labels on top of the bars
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2., height + 0.1,
+             f'{height:,}',
+             ha='center', va='bottom', fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+```
+
+**Note on Sample Sizes**: The data shows a smaller sample for MSNBC compared to Fox News and ABC News. This discrepancy should be considered when interpreting results, as it may impact the representativeness of trends for MSNBC.
+
+## Tone Distribution Analysis
+
+Let's examine how tone scores are distributed across the three networks:
+
+```{python}
+#| echo: false
+#| label: fig-tone-distribution
+#| fig-cap: "Tone score distribution comparison between networks"
+
+plt.figure(figsize=(12, 8))
+
+# Create violin plots
+parts = plt.violinplot([df[df['network'] == network]['tone'].dropna() for network in NETWORK_COLORS.keys()], 
+                 showmeans=False, showmedians=True)
+
+# Color the violin plots according to the network
+for i, pc in enumerate(parts['bodies']):
+    network = list(NETWORK_COLORS.keys())[i]
+    pc.set_facecolor(NETWORK_COLORS[network])
+    pc.set_edgecolor('black')
+    pc.set_alpha(0.7)
+
+# Add boxplot inside the violin plots
+positions = range(1, len(NETWORK_COLORS) + 1)
+boxplots = plt.boxplot([df[df['network'] == network]['tone'].dropna() for network in NETWORK_COLORS.keys()], 
+          positions=positions, widths=0.15, patch_artist=True,
+          showfliers=False, showcaps=True, showbox=True, showmeans=True)
+
+# Color the boxplots
+for i, box in enumerate(boxplots['boxes']):
+    network = list(NETWORK_COLORS.keys())[i]
+    box.set_facecolor(NETWORK_COLORS[network])
+    box.set_alpha(0.5)
+
+# Add neutral line
+plt.axhline(y=0, color='black', linestyle='--', alpha=0.7, label='Neutral Tone')
+
+# Add mean lines and values
+for i, network in enumerate(NETWORK_COLORS.keys()):
+    mean_val = df[df['network'] == network]['tone'].mean()
+    plt.text(i + 1, mean_val + 0.2, f'Mean: {mean_val:.2f}', 
+             ha='center', va='bottom', fontsize=10, fontweight='bold')
+
+# Customize the plot
+plt.title('Tone Score Distribution by Network', fontsize=16, fontweight='bold')
+plt.xlabel('News Network', fontsize=12)
+plt.ylabel('Tone Score', fontsize=12)
+plt.xticks(positions, NETWORK_COLORS.keys())
+plt.grid(axis='y', alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
+```{python}
+#| echo: false
+#| label: fig-tone-boxplot
+#| fig-cap: "Tone distribution boxplot comparison between networks"
+
+plt.figure(figsize=(12, 8))
+sns.boxplot(x='network', y='tone', data=df, palette=NETWORK_COLORS)
+plt.axhline(y=0, color='black', linestyle='--', alpha=0.7, label='Neutral Tone')
+plt.title('Tone Score Distribution', fontsize=16, fontweight='bold')
+plt.xlabel('News Network', fontsize=12)
+plt.ylabel('Tone Score', fontsize=12)
+plt.grid(axis='y', alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
+### Key Observations:
+
+1. **Median Tone Levels**: Fox News tends to have a higher median tone compared to MSNBC and ABC News, suggesting generally more positive language.
+2. **Distribution Width**: MSNBC shows the widest distribution of tone scores, indicating greater variability in sentiment.
+3. **Negative Skew**: All three networks show a slight negative skew, meaning they tend toward negative coverage overall, but Fox News is closest to neutral.
+
+## Long-Term Tone Trends (2015-2025)
+
+The following visualization tracks monthly average tone scores across the three networks over time:
+
+```{python}
+#| echo: false
+#| label: fig-monthly-tone-trends
+#| fig-cap: "Monthly average tone trends by news network (2015-2025)"
+
+# Calculate monthly average tone for each network
+monthly_tone = df.groupby(['month', 'network'])['tone'].mean().unstack()
+
+# Define key events for annotation
+events = {
+    '2016-11': ('Trump Elected', 0.5),
+    '2020-01': ('COVID-19 Begins', 0.3),
+    '2020-11': ('Biden Elected', 0.5),
+    '2024-11': ('Trump Re-Elected', 0.5)
+}
+
+# Define election years for highlighting
+election_years = [2016, 2020, 2024]
+
+```
+
+### Rolling Average Trend
+
+For a clearer view of long-term trends, here's a 6-month rolling average of tone scores:
+
+```{python}
+#| echo: false
+#| label: fig-rolling-tone-trends
+#| fig-cap: "6-month rolling average tone trends by news network (2015-2025)"
+
+# Convert month period to datetime for rolling calculation
+monthly_tone_reset = monthly_tone.reset_index()
+monthly_tone_reset['month_datetime'] = monthly_tone_reset['month'].dt.to_timestamp()
+monthly_tone_reset = monthly_tone_reset.set_index('month_datetime')
+
+# Calculate 6-month rolling average
+rolling_window = 6
+rolling_tone = monthly_tone_reset.drop('month', axis=1).rolling(window=rolling_window, min_periods=1).mean()
+
+# Plot rolling average trends
+plt.figure(figsize=(14, 8))
+
+# Plot lines for each network
+for column in rolling_tone.columns:
+    plt.plot(rolling_tone.index, rolling_tone[column], 
+             linewidth=3, label=column, color=NETWORK_COLORS[column])
+
+# Add election year highlighting
+for year in election_years:
+    start_date = pd.Timestamp(f'{year}-01-01')
+    end_date = pd.Timestamp(f'{year}-12-31')
+    if start_date >= rolling_tone.index.min() and start_date <= rolling_tone.index.max():
+        plt.axvspan(start_date, end_date, alpha=0.15, color='gray')
+
+# Add key events
+for date_str, (event_name, offset) in events.items():
+    date = pd.Timestamp(date_str + '-01')  # Convert to first day of month
+    if date >= rolling_tone.index.min() and date <= rolling_tone.index.max():
+        plt.axvline(x=date, color='red', linestyle=':', alpha=0.7)
+        # Find a y-position
+        date_idx = rolling_tone.index.get_indexer([date], method='nearest')[0]
+        y_pos = rolling_tone.iloc[date_idx].max() + offset
+        plt.annotate(event_name, xy=(date, y_pos), xytext=(date + pd.DateOffset(months=2), y_pos),
+                    arrowprops=dict(facecolor='red', shrink=0.05, width=1.5, headwidth=8),
+                    fontsize=10, fontweight='bold')
+
+# Add neutral line
+plt.axhline(y=0, color='black', linestyle='--', alpha=0.5, label='Neutral Tone')
+
+# Customize the plot
+plt.title(f'{rolling_window}-Month Rolling Average Tone by News Network (2015-2025)', fontsize=16, fontweight='bold')
+plt.xlabel('Date', fontsize=12)
+plt.ylabel('Average Tone Score', fontsize=12)
+plt.grid(alpha=0.3)
+plt.legend(loc='best')
+
+# Format x-axis to show years
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+
+plt.tight_layout()
+plt.show()
+```
+
+### Tone Volatility Analysis
+
+Let's examine how tone volatility (measured by standard deviation) differs across networks:
+
+```{python}
+#| echo: false
+#| label: fig-tone-volatility
+#| fig-cap: "Tone volatility by news network (2015-2025)"
+
+# Calculate monthly standard deviation of tone for each network
+monthly_volatility = df.groupby(['year', 'network'])['tone'].std().unstack()
+
+# Plot yearly volatility
+plt.figure(figsize=(12, 6))
+
+# Plot lines for each network
+for column in monthly_volatility.columns:
+    plt.plot(monthly_volatility.index, monthly_volatility[column], 
+             marker='o', markersize=6, linewidth=2, 
+             label=column, color=NETWORK_COLORS[column])
+
+# Add election year highlighting
+for year in election_years:
+    if year in monthly_volatility.index:
+        plt.axvspan(year-0.5, year+0.5, alpha=0.15, color='gray')
+
+# Customize the plot
+plt.title('Yearly Tone Volatility by News Network (2015-2025)', fontsize=16, fontweight='bold')
+plt.xlabel('Year', fontsize=12)
+plt.ylabel('Tone Standard Deviation', fontsize=12)
+plt.grid(alpha=0.3)
+plt.legend(loc='best')
+plt.xticks(monthly_volatility.index)
+
+plt.tight_layout()
+plt.show()
+```
+
+## Tone Heatmap by Month/Year
+
+This visualization shows tone patterns over time in a heatmap format:
+
+```{python}
+#| echo: false
+#| label: fig-tone-heatmap
+#| fig-cap: "Tone heatmap by month and year for each network"
+
+# Prepare data for heatmap
+yearly_monthly_tone = df.groupby(['year', df['parsed_date'].dt.month, 'network'])['tone'].mean().unstack()
+
+# Create a separate heatmap for each network
+networks = ['Fox News', 'MSNBC', 'ABC News']
+fig, axes = plt.subplots(len(networks), 1, figsize=(14, 15), sharex=True)
+
+for i, network in enumerate(networks):
+    if network in yearly_monthly_tone.columns:
+        # Extract data for this network
+        network_data = yearly_monthly_tone[network].unstack()
+        
+        # Create the heatmap
+        im = axes[i].imshow(network_data, cmap='RdBu_r', aspect='auto', vmin=-2, vmax=2)
+        
+        # Add network name as title
+        axes[i].set_title(f'{network} Tone by Month/Year', fontsize=14, fontweight='bold')
+        
+        # Set y-axis (years)
+        axes[i].set_yticks(range(len(network_data.index)))
+        axes[i].set_yticklabels(network_data.index)
+        
+        # Set x-axis (months)
+        if i == len(networks) - 1:  # Only add month labels to the bottom subplot
+            axes[i].set_xticks(range(12))
+            axes[i].set_xticklabels(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+        
+        # Add text annotations with tone values
+        for y in range(len(network_data.index)):
+            for x in range(len(network_data.columns)):
+                if not np.isnan(network_data.iloc[y, x]):
+                    text_color = 'white' if abs(network_data.iloc[y, x]) > 1 else 'black'
+                    axes[i].text(x, y, f'{network_data.iloc[y, x]:.1f}', 
+                              ha='center', va='center', color=text_color, fontsize=8)
+
+# Add a single colorbar for all heatmaps
+cbar_ax = fig.add_axes([0.92, 0.15, 0.02, 0.7])
+cbar = fig.colorbar(im, cax=cbar_ax)
+cbar.set_label('Tone Score', fontsize=12)
+
+plt.suptitle('News Network Tone by Month and Year (2015-2025)', fontsize=16, fontweight='bold')
+plt.tight_layout(rect=[0, 0, 0.9, 0.95])
+plt.show()
+```
+
+## Positive vs Negative Component Analysis
+
+To better understand the composition of tone scores, let's analyze the positive and negative components separately:
+
+```{python}
+#| echo: false
+#| label: fig-pos-neg-comparison
+#| fig-cap: "Comparison of average positive and negative scores by network"
+
+avg_scores = df.groupby('network')[['positive_score', 'negative_score']].mean().reset_index()
+
+plt.figure(figsize=(12, 8))
+bar_width = 0.35
+x = np.arange(len(avg_scores))
+
+plt.bar(x - bar_width/2, avg_scores['positive_score'], bar_width, label='Positive Score', color='forestgreen', alpha=0.7)
+plt.bar(x + bar_width/2, avg_scores['negative_score'], bar_width, label='Negative Score', color='firebrick', alpha=0.7)
+
+# Add network-colored markers at the bottom
+for i, network in enumerate(avg_scores['network']):
+    plt.plot(i, -0.5, marker='o', markersize=15, color=NETWORK_COLORS[network])
+    plt.text(i, -0.6, network, ha='center', va='top', fontsize=10, fontweight='bold')
+
+plt.title('Average Positive vs Negative Scores by Network', fontsize=16, fontweight='bold')
+plt.ylabel('Average Score', fontsize=12)
+plt.xticks([])  # Hide x-axis ticks since we added custom network labels
+plt.legend()
+plt.grid(axis='y', alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+## Statistical Analysis
+
+```{python}
+#| echo: false
+#| label: tbl-tone-stats
+#| tbl-cap: "Tone analysis summary statistics by network"
+
+tone_stats = df.groupby('network')['tone'].agg(['mean', 'std', 'median', 'min', 'max']).round(2)
+pos_stats = df.groupby('network')['positive_score'].agg(['mean', 'std']).round(2)
+neg_stats = df.groupby('network')['negative_score'].agg(['mean', 'std']).round(2)
+
+summary_stats = pd.DataFrame({
+    'Mean Tone': tone_stats['mean'],
+    'Median Tone': tone_stats['median'],
+    'Tone Std Dev': tone_stats['std'],
+    'Min Tone': tone_stats['min'],
+    'Max Tone': tone_stats['max'],
+    'Mean Positive Score': pos_stats['mean'],
+    'Mean Negative Score': neg_stats['mean']
+})
+
+summary_stats
+```
+
+```{python}
+#| echo: false
+#| label: tbl-significance-tests
+#| tbl-cap: "Statistical significance of tone differences between networks"
+
+print("Statistical Significance Testing (t-test for tone differences):")
+networks = df['network'].unique()
+
+significance_results = []
+
+for i in range(len(networks)):
+    for j in range(i+1, len(networks)):
+        network1 = networks[i]
+        network2 = networks[j]
+        tone1 = df[df['network'] == network1]['tone']
+        tone2 = df[df['network'] == network2]['tone']
+        
+        t_stat, p_val = ttest_ind(tone1, tone2, equal_var=False)
+        
+        # Add to results
+        significance_results.append({
+            'Comparison': f"{network1} vs {network2}",
+            't-statistic': round(t_stat, 4),
+            'p-value': round(p_val, 4),
+            'Significant': 'Yes' if p_val < 0.05 else 'No'
+        })
+
+significance_df = pd.DataFrame(significance_results)
+display(significance_df)
+```
+
+## Key Findings
+
