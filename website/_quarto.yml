@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: _site
+  
+website:
+  title: "Media Coverage Analysis (2015-2025)"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+  page-footer:
+    left: "© 2025, DSAN5400 Group Project"
+    
+format:
+  html:
+    theme: cosmo
+    css: styles/custom.scss
+    toc: true
+    page-layout: full
+

@@ -1,0 +1,39 @@
+/* Calendar styling */
+.calendar-month-preview {
+    min-height: 80px;
+  }
+  
+  /* Event indicators */
+  .border-danger {
+    border-width: 2px !important;
+  }
+  
+  .border-warning {
+    border-width: 2px !important;
+  }
+  
+  .border-info {
+    border-width: 2px !important;
+  }
+  
+  /* Month details */
+  #monthDetailCard {
+    margin-top: 2rem;
+  }
+  
+  /* Custom colors for sentiment/tone */
+  .text-success {
+    color: #28a745 !important;
+  }
+  
+  .text-danger {
+    color: #dc3545 !important;
+  }
+  
+  .text-warning {
+    color: #ffc107 !important;
+  }
+  
+  .text-info {
+    color: #17a2b8 !important;
+  }
