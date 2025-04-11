@@ -1,39 +1,46 @@
-/* Calendar styling */
-.calendar-month-preview {
-    min-height: 80px;
-  }
-  
-  /* Event indicators */
-  .border-danger {
+/* Custom styles for calendar */
+.year-nav {
+    background-color: white;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+    z-index: 1000;
+}
+
+.year-section {
+    scroll-margin-top: 80px; /* Ensures the heading isn't hidden behind the nav when scrolling */
+}
+
+.year-heading {
+    color: #495057;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+/* Special borders for event cards */
+.border-danger {
     border-width: 2px !important;
-  }
-  
-  .border-warning {
+}
+
+.border-warning {
     border-width: 2px !important;
-  }
-  
-  .border-info {
+}
+
+.border-info {
     border-width: 2px !important;
-  }
-  
-  /* Month details */
-  #monthDetailCard {
-    margin-top: 2rem;
-  }
-  
-  /* Custom colors for sentiment/tone */
-  .text-success {
-    color: #28a745 !important;
-  }
-  
-  .text-danger {
-    color: #dc3545 !important;
-  }
-  
-  .text-warning {
-    color: #ffc107 !important;
-  }
-  
-  .text-info {
-    color: #17a2b8 !important;
-  }
+}
+
+/* Make cards clickable */
+.card {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Badge styles */
+.badge {
+    font-size: 0.7rem;
+}

@@ -21,314 +21,259 @@ function loadYearData(year) {
 }
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
-    // State
-    let currentYear = 2015;
-    let selectedMonth = null;
-    let selectedSource = null;
-    let yearData = null;
+    // Create all year sections
+    createYearSections();
     
-    // DOM elements
-    const calendarView = document.getElementById('calendarView');
-    const calendarTitle = document.getElementById('calendarTitle');
-    const prevYearBtn = document.getElementById('prevYear');
-    const nextYearBtn = document.getElementById('nextYear');
-    const yearSelect = document.getElementById('yearSelect');
-    const monthDetailCard = document.getElementById('monthDetailCard');
-    const monthDetailTitle = document.getElementById('monthDetailTitle');
-    const monthDetailContent = document.getElementById('monthDetailContent');
+    // Highlight the current year in navigation
+    highlightCurrentYearInNav();
     
-    // Initialize
-    yearSelect.value = currentYear;
-    loadYearData(currentYear);
+    // Set up scroll monitoring to update nav highlighting
+    setupScrollMonitoring();
+});
+
+function createYearSections() {
+    const container = document.getElementById('yearsContainer');
     
-    // Event listeners
-    yearSelect.addEventListener('change', function() {
-        currentYear = parseInt(this.value);
-        loadYearData(currentYear);
-        updateCalendarTitle();
-    });
+    // Clear existing content
+    container.innerHTML = '';
     
-    prevYearBtn.addEventListener('click', function() {
-        if (currentYear > 2015) {
-            currentYear--;
-            yearSelect.value = currentYear;
-            loadYearData(currentYear);
-            updateCalendarTitle();
-        }
-    });
-    
-    nextYearBtn.addEventListener('click', function() {
-        if (currentYear < 2025) {
-            currentYear++;
-            yearSelect.value = currentYear;
-            loadYearData(currentYear);
-            updateCalendarTitle();
-        }
-    });
-    
-    // Functions
-    function updateCalendarTitle() {
-        calendarTitle.textContent = currentYear;
-    }
-    
-    function loadYearData(year) {
-        // In a real implementation, this would load from your JSON files
-        // For now, we'll use placeholder data
-        fetch(`data/data_${year}.json`)
-            .then(response => response.json())
-            .then(data => {
-                yearData = data[year];
-                renderCalendar();
-            })
-            .catch(error => {
-                console.error('Error loading data:', error);
-                // Use dummy data for demonstration
-                generateDummyData(year);
-                renderCalendar();
-            });
-    }
-    
-    function generateDummyData(year) {
-        yearData = {};
-        const months = year === 2025 ? 4 : 12;
+    // Create sections for each year
+    for (let year = 2015; year <= 2025; year++) {
+        const yearSection = document.createElement('div');
+        yearSection.id = `year-${year}`;
+        yearSection.className = 'year-section mb-5';
         
-        for (let month = 1; month <= months; month++) {
-            yearData[month] = {
-                month: month,
-                year: year,
-                sources: {
-                    fox: {
-                        top_topics: ["Immigration", "Economy", "Foreign Policy"],
-                        sentiment: ["positive", "negative", "neutral"][Math.floor(Math.random() * 3)],
-                        tone: ["objective", "aggressive", "supportive"][Math.floor(Math.random() * 3)]
-                    },
-                    abc: {
-                        top_topics: ["Healthcare", "Economy", "Climate Change"],
-                        sentiment: ["positive", "negative", "neutral"][Math.floor(Math.random() * 3)],
-                        tone: ["objective", "aggressive", "supportive"][Math.floor(Math.random() * 3)]
-                    },
-                    msnbc: {
-                        top_topics: ["Social Justice", "Healthcare", "Climate Change"],
-                        sentiment: ["positive", "negative", "neutral"][Math.floor(Math.random() * 3)],
-                        tone: ["objective", "aggressive", "supportive"][Math.floor(Math.random() * 3)]
-                    }
-                }
-            };
+        // Year heading
+        const yearHeading = document.createElement('h2');
+        yearHeading.className = 'year-heading mb-4';
+        yearHeading.textContent = year;
+        yearSection.appendChild(yearHeading);
+        
+        // Month grid - using Bootstrap grid system
+        const monthsGrid = document.createElement('div');
+        monthsGrid.className = 'row g-4'; // Bootstrap row with gap
+        
+        // Generate months for this year
+        const maxMonth = (year === 2025) ? 4 : 12; // Only show up to April 2025
+        
+        for (let month = 1; month <= maxMonth; month++) {
+            const monthNames = [
+                "January", "February", "March", "April", 
+                "May", "June", "July", "August",
+                "September", "October", "November", "December"
+            ];
             
-            // Add events for specific months
-            if (year === 2020 && month === 3) {
-                yearData[month].events = [
-                    {name: "COVID-19 pandemic begins", type: "health_crisis", day: 13}
-                ];
-            }
-            if ((year === 2016 || year === 2020 || year === 2024) && month === 11) {
-                yearData[month].events = [
-                    {name: "US Presidential Election", type: "election", day: year === 2016 ? 8 : (year === 2020 ? 3 : 5)}
-                ];
-            }
-            if (year === 2020 && month === 6) {
-                yearData[month].events = [
-                    {name: "Black Lives Matter protests", type: "social_movement", day: 1}
-                ];
-            }
-            if (year === 2024 && month === 5) {
-                yearData[month].events = [
-                    {name: "Pro-Palestinian campus protests", type: "protest", day: 1}
-                ];
-            }
-        }
-    }
-    
-    function renderCalendar() {
-        calendarView.innerHTML = '';
-        
-        const monthNames = [
-            "January", "February", "March", "April", 
-            "May", "June", "July", "August",
-            "September", "October", "November", "December"
-        ];
-        
-        const calendarGrid = document.createElement('div');
-        calendarGrid.className = 'row g-4';
-        
-        // Create a card for each month
-        for (let i = 1; i <= 12; i++) {
-            // Skip months in 2025 that don't exist yet
-            if (currentYear === 2025 && i > 4) continue;
-            
-            const monthData = yearData[i];
+            // Create a month card
             const monthCard = document.createElement('div');
-            monthCard.className = 'col-md-3';
+            monthCard.className = 'col-md-3 col-sm-6'; // Bootstrap column
+            
+            let cardClass = 'card h-100';
             
             // Add special classes for events
-            let cardClasses = 'card h-100';
-            let monthHasEvent = false;
-            
-            if (monthData && monthData.events) {
-                monthData.events.forEach(event => {
-                    if (event.type === 'election') {
-                        cardClasses += ' border-danger';
-                        monthHasEvent = true;
-                    } else if (event.type === 'health_crisis') {
-                        cardClasses += ' border-warning';
-                        monthHasEvent = true;
-                    } else if (event.type === 'social_movement' || event.type === 'protest') {
-                        cardClasses += ' border-info';
-                        monthHasEvent = true;
-                    }
-                });
+            if ((year === 2016 || year === 2020 || year === 2024) && month === 11) {
+                cardClass += ' border-danger'; // Elections
+            } else if ((year === 2020 && month >= 3) || (year === 2021 && month <= 6)) {
+                cardClass += ' border-warning'; // COVID
+            } else if (year === 2020 && month === 6) {
+                cardClass += ' border-info'; // BLM
+            } else if (year === 2024 && month === 5) {
+                cardClass += ' border-info'; // Campus protests
             }
             
-            // Create the month card
+            // Create card content
             monthCard.innerHTML = `
-                <div class="${cardClasses}" data-month="${i}">
+                <div class="${cardClass}" data-year="${year}" data-month="${month}">
                     <div class="card-header">
-                        ${monthNames[i-1]}
-                        ${monthHasEvent ? '<span class="badge bg-primary ms-2">!</span>' : ''}
+                        ${monthNames[month-1]}
                     </div>
                     <div class="card-body">
-                        <div class="calendar-month-preview">
-                            ${getMonthPreview(monthData)}
-                        </div>
+                        <p>Top topics: Immigration, Economy...</p>
+                        ${addEventBadges(year, month)}
                     </div>
                 </div>
             `;
             
+            // Add click event to show month details
             monthCard.querySelector('.card').addEventListener('click', function() {
-                const month = parseInt(this.dataset.month);
-                displayMonthDetails(month);
+                showMonthDetails(year, month);
             });
             
-            calendarGrid.appendChild(monthCard);
+            monthsGrid.appendChild(monthCard);
         }
         
-        calendarView.appendChild(calendarGrid);
+        yearSection.appendChild(monthsGrid);
+        container.appendChild(yearSection);
+    }
+}
+
+function addEventBadges(year, month) {
+    let badges = '';
+    
+    // Election badges
+    if ((year === 2016 || year === 2020 || year === 2024) && month === 11) {
+        badges += '<span class="badge bg-danger me-1">Election</span>';
     }
     
-    function getMonthPreview(monthData) {
-        if (!monthData) return 'No data available';
-        
-        let preview = '<div class="small text-muted">';
-        
-        // Show a snippet of the top topics
-        const sources = Object.keys(monthData.sources);
-        if (sources.length > 0) {
-            const firstSource = sources[0];
-            const topics = monthData.sources[firstSource].top_topics.slice(0, 2);
-            preview += `Top topics: ${topics.join(', ')}...`;
-        }
-        
-        // Show event badges if any
-        if (monthData.events) {
-            preview += '<div class="mt-2">';
-            monthData.events.forEach(event => {
-                let badgeClass = 'bg-secondary';
-                if (event.type === 'election') badgeClass = 'bg-danger';
-                if (event.type === 'health_crisis') badgeClass = 'bg-warning';
-                if (event.type === 'social_movement' || event.type === 'protest') badgeClass = 'bg-info';
-                
-                preview += `<span class="badge ${badgeClass} me-1">${event.name}</span>`;
-            });
-            preview += '</div>';
-        }
-        
-        preview += '</div>';
-        return preview;
+    // COVID badges
+    if ((year === 2020 && month >= 3) || (year === 2021 && month <= 6)) {
+        badges += '<span class="badge bg-warning text-dark me-1">COVID-19</span>';
     }
     
-    function displayMonthDetails(month) {
-        selectedMonth = month;
-        const monthData = yearData[month];
-        
-        if (!monthData) {
-            alert('No data available for this month');
-            return;
-        }
-        
-        const monthNames = [
-            "January", "February", "March", "April", 
-            "May", "June", "July", "August",
-            "September", "October", "November", "December"
-        ];
-        
-        monthDetailTitle.textContent = `${monthNames[month-1]} ${currentYear}`;
-        monthDetailCard.style.display = 'block';
-        
-        // Create the detail content
-        let detailHtml = `
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <div class="d-flex justify-content-between">
-                        <h5>Media Coverage Comparison</h5>
-                        <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('monthDetailCard').style.display='none';">Close</button>
+    // BLM badge
+    if (year === 2020 && month === 6) {
+        badges += '<span class="badge bg-info me-1">BLM</span>';
+    }
+    
+    // Campus protests
+    if (year === 2024 && month === 5) {
+        badges += '<span class="badge bg-info me-1">Campus Protests</span>';
+    }
+    
+    return badges ? `<div class="mt-2">${badges}</div>` : '';
+}
+
+function showMonthDetails(year, month) {
+    const monthNames = [
+        "January", "February", "March", "April", 
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
+    ];
+    
+    const title = document.getElementById('monthDetailTitle');
+    const content = document.getElementById('monthDetailContent');
+    
+    title.textContent = `${monthNames[month-1]} ${year}`;
+    
+    // Content would be populated from your data
+    content.innerHTML = `
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-header bg-light">
+                        Fox News (Right-leaning)
+                    </div>
+                    <div class="card-body">
+                        <h6>Top Topics</h6>
+                        <ol>
+                            <li>Immigration</li>
+                            <li>Economy</li>
+                            <li>National Security</li>
+                        </ol>
+                        <h6>Sentiment</h6>
+                        <p class="text-success">Positive</p>
+                        <h6>Tone</h6>
+                        <p class="text-danger">Aggressive</p>
                     </div>
                 </div>
             </div>
             
-            <div class="row">
-        `;
-        
-        // Add source comparisons
-        Object.entries(monthData.sources).forEach(([source, data]) => {
-            let sourceTitle = source.toUpperCase();
-            if (source === 'fox') sourceTitle += ' (Right-leaning)';
-            if (source === 'abc') sourceTitle += ' (Neutral)';
-            if (source === 'msnbc') sourceTitle += ' (Left-leaning)';
-            
-            let sentimentClass = 'text-secondary';
-            if (data.sentiment === 'positive') sentimentClass = 'text-success';
-            if (data.sentiment === 'negative') sentimentClass = 'text-danger';
-            
-            let toneClass = 'text-secondary';
-            if (data.tone === 'aggressive') toneClass = 'text-danger';
-            if (data.tone === 'supportive') toneClass = 'text-success';
-            
-            detailHtml += `
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            ${sourceTitle}
-                        </div>
-                        <div class="card-body">
-                            <h6>Top Topics</h6>
-                            <ol>
-                                ${data.top_topics.map(topic => `<li>${topic}</li>`).join('')}
-                            </ol>
-                            
-                            <h6>Sentiment</h6>
-                            <p class="${sentimentClass}">${data.sentiment.charAt(0).toUpperCase() + data.sentiment.slice(1)}</p>
-                            
-                            <h6>Tone</h6>
-                            <p class="${toneClass}">${data.tone.charAt(0).toUpperCase() + data.tone.slice(1)}</p>
-                        </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-header bg-light">
+                        ABC News (Neutral)
+                    </div>
+                    <div class="card-body">
+                        <h6>Top Topics</h6>
+                        <ol>
+                            <li>Healthcare</li>
+                            <li>Economy</li>
+                            <li>Education</li>
+                        </ol>
+                        <h6>Sentiment</h6>
+                        <p class="text-secondary">Neutral</p>
+                        <h6>Tone</h6>
+                        <p class="text-info">Objective</p>
                     </div>
                 </div>
-            `;
-        });
-        
-        detailHtml += `</div>`;
-        
-        // Add events section if any
-        if (monthData.events && monthData.events.length > 0) {
-            detailHtml += `
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <h5>Major Events</h5>
-                        <ul class="list-group">
-                            ${monthData.events.map(event => 
-                                `<li class="list-group-item">
-                                    ${event.name} (Day ${event.day})
-                                </li>`
-                            ).join('')}
-                        </ul>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-header bg-light">
+                        MSNBC (Left-leaning)
+                    </div>
+                    <div class="card-body">
+                        <h6>Top Topics</h6>
+                        <ol>
+                            <li>Social Justice</li>
+                            <li>Healthcare</li>
+                            <li>Climate Change</li>
+                        </ol>
+                        <h6>Sentiment</h6>
+                        <p class="text-danger">Negative</p>
+                        <h6>Tone</h6>
+                        <p class="text-warning">Critical</p>
                     </div>
                 </div>
-            `;
-        }
+            </div>
+        </div>
         
-        monthDetailContent.innerHTML = detailHtml;
-    }
-});
+        <div class="card">
+            <div class="card-header bg-light">
+                Daily Coverage Calendar
+            </div>
+            <div class="card-body">
+                <div class="calendar-grid">
+                    <!-- This would be a mini-calendar that shows day-by-day coverage -->
+                    <p class="text-center">Daily coverage calendar would go here</p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Show the modal
+    const modal = new bootstrap.Modal(document.getElementById('monthDetailModal'));
+    modal.show();
+}
 
+function scrollToYear(year) {
+    const yearElement = document.getElementById(`year-${year}`);
+    if (yearElement) {
+        yearElement.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+function highlightCurrentYearInNav() {
+    // Get all year buttons
+    const yearButtons = document.querySelectorAll('#yearNav button');
+    
+    // Clear active class from all buttons
+    yearButtons.forEach(button => {
+        button.classList.remove('active');
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-outline-primary');
+    });
+    
+    // Determine which year is most visible in the viewport
+    const yearSections = document.querySelectorAll('.year-section');
+    let mostVisibleYear = null;
+    let maxVisibleHeight = 0;
+    
+    yearSections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+        
+        if (visibleHeight > maxVisibleHeight) {
+            maxVisibleHeight = visibleHeight;
+            mostVisibleYear = section.id.split('-')[1];
+        }
+    });
+    
+    // If a year is visible, highlight its button
+    if (mostVisibleYear) {
+        const activeButton = document.querySelector(`#yearNav button[onclick="scrollToYear(${mostVisibleYear})"]`);
+        if (activeButton) {
+            activeButton.classList.remove('btn-outline-primary');
+            activeButton.classList.add('btn-primary');
+            activeButton.classList.add('active');
+        }
+    }
+}
+
+function setupScrollMonitoring() {
+    // Update active year button on scroll
+    window.addEventListener('scroll', function() {
+        highlightCurrentYearInNav();
+    });
+}
