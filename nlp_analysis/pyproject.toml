@@ -1,9 +1,12 @@
 [project]
 name = "nlp-analysis"
 version = "0.1.0"
-description = ""
+description = "Perform topic modeling, half-life modeling, sentiment analysis, and semantic analysis on media sources"
 authors = [
-    {name = "Viviana Luccioli",email = "vcl16@georgetown.edu"}
+    {name = "Viviana Luccioli", email = "vcl16@georgetown.edu"},
+    {name = "Kristin Lloyd", email = "kml301@georgetown.edu"}, 
+    {name = "Ria Sonawane", email = "rs2261@georgetown.edu"},
+    {name = "Zixu Hao", email = "zh301@georgetown.edu"}
 ]
 readme = "README.md"
 requires-python = ">=3.12"
@@ -13,6 +16,9 @@ dependencies = [
 [tool.poetry]
 packages = [{include = "nlp_analysis", from = "src"}]
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
