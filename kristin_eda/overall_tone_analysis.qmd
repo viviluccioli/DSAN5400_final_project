@@ -132,7 +132,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-**Note on Sample Sizes**: The data shows a smaller sample for MSNBC compared to Fox News and ABC News. This discrepancy should be considered when interpreting results, as it may impact the representativeness of trends for MSNBC.
+**Note on Sample Sizes**: The data shows a smaller sample for MSNBC compared to Fox News and ABC News. These differences reflect availability via GDELT's API. This discrepancy should be considered when interpreting results, as it may impact the representativeness of trends for MSNBC.
 
 ## Tone Distribution Analysis
 
@@ -188,6 +188,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+All networks skew slightly negative, with Fox News averaging –2.69, MSNBC –2.74, and ABC News –3.10. While the general shape of the distributions is similar, ABC News has a slightly more negative average and wider spread, suggesting a greater variability in tone across its coverage. The dashed line at 0 represents a neutral tone.
+
 ```{python}
 #| echo: false
 #| label: fig-tone-boxplot
@@ -204,6 +206,8 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 ```
+
+All three networks center below the neutral tone line, reflecting a general trend toward negative coverage. Fox and ABC News display slightly tighter interquartile ranges, while MSNBC shows more outliers on both the positive and negative ends. ABC News appears to have the most extreme negative outliers, with some scores dipping below –40.
 
 ### Key Observations:
 
@@ -223,17 +227,6 @@ The following visualization tracks monthly average tone scores across the three 
 # Calculate monthly average tone for each network
 monthly_tone = df.groupby(['month', 'network'])['tone'].mean().unstack()
 
-# Define key events for annotation
-events = {
-    '2016-11': ('Trump Elected', 0.5),
-    '2020-01': ('COVID-19 Begins', 0.3),
-    '2020-11': ('Biden Elected', 0.5),
-    '2024-11': ('Trump Re-Elected', 0.5)
-}
-
-# Define election years for highlighting
-election_years = [2016, 2020, 2024]
-
 ```
 
 ### Rolling Average Trend
@@ -241,10 +234,7 @@ election_years = [2016, 2020, 2024]
 For a clearer view of long-term trends, here's a 6-month rolling average of tone scores:
 
 ```{python}
-#| echo: false
-#| label: fig-rolling-tone-trends
-#| fig-cap: "6-month rolling average tone trends by news network (2015-2025)"
-
+# Convert month period to datetime for rolling calculation
 # Convert month period to datetime for rolling calculation
 monthly_tone_reset = monthly_tone.reset_index()
 monthly_tone_reset['month_datetime'] = monthly_tone_reset['month'].dt.to_timestamp()
@@ -262,24 +252,8 @@ for column in rolling_tone.columns:
     plt.plot(rolling_tone.index, rolling_tone[column], 
              linewidth=3, label=column, color=NETWORK_COLORS[column])
 
-# Add election year highlighting
-for year in election_years:
-    start_date = pd.Timestamp(f'{year}-01-01')
-    end_date = pd.Timestamp(f'{year}-12-31')
-    if start_date >= rolling_tone.index.min() and start_date <= rolling_tone.index.max():
-        plt.axvspan(start_date, end_date, alpha=0.15, color='gray')
-
-# Add key events
-for date_str, (event_name, offset) in events.items():
-    date = pd.Timestamp(date_str + '-01')  # Convert to first day of month
-    if date >= rolling_tone.index.min() and date <= rolling_tone.index.max():
-        plt.axvline(x=date, color='red', linestyle=':', alpha=0.7)
-        # Find a y-position
-        date_idx = rolling_tone.index.get_indexer([date], method='nearest')[0]
-        y_pos = rolling_tone.iloc[date_idx].max() + offset
-        plt.annotate(event_name, xy=(date, y_pos), xytext=(date + pd.DateOffset(months=2), y_pos),
-                    arrowprops=dict(facecolor='red', shrink=0.05, width=1.5, headwidth=8),
-                    fontsize=10, fontweight='bold')
+# Removed event annotations
+# Removed shaded election years
 
 # Add neutral line
 plt.axhline(y=0, color='black', linestyle='--', alpha=0.5, label='Neutral Tone')
@@ -297,7 +271,10 @@ plt.gca().xaxis.set_major_locator(mdates.YearLocator())
 
 plt.tight_layout()
 plt.show()
+
 ```
+
+This smoothed trendline shows how average tone evolved over time for each network using GDELT data. Fox News (red) exhibits a notable upward trend in tone starting around 2023, while MSNBC (blue) shows more volatility with several peaks and sharp declines across the decade. ABC News (purple) remains relatively steady with consistently negative tone scores.
 
 ### Tone Volatility Analysis
 
@@ -320,10 +297,7 @@ for column in monthly_volatility.columns:
              marker='o', markersize=6, linewidth=2, 
              label=column, color=NETWORK_COLORS[column])
 
-# Add election year highlighting
-for year in election_years:
-    if year in monthly_volatility.index:
-        plt.axvspan(year-0.5, year+0.5, alpha=0.15, color='gray')
+# Removed shaded election year highlighting
 
 # Customize the plot
 plt.title('Yearly Tone Volatility by News Network (2015-2025)', fontsize=16, fontweight='bold')
@@ -335,7 +309,10 @@ plt.xticks(monthly_volatility.index)
 
 plt.tight_layout()
 plt.show()
+
 ```
+
+This line plot tracks the standard deviation of tone scores by year for each network, offering a view into how volatile or stable their coverage was. MSNBC (blue) shows the highest variability, peaking in 2020, which coincides with major societal events. Fox News (red) displays a steady decline in volatility after 2018, suggesting more consistent tone in recent years. ABC News (purple) remains relatively stable throughout the decade.
 
 ## Tone Heatmap by Month/Year
 
@@ -392,6 +369,8 @@ plt.tight_layout(rect=[0, 0, 0.9, 0.95])
 plt.show()
 ```
 
+Darker blue tones represent more negative sentiment, while lighter shades and reds indicate more positive coverage. Across all three networks, most months and years exhibit consistently negative tone, reflecting the overall pessimistic framing of news coverage in this period. MSNBC shows greater variability between years, especially around 2016–2018, while Fox News trends sharply more positive in early 2025. ABC News remains steadily negative with minimal monthly fluctuation. This format makes it easy to spot brief tonal shifts against a predominantly negative backdrop.
+
 ## Positive vs Negative Component Analysis
 
 To better understand the composition of tone scores, let's analyze the positive and negative components separately:
@@ -423,6 +402,8 @@ plt.grid(axis='y', alpha=0.3)
 plt.tight_layout()
 plt.show()
 ```
+
+Across all three networks, negative scores are significantly higher than positive ones, reinforcing the trend of predominantly negative news coverage observed elsewhere in the dataset. Fox News and ABC News have slightly higher average positive scores than MSNBC, but the gap between positive and negative sentiment is consistently large across the board. This highlights how negative language tends to dominate regardless of network affiliation.
 
 ## Statistical Analysis
 
@@ -481,3 +462,4 @@ display(significance_df)
 
 ## Key Findings
 
+This table summarizes results from t-tests comparing average tone scores between each pair of networks. All comparisons are statistically significant at p < 0.01, confirming meaningful differences in tone across outlets. The largest difference is between Fox News and ABC News, followed by ABC News vs. MSNBC. Even the more modest difference between Fox News and MSNBC is statistically significant.
