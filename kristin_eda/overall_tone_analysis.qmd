@@ -3,13 +3,21 @@ title: "News Network Tone Analysis"
 author: "Kristin Lloyd"
 format: 
   html:
-    embed-resources: true
     code-fold: true
     toc: true
     toc-depth: 3
-    toc-title: "Contents"
-    code-tools: true
-    error: false  
+    number-sections: true
+    theme: cosmo
+    fig-width: 9
+    fig-height: 6
+    fig-dpi: 300
+    self-contained: true
+execute:
+  warning: false
+  message: false
+bibliography: references.bib
+nocite: "@*"
+csl: apa.csl
 ---
 
 # Overall Tone Analysis (🔹GDELT Only)
