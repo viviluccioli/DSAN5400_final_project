@@ -41,3 +41,82 @@
 2025-04-11 17:09:25,599 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2024.csv
 2025-04-11 17:09:26,293 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2024.csv
 2025-04-11 17:09:26,296 - INFO - Finished 2024 - After: {'total': 2768, 'positive': np.int64(835), 'negative': np.int64(1933), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.0570557966909098), 'avg_model': np.float64(-0.3780869244667836), 'avg_afinn': np.float64(-5.1033665801400545)}
+2025-04-12 12:10:19,086 - INFO - Processing: 2016 - Before
+2025-04-12 12:10:40,690 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 12:10:40,957 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 12:10:41,497 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-12 12:10:41,500 - INFO - Finished 2016 - Before: {'total': 2275, 'positive': np.int64(577), 'negative': np.int64(1698), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.9711220121556683), 'avg_model': np.float64(-0.47510008073115084), 'avg_afinn': np.float64(-9.943401384222328), 'polarization': np.float64(1.0)}
+2025-04-12 12:10:41,500 - INFO - Processing: 2016 - After
+2025-04-12 12:11:00,649 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 12:11:00,911 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 12:11:01,438 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-12 12:11:01,440 - INFO - Finished 2016 - After: {'total': 2120, 'positive': np.int64(563), 'negative': np.int64(1557), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.7582483491059513), 'avg_model': np.float64(-0.4524673164734301), 'avg_afinn': np.float64(-9.248155277636409), 'polarization': np.float64(1.0)}
+2025-04-12 12:11:01,444 - INFO - Processing: 2020 - Before
+2025-04-12 12:11:24,278 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2020.csv
+2025-04-12 12:11:24,513 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2020.csv
+2025-04-12 12:11:25,137 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2020.csv
+2025-04-12 12:11:25,140 - INFO - Finished 2020 - Before: {'total': 2413, 'positive': np.int64(614), 'negative': np.int64(1799), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.610896323691171), 'avg_model': np.float64(-0.4728908827825547), 'avg_afinn': np.float64(-6.545282638548463), 'polarization': np.float64(1.0)}
+2025-04-12 12:11:25,140 - INFO - Processing: 2020 - After
+2025-04-12 12:11:49,119 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2020.csv
+2025-04-12 12:11:49,352 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2020.csv
+2025-04-12 12:11:49,971 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2020.csv
+2025-04-12 12:11:49,974 - INFO - Finished 2020 - After: {'total': 2616, 'positive': np.int64(755), 'negative': np.int64(1861), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.1411620123554354), 'avg_model': np.float64(-0.4092939747810728), 'avg_afinn': np.float64(-6.151236443351069), 'polarization': np.float64(1.0)}
+2025-04-12 12:11:49,978 - INFO - Processing: 2024 - Before
+2025-04-12 12:12:15,061 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2024.csv
+2025-04-12 12:12:15,427 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2024.csv
+2025-04-12 12:12:16,131 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2024.csv
+2025-04-12 12:12:16,134 - INFO - Finished 2024 - Before: {'total': 2613, 'positive': np.int64(677), 'negative': np.int64(1936), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.5522952067658515), 'avg_model': np.float64(-0.4647251692623003), 'avg_afinn': np.float64(-7.461845517734801), 'polarization': np.float64(1.0)}
+2025-04-12 12:12:16,134 - INFO - Processing: 2024 - After
+2025-04-12 12:12:42,041 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2024.csv
+2025-04-12 12:12:42,399 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2024.csv
+2025-04-12 12:12:43,085 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2024.csv
+2025-04-12 12:12:43,088 - INFO - Finished 2024 - After: {'total': 2768, 'positive': np.int64(835), 'negative': np.int64(1933), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.0570557966909098), 'avg_model': np.float64(-0.3780869244667836), 'avg_afinn': np.float64(-5.1033665801400545), 'polarization': np.float64(1.0)}
+2025-04-12 12:26:26,174 - INFO - Processing: 2016 - Before
+2025-04-12 12:27:04,592 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 12:27:04,855 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 12:27:05,386 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-12 12:27:05,389 - INFO - Finished 2016 - Before: {'total': 2275, 'positive': np.int64(0), 'negative': np.int64(0), 'neutral': np.int64(2275), 'avg_gdelt': np.float64(-2.9711220121556683), 'avg_model': np.float64(-0.7355309218364757), 'avg_afinn': np.float64(-9.943401384222328), 'polarization': np.float64(0.0)}
+2025-04-12 12:27:05,389 - INFO - Processing: 2016 - After
+2025-04-12 12:27:40,509 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 12:27:40,774 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 12:27:41,299 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-12 12:27:41,302 - INFO - Finished 2016 - After: {'total': 2120, 'positive': np.int64(0), 'negative': np.int64(0), 'neutral': np.int64(2120), 'avg_gdelt': np.float64(-2.7582483491059513), 'avg_model': np.float64(-0.7354376957382796), 'avg_afinn': np.float64(-9.248155277636409), 'polarization': np.float64(0.0)}
+2025-04-12 12:27:41,305 - INFO - Processing: 2020 - Before
+2025-04-12 12:33:48,423 - INFO - Processing: 2016 - Before
+2025-04-12 12:34:09,300 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 12:34:09,561 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 12:34:10,094 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-12 12:34:10,097 - INFO - Finished 2016 - Before: {'total': 2275, 'positive': np.int64(577), 'negative': np.int64(1698), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.9711220121556683), 'avg_model': np.float64(-0.47510008073115084), 'avg_afinn': np.float64(-9.943401384222328), 'polarization': np.float64(1.0)}
+2025-04-12 12:34:10,097 - INFO - Processing: 2016 - After
+2025-04-12 12:34:28,442 - INFO - \u2705 Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 12:34:28,698 - INFO - \u2705 Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 12:34:29,234 - INFO - \u2705 Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-12 12:34:29,237 - INFO - Finished 2016 - After: {'total': 2120, 'positive': np.int64(563), 'negative': np.int64(1557), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.7582483491059513), 'avg_model': np.float64(-0.4524673164734301), 'avg_afinn': np.float64(-9.248155277636409), 'polarization': np.float64(1.0)}
+2025-04-12 12:34:29,241 - INFO - Processing: 2020 - Before
+2025-04-12 19:22:20,794 - INFO - Processing: 2016 - Combined 60 Day Window
+2025-04-12 19:24:25,231 - INFO - Processing: 2016 - Combined 60 Day Window
+2025-04-12 19:25:02,686 - INFO - Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 19:25:02,950 - INFO - Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 19:25:32,386 - INFO - Processing: 2016 - Combined 60 Day Window
+2025-04-12 19:26:09,186 - INFO - Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 19:26:09,451 - INFO - Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 19:26:09,971 - INFO - Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-12 19:27:24,556 - INFO - Processing: 2016 - Combined 60 Day Window
+2025-04-12 19:28:01,272 - INFO - Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 19:28:01,538 - INFO - Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 19:28:02,069 - INFO - Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-12 19:28:45,026 - INFO - Processing: 2016 - Combined 60 Day Window
+2025-04-12 19:29:21,600 - INFO - Updated file with afinn tone: data\abc\abc2016.csv
+2025-04-12 19:29:21,863 - INFO - Updated file with afinn tone: data\msnbc\msnbc2016.csv
+2025-04-12 19:29:22,386 - INFO - Updated file with afinn tone: data\fox\fox2016.csv
+2025-04-12 19:29:22,390 - INFO - Finished 2016 - Combined 60 Day Window: {'total': 4396, 'positive': np.int64(1140), 'negative': np.int64(3256), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.8682756176963538), 'avg_model': np.float64(-0.4643032288312695), 'avg_afinn': np.float64(-9.615601565184742)}
+2025-04-12 19:29:22,405 - INFO - Processing: 2020 - Combined 60 Day Window
+2025-04-12 19:30:06,923 - INFO - Updated file with afinn tone: data\abc\abc2020.csv
+2025-04-12 19:30:07,157 - INFO - Updated file with afinn tone: data\msnbc\msnbc2020.csv
+2025-04-12 19:30:07,776 - INFO - Updated file with afinn tone: data\fox\fox2020.csv
+2025-04-12 19:30:07,779 - INFO - Finished 2020 - Combined 60 Day Window: {'total': 5029, 'positive': np.int64(1369), 'negative': np.int64(3660), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.366548549092984), 'avg_model': np.float64(-0.4398088567321877), 'avg_afinn': np.float64(-6.340306530647014)}
+2025-04-12 19:30:07,795 - INFO - Processing: 2024 - Combined 60 Day Window
+2025-04-12 19:30:55,369 - INFO - Updated file with afinn tone: data\abc\abc2024.csv
+2025-04-12 19:30:55,741 - INFO - Updated file with afinn tone: data\msnbc\msnbc2024.csv
+2025-04-12 19:30:56,434 - INFO - Updated file with afinn tone: data\fox\fox2024.csv
+2025-04-12 19:30:56,438 - INFO - Finished 2024 - Combined 60 Day Window: {'total': 5381, 'positive': np.int64(1512), 'negative': np.int64(3869), 'neutral': np.int64(0), 'avg_gdelt': np.float64(-2.297542802549639), 'avg_model': np.float64(-0.4201582370582422), 'avg_afinn': np.float64(-6.248637991389836)}

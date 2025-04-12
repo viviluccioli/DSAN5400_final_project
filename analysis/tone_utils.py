@@ -4,7 +4,6 @@ from transformers import pipeline
 from afinn import Afinn
 import os
 
-# Load AFINN for dictionary-style tone replication
 afinn = Afinn()
 
 def load_data(base_dir, media_sources, year, election_day, period):
@@ -20,11 +19,12 @@ def load_data(base_dir, media_sources, year, election_day, period):
             election_day = pd.to_datetime(election_day)
             if election_day.tzinfo is None:
                 election_day = election_day.tz_localize("UTC")
-
             if period == "before":
-                mask = (df["parsed_date"] >= (election_day - pd.Timedelta(days=30))) &                        (df["parsed_date"] < election_day)
+                mask = (df["parsed_date"] >= (election_day - pd.Timedelta(days=30))) & \
+                       (df["parsed_date"] < election_day)
             elif period == "after":
-                mask = (df["parsed_date"] > election_day) &                        (df["parsed_date"] <= (election_day + pd.Timedelta(days=30)))
+                mask = (df["parsed_date"] > election_day) & \
+                       (df["parsed_date"] <= (election_day + pd.Timedelta(days=30)))
             df_filtered = df.loc[mask]
             all_data.append(df_filtered)
     if not all_data:
@@ -39,7 +39,7 @@ def compute_afinn_tone(text):
     score = afinn.score(text)
     return (score / len(words)) * 100 if words else 0.0
 
-def run_sentiment(df):
+def run_sentiment(df, output_csv_path=None):
     sentiment_model = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
     texts = df["headline"].tolist()
     results = sentiment_model(texts, batch_size=32, truncation=True)
@@ -49,4 +49,7 @@ def run_sentiment(df):
         df["sentiment_label"] == "POSITIVE", -df["sentiment_score"]
     )
     df["afinn_tone"] = df["headline"].apply(compute_afinn_tone)
+
+    if output_csv_path:
+        df.to_csv(output_csv_path, index=False)
     return df
