@@ -40,13 +40,22 @@ def compute_afinn_tone(text):
     return (score / len(words)) * 100 if words else 0.0
 
 def run_sentiment(df, output_csv_path=None):
-    sentiment_model = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+    sentiment_model = pipeline("sentiment-analysis", model="mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis")
     texts = df["headline"].tolist()
     results = sentiment_model(texts, batch_size=32, truncation=True)
-    df["sentiment_label"] = [x.get("label", "UNKNOWN") for x in results]
+
+    # 手动映射 label（统一为大写）
+    label_map = {
+        "positive": "POSITIVE",
+        "neutral": "NEUTRAL",
+        "negative": "NEGATIVE"
+    }
+    df["sentiment_label"] = [label_map.get(x.get("label", "").lower(), "UNKNOWN") for x in results]
     df["sentiment_score"] = [x.get("score", 0.0) for x in results]
+
     df["signed_score"] = df["sentiment_score"].where(
-        df["sentiment_label"] == "POSITIVE", -df["sentiment_score"]
+        df["sentiment_label"] == "POSITIVE",
+        -df["sentiment_score"]
     )
     df["afinn_tone"] = df["headline"].apply(compute_afinn_tone)
 
