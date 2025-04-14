@@ -1,0 +1,189 @@
+---
+title: "Election Tone Analysis"
+author: "Kristin Lloyd"
+format: 
+  html:
+    code-fold: true
+    toc: true
+execute:
+  warning: false
+  message: false
+---
+
+```{python}
+import pandas as pd
+import glob
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+from collections import Counter
+from scipy.stats import ttest_ind
+from datetime import timedelta
+
+# Set visualization style
+sns.set_style("whitegrid")
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+
+# Define election dates
+elections = {
+    "2016": pd.to_datetime("2016-11-08"),
+    "2020": pd.to_datetime("2020-11-03"),
+    "2024": pd.to_datetime("2024-11-05")
+}
+
+# Define network colors (optional for future use)
+NETWORK_COLORS = {
+    'Fox News': '#E41A1C',
+    'MSNBC': '#377EB8',
+    'ABC News': '#984EA3'
+}
+
+# Load CSV files
+csv_files = (
+    glob.glob("../data/fox/fox*.csv") +
+    glob.glob("../data/abc/abc*.csv") +
+    glob.glob("../data/msnbc/msnbc*.csv")
+)
+
+df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+# Select relevant columns
+columns_of_interest = [
+    "parsed_date", "url", "headline_from_url",
+    "afinn_tone_score", "sentiment_label"
+]
+df = df[columns_of_interest]
+
+# Parse dates and ensure afinn is numeric
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+df["afinn_tone_score"] = pd.to_numeric(df["afinn_tone_score"], errors="coerce")
+df = df.dropna(subset=["parsed_date", "afinn_tone_score"])
+
+# Extract network from URL
+def extract_network(url):
+    if 'fox' in url.lower():
+        return 'Fox News'
+    elif 'abc' in url.lower():
+        return 'ABC News'
+    elif 'msnbc' in url.lower():
+        return 'MSNBC'
+    else:
+        return 'Unknown'
+
+df['network'] = df['url'].apply(extract_network)
+
+# Extract election windows
+election_windows = []
+for year, date in elections.items():
+    df_sub = df[
+        (df["parsed_date"] >= date - timedelta(days=30)) &
+        (df["parsed_date"] <= date + timedelta(days=30))
+    ].copy()
+    df_sub.loc[:, "election_year"] = year
+    df_sub.loc[:, "period"] = np.where(
+        df_sub["parsed_date"] < date, "Before", "After"
+    )
+    election_windows.append(df_sub)
+
+df_elections = pd.concat(election_windows, ignore_index=True)
+
+# Final selection
+df_elections = df_elections[[
+    "parsed_date", "network", "election_year", "period", "afinn_tone_score"
+]]
+
+# ✅ Re-confirm numeric type
+df_elections["afinn_tone_score"] = pd.to_numeric(df_elections["afinn_tone_score"], errors="coerce")
+
+# Print top frequent values for debugging
+print("Top AFINN Scores:\n", df_elections["afinn_tone_score"].value_counts().head(10))
+
+# ✅ Summary statistics by network and period
+summary_by_network_period = df_elections.groupby(['network', 'period'])['afinn_tone_score'].agg([
+    'count', 'mean', 'median', 'std'
+]).reset_index()
+
+print("\nAFINN Score Summary by Network and Period:")
+print(summary_by_network_period)
+
+# ✅ Boxplot: AFINN tone by network and election period
+plt.figure(figsize=(10, 6))
+sns.boxplot(
+    x="network", 
+    y="afinn_tone_score", 
+    hue="period",
+    data=df_elections,
+    palette=["#5A9BD5", "#FF9966"],
+    showfliers=False
+)
+
+plt.title("AFINN Tone Scores by Network - Before vs. After Elections", fontsize=14)
+plt.xlabel("News Network", fontsize=12)
+plt.ylabel("AFINN Tone Score", fontsize=12)
+plt.legend(title="Election Period")
+plt.tight_layout()
+plt.show()
+
+```
+
+```{python}
+
+from scipy.stats import sem  # standard error of the mean
+
+# Aggregate mean and SEM
+mean_sem = df_elections.groupby(["network", "period"])["afinn_tone_score"].agg(
+    mean="mean", sem=sem
+).reset_index()
+
+# Barplot of means with error bars
+plt.figure(figsize=(8, 6))
+sns.barplot(
+    data=mean_sem,
+    x="network", y="mean", hue="period",
+    palette=["#5A9BD5", "#FF9966"],
+    capsize=0.15, errwidth=1.5
+)
+
+plt.title("Mean AFINN Tone Scores by Network\nBefore vs. After Elections", fontsize=14)
+plt.ylabel("Mean AFINN Tone Score")
+plt.xlabel("News Network")
+plt.legend(title="Election Period")
+plt.axhline(0, color="gray", linestyle="--")
+plt.tight_layout()
+plt.show()
+
+```
+
+```{python}
+
+from scipy.stats import sem  # standard error of the mean
+
+# Aggregate mean and SEM
+mean_sem = df_elections.groupby(["network", "period"])["afinn_tone_score"].agg(
+    mean="mean", sem=sem
+).reset_index()
+
+# If needed, create a custom order for the periods
+# This will determine which comes first in the legend and bars
+period_order = ["Before", "After"]  # Change this to ["After", "Before"] if needed
+
+# Barplot of means with error bars
+plt.figure(figsize=(8, 6))
+sns.barplot(
+    data=mean_sem,
+    x="network", y="mean", hue="period",
+    palette=["#FF9966", "#5A9BD5"],  # Swapped colors: Orange for Before, Blue for After
+    hue_order=period_order,  # Use the custom order
+    capsize=0.15, errwidth=1.5
+)
+
+plt.title("Mean AFINN Tone Scores by Network\nBefore vs. After Elections", fontsize=14)
+plt.ylabel("Mean AFINN Tone Score")
+plt.xlabel("News Network")
+plt.legend(title="Election Period")
+plt.axhline(0, color="gray", linestyle="--")
+plt.tight_layout()
+plt.show()
+
+```
