@@ -1,0 +1,497 @@
+---
+title: "News Network Tone Analysis"
+format: 
+  html:
+    code-fold: true
+    toc: true
+    number-sections: true
+execute:
+  warning: false
+  message: false
+---
+
+![](images/intro2.png){width=150px}
+
+# Overall Tone Analysis 
+
+::: {.columns}
+
+::: {.column width="33%"}
+![](images/fox.png){width=45%}
+:::
+
+::: {.column width="33%"}
+![](images/abc.png){width=70%}
+:::
+
+::: {.column width="33%"}
+![](images/msnbc.png){width=55%}
+:::
+
+:::
+
+In this analysis, Fox News is generally regarded as a right-leaning outlet, MSNBC as left-leaning, and ABC News as a centrist source. These distinctions help contextualize differences in tone over time, as each network’s political orientation may influence how stories are framed and presented to their audiences.
+
+## Overview
+
+This section examines long-term sentiment trends across three major U.S. news networks—**Fox News**, **MSNBC**, and **ABC News**—using tone scores derived from the **Global Database of Events, Language, and Tone (GDELT)** from **2015 through 2025**. These scores quantify the overall tone of news articles on a continuous scale, offering insight into the emotional framing of events and issues over time.
+
+Rather than centering on specific political events, this analysis takes a **broad temporal view** to uncover overarching trends in news tone. We investigate whether certain networks consistently portray the news with a more positive or negative tone, and how those patterns may shift across months and years.
+
+## Understanding GDELT Tone Scores
+
+Before diving into the analysis, it’s essential to understand how **GDELT tone scores** are computed and what they represent. These scores provide a quantitative measure of emotional tone in global news coverage, enabling systematic comparisons across sources and time periods.
+
+- **Tone Score**: This metric typically ranges from **-10 (extremely negative)** to **+10 (extremely positive)**, with **0 indicating a neutral tone**. It reflects the overall sentiment conveyed in a news article or segment.
+- **Calculation Method**: GDELT applies **natural language processing (NLP)** techniques to extract sentiment by analyzing the frequency and intensity of positive and negative language within each document.
+- **Composite Measure**: The tone score is derived as the **difference between positive and negative sentiment components**, providing a net emotional tone. In later sections, we’ll explore these components individually for a more detailed breakdown.
+
+Higher tone scores indicate a stronger presence of positive language, while lower scores reflect more negative framing. These values allow us to track and visualize long-term sentiment trends, evaluate tone consistency or volatility, and compare differences in emotional framing across news networks with varying political orientations.
+
+```{python}
+#| echo: false
+
+import pandas as pd
+import glob
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+from collections import Counter
+from scipy.stats import ttest_ind
+import matplotlib.dates as mdates
+from matplotlib.ticker import MaxNLocator
+
+# Set visualization style
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+
+# Define network colors
+NETWORK_COLORS = {
+    'Fox News': '#E41A1C',    # Red for Fox
+    'MSNBC': '#377EB8',       # Blue for MSNBC
+    'ABC News': '#984EA3'     # Purple for ABC
+}
+
+# Import data files
+csv_files = (
+    glob.glob("../data/fox/fox*.csv") +
+    glob.glob("../data/abc/abc*.csv") +
+    glob.glob("../data/msnbc/msnbc*.csv")
+)
+
+df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+# Select relevant columns
+columns_of_interest = [
+    "parsed_date", "url", "headline_from_url",
+    "V2Themes", "V2Locations", "V2Persons",
+    "V2Organizations", "V2Tone"
+]
+df = df[columns_of_interest]
+
+# Convert date and extract network information
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+
+# Extract network source from URLs
+def extract_network(url):
+    if 'fox' in url.lower():
+        return 'Fox News'
+    elif 'abc' in url.lower():
+        return 'ABC News'
+    elif 'msnbc' in url.lower():
+        return 'MSNBC'
+    else:
+        return 'Unknown'
+
+# Add network column
+df['network'] = df['url'].apply(extract_network)
+
+# Extract tone components
+tone_split = df["V2Tone"].str.split(",", expand=True)
+df["tone"] = pd.to_numeric(tone_split[0], errors="coerce")
+df["positive_score"] = pd.to_numeric(tone_split[1], errors="coerce")
+df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
+
+# Create month and year columns for aggregation
+df['month'] = df['parsed_date'].dt.to_period('M')
+df['year'] = df['parsed_date'].dt.year
+df['month_year'] = df['parsed_date'].dt.strftime('%Y-%m')
+
+```
+
+## Dataset Overview
+
+**Note on Sample Sizes**: The data shows a smaller sample for MSNBC compared to Fox News and ABC News. These differences reflect availability via GDELT's API. This discrepancy should be considered when interpreting results, as it may impact the representativeness of trends for MSNBC.
+
+```{python}
+# Reorder the article counts
+ordered_networks = ['MSNBC', 'ABC News', 'Fox News']
+article_counts = df['network'].value_counts().reindex(ordered_networks)
+
+# Plot
+plt.figure(figsize=(8, 4))
+bars = plt.bar(article_counts.index, article_counts.values,
+               color=[NETWORK_COLORS[network] for network in article_counts.index])
+
+plt.title('Number of Articles by News Network', fontsize=14, fontweight='bold')
+plt.xlabel('News Network')
+plt.ylabel('Number of Articles')
+plt.xticks(rotation=0)
+plt.grid(axis='y', alpha=0.3)
+
+# Add count labels on top of the bars
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2., height + 0.1,
+             f'{int(height):,}', ha='center', va='bottom', fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+```
+
+## Tone Distribution Analysis
+
+The **dashed horizontal line at 0** represents a **neutral tone**, serving as a visual reference point to highlight how all three networks tend to lean toward negative sentiment in their reporting. This trend may reflect the nature of media content itself, where negative events often receive more attention and coverage due to their perceived newsworthiness.
+
+All three news networks skew slightly negative in their average tone scores, consistent with prior findings that news coverage tends to focus more on conflict, controversy, and crisis. **Fox News** has an average tone score of **–2.69**, **MSNBC** averages **–2.74**, and **ABC News** is the most negative on average at **–3.10**.
+
+While the overall shapes of the tone distributions are broadly similar, a few important distinctions emerge. **ABC News**, despite being considered a centrist outlet, exhibits a slightly **more negative average tone** and a **wider distribution**, indicating greater variability in emotional framing across its stories. This suggests that ABC may present a broader range of sentiment—from highly negative to moderately positive—compared to the other networks, which tend to cluster more tightly around their respective means.
+
+```{python}
+#| echo: false
+#| label: fig-tone-boxplot
+#| fig-cap: "Tone score distribution across news networks"
+
+# Define custom order
+ordered_networks = ['MSNBC', 'ABC News', 'Fox News']
+data = [df[df['network'] == network]['tone'].dropna() for network in ordered_networks]
+positions = range(1, len(ordered_networks) + 1)
+
+plt.figure(figsize=(8, 5))
+
+# Create box plot
+boxplots = plt.boxplot(data, positions=positions, widths=0.5, patch_artist=True,
+                       showfliers=False, showcaps=True, showmeans=False)
+
+# Color box plots
+for i, box in enumerate(boxplots['boxes']):
+    network = ordered_networks[i]
+    box.set_facecolor(NETWORK_COLORS[network])
+    box.set_edgecolor('black')
+    box.set_alpha(0.7)
+
+# Set median line color to black
+for median in boxplots['medians']:
+    median.set_color('black')
+    median.set_linewidth(2)
+
+# Neutral tone reference line
+plt.axhline(y=0, color='black', linestyle='--', alpha=0.6, label='Neutral Tone')
+
+# Optional: Add mean labels as text
+for i, network in enumerate(ordered_networks):
+    mean_val = df[df['network'] == network]['tone'].mean()
+    plt.text(i + 1, mean_val + 0.2, f'Mean: {mean_val:.2f}',
+             ha='center', va='bottom', fontsize=10, fontweight='bold')
+
+# Final styling
+plt.title('Tone Score Distribution by Network', fontsize=16, fontweight='bold')
+plt.xlabel('News Network', fontsize=12)
+plt.ylabel('Tone Score', fontsize=12)
+plt.xticks(positions, ordered_networks)
+plt.grid(axis='y', alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+## Outlier Analysis of Tone Scores by Network
+
+The bar chart above visualizes the number of **tone score outliers**—both negative and positive—for each news network, based on the 1.5×IQR rule. 
+
+- **ABC News** has the highest number of outliers overall, with **1,733 negative** and **643 positive** outliers. This aligns with the earlier observation of ABC’s wider tone distribution, suggesting a greater range in emotional framing.
+- **Fox News** reports **1,142 negative** and **449 positive** outliers, placing it in the middle across both categories.
+- **MSNBC**, notably, shows **1,393 negative** and **548 positive** outliers—**despite having fewer total articles** in the dataset compared to ABC and Fox. This indicates that MSNBC's tone scores, while stemming from a smaller sample, exhibit a relatively high rate of extreme sentiment (especially on the negative end).
+
+This pattern reinforces earlier findings that **MSNBC’s tone distribution is highly skewed and variable**, and that **ABC News, though centrist in political alignment, features the most extreme tone scores overall**. Outliers play a key role in revealing how each network diverges from neutral framing, offering insight into the intensity of sentiment conveyed over time.
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Set network order
+ordered_networks = ['MSNBC', 'ABC News', 'Fox News']
+outlier_counts = []
+
+# Calculate outliers for each network
+for network in ordered_networks:
+    scores = df[df['network'] == network]['tone'].dropna()
+    q1 = scores.quantile(0.25)
+    q3 = scores.quantile(0.75)
+    iqr = q3 - q1
+    lower_bound = q1 - 1.5 * iqr
+    upper_bound = q3 + 1.5 * iqr
+    
+    num_negative = (scores < lower_bound).sum()
+    num_positive = (scores > upper_bound).sum()
+    
+    outlier_counts.append({'network': network, 'type': 'Negative', 'count': num_negative})
+    outlier_counts.append({'network': network, 'type': 'Positive', 'count': num_positive})
+
+# Create DataFrame
+outlier_df = pd.DataFrame(outlier_counts)
+
+# Pivot data for easier stacking
+pivot_df = outlier_df.pivot(index='network', columns='type', values='count').fillna(0)
+
+# Plot
+plt.figure(figsize=(8, 4))
+bars_neg = plt.bar(pivot_df.index, pivot_df['Negative'], label='Negative', color='salmon', alpha=0.8)
+bars_pos = plt.bar(pivot_df.index, pivot_df['Positive'], bottom=pivot_df['Negative'], label='Positive', color='skyblue', alpha=0.8)
+
+# Add text labels
+for i, network in enumerate(pivot_df.index):
+    neg = pivot_df.loc[network, 'Negative']
+    pos = pivot_df.loc[network, 'Positive']
+    
+    # Label for negative
+    if neg > 0:
+        plt.text(i, neg / 2, f'{int(neg)}', ha='center', va='center', fontsize=10, fontweight='bold', color='black')
+    
+    # Label for positive
+    if pos > 0:
+        plt.text(i, neg + pos / 2, f'{int(pos)}', ha='center', va='center', fontsize=10, fontweight='bold', color='black')
+
+# Styling
+plt.title('Number of Tone Score Outliers by News Network', fontsize=16, fontweight='bold')
+plt.ylabel('Number of Outliers')
+plt.xlabel('News Network')
+plt.legend(title='Outlier Type')
+plt.grid(axis='y', alpha=0.3)
+plt.tight_layout()
+plt.show()
+
+```
+
+## Long-Term Tone Trends (2015-2025)
+
+The analysis spans a full decade, capturing evolving sentiment during a wide range of historical events—including **presidential election cycles**, **natural disasters**, **social movements**, and **public health crises**. Rather than focusing solely on isolated events, this section prioritizes **broad temporal trends** to uncover patterns in how sentiment varies **within and across networks**.
+
+```{python}
+
+#| echo: false
+#| label: fig-animated-monthly-tone
+#| fig-cap: "Animated monthly average tone trends by news network (2015-2025)"
+
+import plotly.graph_objects as go
+import pandas as pd
+import numpy as np
+from plotly.subplots import make_subplots
+import datetime as dt
+
+# Network color definitions
+NETWORK_COLORS = {
+    'MSNBC': '#3366CC',
+    'ABC News': '#6633CC', 
+    'Fox News': '#CC3366'
+}
+
+# Create the monthly tone data from df
+# Starting with the calculation of monthly averages
+monthly_tone = df.groupby(['month', 'network'])['tone'].mean().unstack()
+
+# Convert month period to datetime for rolling calculation
+monthly_tone_reset = monthly_tone.reset_index()
+monthly_tone_reset['month_datetime'] = monthly_tone_reset['month'].dt.to_timestamp()
+monthly_tone_reset = monthly_tone_reset.set_index('month_datetime')
+
+# Calculate 6-month rolling average
+rolling_window = 6
+rolling_tone = monthly_tone_reset.drop('month', axis=1).rolling(window=rolling_window, min_periods=1).mean()
+
+# Create figure
+fig = go.Figure()
+
+# Add neutral line
+fig.add_shape(
+    type="line",
+    x0=rolling_tone.index.min(),
+    x1=rolling_tone.index.max(),
+    y0=0,
+    y1=0,
+    line=dict(
+        color="black",
+        width=2,
+        dash="dash",
+    ),
+    name="Neutral Tone"
+)
+
+# Set up the animation parameters
+num_frames = 60  # Number of frames in the animation
+animation_frames = []
+
+# Get min and max y-values for consistent axis scaling
+y_min = rolling_tone.min().min() - 0.5
+y_max = rolling_tone.max().max() + 0.5
+
+# Create frames for the animation
+for i in range(num_frames):
+    frame_data = []
+    # Calculate how much of the data to show in this frame
+    cutoff_idx = int((i + 1) * len(rolling_tone) / num_frames)
+    
+    # If we're at the last frame, make sure we show all data
+    if i == num_frames - 1:
+        cutoff_idx = len(rolling_tone)
+    
+    # Create a trace for each network
+    for column in rolling_tone.columns:
+        visible_data = rolling_tone[column].iloc[:cutoff_idx]
+        
+        frame_data.append(
+            go.Scatter(
+                x=visible_data.index,
+                y=visible_data.values,
+                mode="lines",
+                name=column,
+                line=dict(color=NETWORK_COLORS[column], width=4),
+                showlegend=(i == num_frames - 1)  # Only show legend on the last frame
+            )
+        )
+    
+    # Add data for this frame
+    animation_frames.append(go.Frame(data=frame_data, name=f"frame_{i}"))
+
+# Add the final state to the initial figure (will be shown before animation starts)
+for column in rolling_tone.columns:
+    fig.add_trace(
+        go.Scatter(
+            x=[rolling_tone.index[0]],  # Start with just the first point
+            y=[rolling_tone[column].iloc[0]],
+            mode="lines",
+            name=column,
+            line=dict(color=NETWORK_COLORS[column], width=4)
+        )
+    )
+
+# Update the figure layout
+fig.update_layout(
+    title=dict(
+        text=f"{rolling_window}-Month Rolling Average Tone by News Network (2015-2025)",
+        font=dict(size=18, family="Arial, sans-serif"),
+        x=0.5,
+        xanchor="center"
+    ),
+    xaxis=dict(
+        title="Date",
+        titlefont=dict(size=14),
+        tickformat="%Y",  # Show just the year
+        gridcolor="#E5E5E5",
+        showgrid=True
+    ),
+    yaxis=dict(
+        title="Average Tone Score",
+        titlefont=dict(size=14),
+        gridcolor="#E5E5E5",
+        showgrid=True,
+        range=[y_min, y_max]  # Consistent y-axis range
+    ),
+    legend=dict(
+        title="News Networks",
+        orientation="h",
+        y=-0.2,
+        x=0.5,
+        xanchor="center"
+    ),
+    plot_bgcolor="white",
+    width=900,
+    height=500,
+    margin=dict(l=50, r=50, t=80, b=100),
+    annotations=[
+        dict(
+            text="Negative values indicate negative sentiment, positive values indicate positive sentiment",
+            showarrow=False,
+            xref="paper",
+            yref="paper",
+            x=0.5,
+            y=-0.15,
+            font=dict(size=12, color="gray"),
+            align="center"
+        )
+    ],
+    updatemenus=[
+        dict(
+            type="buttons",
+            showactive=False,
+            buttons=[
+                dict(
+                    label="Play",
+                    method="animate",
+                    args=[
+                        None,
+                        dict(
+                            frame=dict(duration=100, redraw=True),
+                            fromcurrent=True,
+                            transition=dict(duration=50, easing="cubic-in-out")
+                        )
+                    ]
+                ),
+                dict(
+                    label="Pause",
+                    method="animate",
+                    args=[
+                        [None],
+                        dict(
+                            frame=dict(duration=0, redraw=True),
+                            mode="immediate",
+                            transition=dict(duration=0)
+                        )
+                    ]
+                )
+            ],
+            direction="left",
+            pad=dict(r=10, t=10),
+            x=0.1,
+            y=0,
+            xanchor="right",
+            yanchor="top"
+        )
+    ]
+)
+
+# Add frames to the figure
+fig.frames = animation_frames
+
+# Add presidential administration periods (shown as background color)
+administrations = [
+    {"name": "Obama Admin", "start": "2015-01-01", "end": "2017-01-19", "color": "rgba(0, 112, 192, 0.1)"},
+    {"name": "Trump 1st Term", "start": "2017-01-20", "end": "2021-01-19", "color": "rgba(192, 0, 0, 0.1)"},
+    {"name": "Biden Admin", "start": "2021-01-20", "end": "2025-01-19", "color": "rgba(0, 112, 192, 0.1)"},
+    {"name": "Trump 2nd Term", "start": "2025-01-20", "end": "2025-03-31", "color": "rgba(192, 0, 0, 0.1)"}
+]
+
+for admin in administrations:
+    fig.add_shape(
+        type="rect",
+        x0=admin["start"],
+        x1=admin["end"],
+        y0=y_min,
+        y1=y_max,
+        fillcolor=admin["color"],
+        line=dict(width=0),
+        layer="below"
+    )
+    
+    # Add presidency annotations
+    fig.add_annotation(
+        x=pd.to_datetime(admin["start"]) + (pd.to_datetime(admin["end"]) - pd.to_datetime(admin["start"])) / 2,
+        y=y_max - 0.3,
+        text=admin["name"],
+        showarrow=False,
+        font=dict(size=10)
+    )
+
+# Show the figure
+fig.show()
+```

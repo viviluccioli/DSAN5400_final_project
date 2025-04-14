@@ -11,7 +11,7 @@ execute:
   message: false
 ---
 
-# Overall Tone Analysis (🔹GDELT Only)
+# Overall Tone Analysis 
 
 This section examines long-term sentiment trends across three major news networks (Fox News, MSNBC, and ABC News) using GDELT tone scores from 2015 to 2025. We analyze how tone varies over time, especially during key periods like elections and major events.
 
@@ -135,7 +135,16 @@ plt.show()
 
 ## Tone Distribution Analysis
 
-Let's examine how tone scores are distributed across the three networks:
+## Distribution of Tone Scores Across Networks
+
+The **dashed horizontal line at 0** represents a **neutral tone**, serving as a visual reference point to highlight how all three networks tend to lean toward negative sentiment in their reporting. This trend may reflect the nature of media content itself, where negative events often receive more attention and coverage due to their perceived newsworthiness.
+
+All three news networks skew slightly negative in their average tone scores, consistent with prior findings that news coverage tends to focus more on conflict, controversy, and crisis. **Fox News** has an average tone score of **–2.69**, **MSNBC** averages **–2.74**, and **ABC News** is the most negative on average at **–3.10**.
+
+While the overall shapes of the tone distributions are broadly similar, a few important distinctions emerge. **ABC News**, despite being considered a centrist outlet, exhibits a slightly **more negative average tone** and a **wider distribution**, indicating greater variability in emotional framing across its stories. This suggests that ABC may present a broader range of sentiment—from highly negative to moderately positive—compared to the other networks, which tend to cluster more tightly around their respective means.
+
+Taken together, these patterns provide insight into how tone is distributed within and across networks, offering a nuanced lens into the emotional texture of mainstream U.S. news media between 2015 and 2025.
+
 
 ```{python}
 #| echo: false
@@ -186,8 +195,6 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 ```
-
-All networks skew slightly negative, with Fox News averaging –2.69, MSNBC –2.74, and ABC News –3.10. While the general shape of the distributions is similar, ABC News has a slightly more negative average and wider spread, suggesting a greater variability in tone across its coverage. The dashed line at 0 represents a neutral tone.
 
 ```{python}
 #| echo: false
