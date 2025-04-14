@@ -5,19 +5,10 @@ format:
   html:
     code-fold: true
     toc: true
-    toc-depth: 3
     number-sections: true
-    theme: cosmo
-    fig-width: 9
-    fig-height: 6
-    fig-dpi: 300
-    self-contained: true
 execute:
   warning: false
   message: false
-bibliography: references.bib
-nocite: "@*"
-csl: apa.csl
 ---
 
 # Overall Tone Analysis (🔹GDELT Only)
@@ -151,7 +142,7 @@ Let's examine how tone scores are distributed across the three networks:
 #| label: fig-tone-distribution
 #| fig-cap: "Tone score distribution comparison between networks"
 
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(12, 6))
 
 # Create violin plots
 parts = plt.violinplot([df[df['network'] == network]['tone'].dropna() for network in NETWORK_COLORS.keys()], 
@@ -203,7 +194,7 @@ All networks skew slightly negative, with Fox News averaging –2.69, MSNBC –2
 #| label: fig-tone-boxplot
 #| fig-cap: "Tone distribution boxplot comparison between networks"
 
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(6, 4))
 sns.boxplot(x='network', y='tone', data=df, palette=NETWORK_COLORS)
 plt.axhline(y=0, color='black', linestyle='--', alpha=0.7, label='Neutral Tone')
 plt.title('Tone Score Distribution', fontsize=16, fontweight='bold')
@@ -253,7 +244,7 @@ rolling_window = 6
 rolling_tone = monthly_tone_reset.drop('month', axis=1).rolling(window=rolling_window, min_periods=1).mean()
 
 # Plot rolling average trends
-plt.figure(figsize=(14, 8))
+plt.figure(figsize=(6, 4))
 
 # Plot lines for each network
 for column in rolling_tone.columns:
@@ -297,7 +288,7 @@ Let's examine how tone volatility (measured by standard deviation) differs acros
 monthly_volatility = df.groupby(['year', 'network'])['tone'].std().unstack()
 
 # Plot yearly volatility
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(6, 4))
 
 # Plot lines for each network
 for column in monthly_volatility.columns:
@@ -336,7 +327,7 @@ yearly_monthly_tone = df.groupby(['year', df['parsed_date'].dt.month, 'network']
 
 # Create a separate heatmap for each network
 networks = ['Fox News', 'MSNBC', 'ABC News']
-fig, axes = plt.subplots(len(networks), 1, figsize=(14, 15), sharex=True)
+fig, axes = plt.subplots(len(networks), 1, figsize=(6, 4), sharex=True)
 
 for i, network in enumerate(networks):
     if network in yearly_monthly_tone.columns:
@@ -390,7 +381,7 @@ To better understand the composition of tone scores, let's analyze the positive 
 
 avg_scores = df.groupby('network')[['positive_score', 'negative_score']].mean().reset_index()
 
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(6, 4))
 bar_width = 0.35
 x = np.arange(len(avg_scores))
 

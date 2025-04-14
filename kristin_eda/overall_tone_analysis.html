@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kristin Lloyd">
+
+<title>News Network Tone Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="overall_tone_analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="overall_tone_analysis_files/libs/quarto-html/quarto.js"></script>
+<script src="overall_tone_analysis_files/libs/quarto-html/popper.min.js"></script>
+<script src="overall_tone_analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="overall_tone_analysis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="overall_tone_analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="overall_tone_analysis_files/libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="overall_tone_analysis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="overall_tone_analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="overall_tone_analysis_files/libs/bootstrap/bootstrap-677b520d69fcc55ab41b4b425631e74d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overall-tone-analysis-gdelt-only" id="toc-overall-tone-analysis-gdelt-only" class="nav-link active" data-scroll-target="#overall-tone-analysis-gdelt-only"><span class="header-section-number">1</span> Overall Tone Analysis (🔹GDELT Only)</a>
+  <ul class="collapse">
+  <li><a href="#data-processing" id="toc-data-processing" class="nav-link" data-scroll-target="#data-processing"><span class="header-section-number">1.1</span> Data Processing</a></li>
+  <li><a href="#understanding-gdelt-tone-scores" id="toc-understanding-gdelt-tone-scores" class="nav-link" data-scroll-target="#understanding-gdelt-tone-scores"><span class="header-section-number">1.2</span> Understanding GDELT Tone Scores</a></li>
+  <li><a href="#dataset-overview" id="toc-dataset-overview" class="nav-link" data-scroll-target="#dataset-overview"><span class="header-section-number">1.3</span> Dataset Overview</a></li>
+  <li><a href="#tone-distribution-analysis" id="toc-tone-distribution-analysis" class="nav-link" data-scroll-target="#tone-distribution-analysis"><span class="header-section-number">1.4</span> Tone Distribution Analysis</a>
+  <ul class="collapse">
+  <li><a href="#key-observations" id="toc-key-observations" class="nav-link" data-scroll-target="#key-observations"><span class="header-section-number">1.4.1</span> Key Observations:</a></li>
+  </ul></li>
+  <li><a href="#long-term-tone-trends-2015-2025" id="toc-long-term-tone-trends-2015-2025" class="nav-link" data-scroll-target="#long-term-tone-trends-2015-2025"><span class="header-section-number">1.5</span> Long-Term Tone Trends (2015-2025)</a>
+  <ul class="collapse">
+  <li><a href="#rolling-average-trend" id="toc-rolling-average-trend" class="nav-link" data-scroll-target="#rolling-average-trend"><span class="header-section-number">1.5.1</span> Rolling Average Trend</a></li>
+  <li><a href="#tone-volatility-analysis" id="toc-tone-volatility-analysis" class="nav-link" data-scroll-target="#tone-volatility-analysis"><span class="header-section-number">1.5.2</span> Tone Volatility Analysis</a></li>
+  </ul></li>
+  <li><a href="#tone-heatmap-by-monthyear" id="toc-tone-heatmap-by-monthyear" class="nav-link" data-scroll-target="#tone-heatmap-by-monthyear"><span class="header-section-number">1.6</span> Tone Heatmap by Month/Year</a></li>
+  <li><a href="#positive-vs-negative-component-analysis" id="toc-positive-vs-negative-component-analysis" class="nav-link" data-scroll-target="#positive-vs-negative-component-analysis"><span class="header-section-number">1.7</span> Positive vs Negative Component Analysis</a></li>
+  <li><a href="#statistical-analysis" id="toc-statistical-analysis" class="nav-link" data-scroll-target="#statistical-analysis"><span class="header-section-number">1.8</span> Statistical Analysis</a></li>
+  <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings"><span class="header-section-number">1.9</span> Key Findings</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">News Network Tone Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kristin Lloyd </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overall-tone-analysis-gdelt-only" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Overall Tone Analysis (🔹GDELT Only)</h1>
+<p>This section examines long-term sentiment trends across three major news networks (Fox News, MSNBC, and ABC News) using GDELT tone scores from 2015 to 2025. We analyze how tone varies over time, especially during key periods like elections and major events.</p>
+<section id="data-processing" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="data-processing"><span class="header-section-number">1.1</span> Data Processing</h2>
+</section>
+<section id="understanding-gdelt-tone-scores" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="understanding-gdelt-tone-scores"><span class="header-section-number">1.2</span> Understanding GDELT Tone Scores</h2>
+<p>Before diving into the analysis, it’s important to understand how GDELT tone scores are calculated:</p>
+<ul>
+<li><strong>Tone Score</strong>: A measure ranging typically from -10 (extremely negative) to +10 (extremely positive), with 0 representing neutral coverage.</li>
+<li><strong>Calculation Method</strong>: GDELT uses natural language processing to analyze the emotional tone of news articles, considering both positive and negative language.</li>
+<li><strong>Composite Measure</strong>: The overall tone score is derived from separate positive and negative components, which we’ll examine separately later.</li>
+</ul>
+<p>Higher tone scores indicate more positive language, while lower scores indicate more negative language. These scores help us quantify and compare sentiment across different news sources over time.</p>
+</section>
+<section id="dataset-overview" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="dataset-overview"><span class="header-section-number">1.3</span> Dataset Overview</h2>
+<p>First, let’s examine the number of articles analyzed per network:</p>
+<div class="cell" data-execution_count="2">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Number of Articles Analyzed by Network:</code></pre>
+</div>
+<div id="fig-article-count" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-article-count-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="fig-article-count-1" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-article-count-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<pre id="fig-article-count-1" class="cell-output cell-output-display"><code>network
+ABC News    121818
+Fox News    122764
+MSNBC        86287
+dtype: int64</code></pre>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-article-count-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Number of articles analyzed by network
+</figcaption>
+</figure>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-article-count-2" class="quarto-float quarto-figure quarto-figure-center anchored" width="950" height="566">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-article-count-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="overall_tone_analysis_files/figure-html/fig-article-count-output-3.png" id="fig-article-count-2" data-ref-parent="fig-article-count" width="950" height="566" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-article-count-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-article-count-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+</div>
+<p><strong>Note on Sample Sizes</strong>: The data shows a smaller sample for MSNBC compared to Fox News and ABC News. These differences reflect availability via GDELT’s API. This discrepancy should be considered when interpreting results, as it may impact the representativeness of trends for MSNBC.</p>
+</section>
+<section id="tone-distribution-analysis" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="tone-distribution-analysis"><span class="header-section-number">1.4</span> Tone Distribution Analysis</h2>
+<p>Let’s examine how tone scores are distributed across the three networks:</p>
+<div id="cell-fig-tone-distribution" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div id="fig-tone-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tone-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="overall_tone_analysis_files/figure-html/fig-tone-distribution-output-1.png" width="1142" height="567" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tone-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Tone score distribution comparison between networks
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>All networks skew slightly negative, with Fox News averaging –2.69, MSNBC –2.74, and ABC News –3.10. While the general shape of the distributions is similar, ABC News has a slightly more negative average and wider spread, suggesting a greater variability in tone across its coverage. The dashed line at 0 represents a neutral tone.</p>
+<div id="cell-fig-tone-boxplot" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div id="fig-tone-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tone-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="overall_tone_analysis_files/figure-html/fig-tone-boxplot-output-1.png" width="566" height="374" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tone-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Tone distribution boxplot comparison between networks
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>All three networks center below the neutral tone line, reflecting a general trend toward negative coverage. Fox and ABC News display slightly tighter interquartile ranges, while MSNBC shows more outliers on both the positive and negative ends. ABC News appears to have the most extreme negative outliers, with some scores dipping below –40.</p>
+<section id="key-observations" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="key-observations"><span class="header-section-number">1.4.1</span> Key Observations:</h3>
+<ol type="1">
+<li><strong>Median Tone Levels</strong>: Fox News tends to have a higher median tone compared to MSNBC and ABC News, suggesting generally more positive language.</li>
+<li><strong>Distribution Width</strong>: MSNBC shows the widest distribution of tone scores, indicating greater variability in sentiment.</li>
+<li><strong>Negative Skew</strong>: All three networks show a slight negative skew, meaning they tend toward negative coverage overall, but Fox News is closest to neutral.</li>
+</ol>
+</section>
+</section>
+<section id="long-term-tone-trends-2015-2025" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="long-term-tone-trends-2015-2025"><span class="header-section-number">1.5</span> Long-Term Tone Trends (2015-2025)</h2>
+<p>The following visualization tracks monthly average tone scores across the three networks over time:</p>
+<section id="rolling-average-trend" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="rolling-average-trend"><span class="header-section-number">1.5.1</span> Rolling Average Trend</h3>
+<p>For a clearer view of long-term trends, here’s a 6-month rolling average of tone scores:</p>
+<div id="ba75d8a1" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert month period to datetime for rolling calculation</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert month period to datetime for rolling calculation</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>monthly_tone_reset <span class="op">=</span> monthly_tone.reset_index()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>monthly_tone_reset[<span class="st">'month_datetime'</span>] <span class="op">=</span> monthly_tone_reset[<span class="st">'month'</span>].dt.to_timestamp()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>monthly_tone_reset <span class="op">=</span> monthly_tone_reset.set_index(<span class="st">'month_datetime'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate 6-month rolling average</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>rolling_window <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>rolling_tone <span class="op">=</span> monthly_tone_reset.drop(<span class="st">'month'</span>, axis<span class="op">=</span><span class="dv">1</span>).rolling(window<span class="op">=</span>rolling_window, min_periods<span class="op">=</span><span class="dv">1</span>).mean()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot rolling average trends</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot lines for each network</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> column <span class="kw">in</span> rolling_tone.columns:</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    plt.plot(rolling_tone.index, rolling_tone[column], </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>             linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span>column, color<span class="op">=</span>NETWORK_COLORS[column])</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Removed event annotations</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Removed shaded election years</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Add neutral line</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Neutral Tone'</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Customize the plot</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'</span><span class="sc">{</span>rolling_window<span class="sc">}</span><span class="ss">-Month Rolling Average Tone by News Network (2015-2025)'</span>, fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Date'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Average Tone Score'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'best'</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Format x-axis to show years</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(<span class="st">'%Y'</span>))</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>plt.gca().xaxis.set_major_locator(mdates.YearLocator())</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="overall_tone_analysis_files/figure-html/cell-7-output-1.png" width="628" height="375" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This smoothed trendline shows how average tone evolved over time for each network using GDELT data. Fox News (red) exhibits a notable upward trend in tone starting around 2023, while MSNBC (blue) shows more volatility with several peaks and sharp declines across the decade. ABC News (purple) remains relatively steady with consistently negative tone scores.</p>
+</section>
+<section id="tone-volatility-analysis" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="tone-volatility-analysis"><span class="header-section-number">1.5.2</span> Tone Volatility Analysis</h3>
+<p>Let’s examine how tone volatility (measured by standard deviation) differs across networks:</p>
+<div id="cell-fig-tone-volatility" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div id="fig-tone-volatility" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tone-volatility-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="overall_tone_analysis_files/figure-html/fig-tone-volatility-output-1.png" width="575" height="375" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tone-volatility-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Tone volatility by news network (2015-2025)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This line plot tracks the standard deviation of tone scores by year for each network, offering a view into how volatile or stable their coverage was. MSNBC (blue) shows the highest variability, peaking in 2020, which coincides with major societal events. Fox News (red) displays a steady decline in volatility after 2018, suggesting more consistent tone in recent years. ABC News (purple) remains relatively stable throughout the decade.</p>
+</section>
+</section>
+<section id="tone-heatmap-by-monthyear" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="tone-heatmap-by-monthyear"><span class="header-section-number">1.6</span> Tone Heatmap by Month/Year</h2>
+<p>This visualization shows tone patterns over time in a heatmap format:</p>
+<div id="cell-fig-tone-heatmap" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<div id="fig-tone-heatmap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tone-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="overall_tone_analysis_files/figure-html/fig-tone-heatmap-output-1.png" width="597" height="381" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tone-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Tone heatmap by month and year for each network
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Darker blue tones represent more negative sentiment, while lighter shades and reds indicate more positive coverage. Across all three networks, most months and years exhibit consistently negative tone, reflecting the overall pessimistic framing of news coverage in this period. MSNBC shows greater variability between years, especially around 2016–2018, while Fox News trends sharply more positive in early 2025. ABC News remains steadily negative with minimal monthly fluctuation. This format makes it easy to spot brief tonal shifts against a predominantly negative backdrop.</p>
+</section>
+<section id="positive-vs-negative-component-analysis" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="positive-vs-negative-component-analysis"><span class="header-section-number">1.7</span> Positive vs Negative Component Analysis</h2>
+<p>To better understand the composition of tone scores, let’s analyze the positive and negative components separately:</p>
+<div id="cell-fig-pos-neg-comparison" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<div id="fig-pos-neg-comparison" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pos-neg-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="overall_tone_analysis_files/figure-html/fig-pos-neg-comparison-output-1.png" width="566" height="374" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pos-neg-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Comparison of average positive and negative scores by network
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Across all three networks, negative scores are significantly higher than positive ones, reinforcing the trend of predominantly negative news coverage observed elsewhere in the dataset. Fox News and ABC News have slightly higher average positive scores than MSNBC, but the gap between positive and negative sentiment is consistently large across the board. This highlights how negative language tends to dominate regardless of network affiliation.</p>
+</section>
+<section id="statistical-analysis" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="statistical-analysis"><span class="header-section-number">1.8</span> Statistical Analysis</h2>
+<div class="cell" data-execution_count="10">
+<div id="tbl-tone-stats" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="10">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tone-stats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Tone analysis summary statistics by network
+</figcaption>
+<div aria-describedby="tbl-tone-stats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="76">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Mean Tone</th>
+<th data-quarto-table-cell-role="th">Median Tone</th>
+<th data-quarto-table-cell-role="th">Tone Std Dev</th>
+<th data-quarto-table-cell-role="th">Min Tone</th>
+<th data-quarto-table-cell-role="th">Max Tone</th>
+<th data-quarto-table-cell-role="th">Mean Positive Score</th>
+<th data-quarto-table-cell-role="th">Mean Negative Score</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">network</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">ABC News</td>
+<td>-3.10</td>
+<td>-2.85</td>
+<td>4.04</td>
+<td>-47.37</td>
+<td>23.81</td>
+<td>2.23</td>
+<td>5.33</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Fox News</td>
+<td>-2.69</td>
+<td>-2.52</td>
+<td>3.76</td>
+<td>-32.14</td>
+<td>20.00</td>
+<td>2.34</td>
+<td>5.03</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MSNBC</td>
+<td>-2.74</td>
+<td>-2.52</td>
+<td>4.06</td>
+<td>-27.78</td>
+<td>20.59</td>
+<td>2.26</td>
+<td>5.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="cell-output cell-output-stdout">
+<pre><code>Statistical Significance Testing (t-test for tone differences):</code></pre>
+</div>
+<div id="tbl-significance-tests" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="11">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-significance-tests-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Statistical significance of tone differences between networks
+</figcaption>
+<div aria-describedby="tbl-significance-tests-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Comparison</th>
+<th data-quarto-table-cell-role="th">t-statistic</th>
+<th data-quarto-table-cell-role="th">p-value</th>
+<th data-quarto-table-cell-role="th">Significant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Fox News vs ABC News</td>
+<td>25.9065</td>
+<td>0.0000</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Fox News vs MSNBC</td>
+<td>2.9581</td>
+<td>0.0031</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>ABC News vs MSNBC</td>
+<td>-19.8019</td>
+<td>0.0000</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="key-findings" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="key-findings"><span class="header-section-number">1.9</span> Key Findings</h2>
+<p>This table summarizes results from t-tests comparing average tone scores between each pair of networks. All comparisons are statistically significant at p &lt; 0.01, confirming meaningful differences in tone across outlets. The largest difference is between Fox News and ABC News, followed by ABC News vs.&nbsp;MSNBC. Even the more modest difference between Fox News and MSNBC is statistically significant.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
