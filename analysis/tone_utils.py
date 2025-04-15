@@ -1,64 +1,87 @@
-
 import pandas as pd
-from transformers import pipeline
-from afinn import Afinn
 import os
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+from afinn import Afinn
+import time
+import logging
+from bs4 import BeautifulSoup
+import requests
+import re
+from transformers import pipeline
 
+# 初始化
+try:
+    nltk.data.find('vader_lexicon')
+except LookupError:
+    nltk.download('vader_lexicon')
+
+sia = SentimentIntensityAnalyzer()
 afinn = Afinn()
+sentiment_model = pipeline("sentiment-analysis", model="mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis")
 
-def load_data(base_dir, media_sources, year, election_day, period):
-    all_data = []
-    for source in media_sources:
-        file_path = os.path.join(base_dir, source, f"{source}{year}.csv")
-        if os.path.exists(file_path):
-            df = pd.read_csv(file_path)
-            df["media"] = source
-            df["year"] = year
-            df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors='coerce')
-            df = df.dropna(subset=["parsed_date"])
-            election_day = pd.to_datetime(election_day)
-            if election_day.tzinfo is None:
-                election_day = election_day.tz_localize("UTC")
-            if period == "before":
-                mask = (df["parsed_date"] >= (election_day - pd.Timedelta(days=30))) & \
-                       (df["parsed_date"] < election_day)
-            elif period == "after":
-                mask = (df["parsed_date"] > election_day) & \
-                       (df["parsed_date"] <= (election_day + pd.Timedelta(days=30)))
-            df_filtered = df.loc[mask]
-            all_data.append(df_filtered)
-    if not all_data:
-        return pd.DataFrame()
-    df_all = pd.concat(all_data, ignore_index=True)
-    df_all["headline"] = df_all["headline_from_url"].astype(str).fillna("")
-    df_all["gdelt_tone"] = pd.to_numeric(df_all["V2Tone"].str.split(",", expand=True)[0], errors="coerce")
-    return df_all
+def extract_article_text(url):
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(url, headers=headers, timeout=10)
+        if response.status_code != 200:
+            return None
+        soup = BeautifulSoup(response.content, 'html.parser')
+        for script in soup(['script', 'style']):
+            script.decompose()
+        return ' '.join([p.get_text() for p in soup.find_all('p')]).strip()
+    except Exception as e:
+        logging.warning(f"Error extracting text from {url}: {e}")
+        return None
 
 def compute_afinn_tone(text):
     words = text.split()
     score = afinn.score(text)
     return (score / len(words)) * 100 if words else 0.0
 
-def run_sentiment(df, output_csv_path=None):
-    sentiment_model = pipeline("sentiment-analysis", model="mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis")
-    texts = df["headline"].tolist()
-    results = sentiment_model(texts, batch_size=32, truncation=True)
+def get_vader_sentiment_analysis(text):
+    if not text:
+        return None
+    sentiment = sia.polarity_scores(text)
+    return 1 if sentiment['compound'] >= 0 else 0
 
-    # 手动映射 label（统一为大写）
-    label_map = {
-        "positive": "POSITIVE",
-        "neutral": "NEUTRAL",
-        "negative": "NEGATIVE"
-    }
-    df["sentiment_label"] = [label_map.get(x.get("label", "").lower(), "UNKNOWN") for x in results]
-    df["sentiment_score"] = [x.get("score", 0.0) for x in results]
+def get_vader_tone_score(text):
+    if not text:
+        return None
+    sentiment = sia.polarity_scores(text)
+    return sentiment['compound']
 
-    df["signed_score"] = df["sentiment_score"].where(
-        df["sentiment_label"] == "POSITIVE",
-        -df["sentiment_score"]
-    )
-    df["afinn_tone"] = df["headline"].apply(compute_afinn_tone)
+def run_sentiment(df):
+    df = df.copy()
+    df['vader_sentiment_analysis'] = None
+    df['vader_tone_score'] = None
+    df['afinn_tone_score'] = None
+    df['RoBERTa_sentiment_label'] = None
+    texts = []
+    indices = []
 
-    if output_csv_path:
-        df.to_csv(output_csv_path, index=False)
+    for i, row in df.iterrows():
+        url = row.get("url")
+        if not url:
+            continue
+        article_text = extract_article_text(url)
+        if article_text:
+            # RoBERTa 
+            texts.append(article_text)
+            indices.append(i)
+
+            # VADER & AFINN
+            df.at[i, 'vader_sentiment_analysis'] = get_vader_sentiment_analysis(article_text)
+            df.at[i, 'vader_tone_score'] = get_vader_tone_score(article_text)
+            df.at[i, 'afinn_tone_score'] = compute_afinn_tone(article_text)
+
+        time.sleep(0.1)
+
+    # Huggingface RoBERTa 
+    if texts:
+        results = sentiment_model(texts, batch_size=16, truncation=True)
+        for i, result in zip(indices, results):
+            label = result.get("label", "").upper()
+            df.at[i, 'RoBERTa_sentiment_label'] = label
+
     return df

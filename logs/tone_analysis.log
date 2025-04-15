@@ -202,3 +202,6 @@
 2025-04-13 11:09:23,193 - INFO - Processing: 2024 - Combined 60 Day Window
 2025-04-13 11:09:40,373 - INFO - Updated file: data\abc\abc2024.csv
 2025-04-13 11:09:40,376 - INFO - Finished 2024 - Combined 60 Day Window: {'total': 2004, 'positive': np.int64(135), 'negative': np.int64(185), 'neutral': np.int64(1684), 'avg_gdelt': np.float64(-2.5267406325466224), 'avg_model': np.float64(-0.8469884056679741), 'avg_afinn': np.float64(-8.453084811617746), 'polarization': np.float64(0.1596806387225549)}
+2025-04-14 22:56:16,050 - INFO - Processing: 2016 - Combined 60 Day Window
+2025-04-14 22:57:22,386 - INFO - Processing: 2016 - Combined 60 Day Window
+2025-04-15 12:04:04,514 - INFO - Processing: 2016 - Combined 60 Day Window
