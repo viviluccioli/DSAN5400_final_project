@@ -14,21 +14,7 @@ execute:
 
 # Overall Tone Analysis 
 
-::: {.columns}
-
-::: {.column width="33%"}
-![](images/fox.png){width=45%}
-:::
-
-::: {.column width="33%"}
-![](images/abc.png){width=70%}
-:::
-
-::: {.column width="33%"}
-![](images/msnbc.png){width=55%}
-:::
-
-:::
+![](images/news.png){width=500px}
 
 In this analysis, Fox News is generally regarded as a right-leaning outlet, MSNBC as left-leaning, and ABC News as a centrist source. These distinctions help contextualize differences in tone over time, as each network’s political orientation may influence how stories are framed and presented to their audiences.
 
@@ -278,7 +264,6 @@ plt.show()
 The analysis spans a full decade, capturing evolving sentiment during a wide range of historical events—including **presidential election cycles**, **natural disasters**, **social movements**, and **public health crises**. Rather than focusing solely on isolated events, this section prioritizes **broad temporal trends** to uncover patterns in how sentiment varies **within and across networks**.
 
 ```{python}
-
 #| echo: false
 #| label: fig-animated-monthly-tone
 #| fig-cap: "Animated monthly average tone trends by news network (2015-2025)"
@@ -297,17 +282,12 @@ NETWORK_COLORS = {
 }
 
 # Create the monthly tone data from df
-# Starting with the calculation of monthly averages
+# Calculate the monthly averages
 monthly_tone = df.groupby(['month', 'network'])['tone'].mean().unstack()
 
-# Convert month period to datetime for rolling calculation
+# Convert month period to datetime for plotting
 monthly_tone_reset = monthly_tone.reset_index()
 monthly_tone_reset['month_datetime'] = monthly_tone_reset['month'].dt.to_timestamp()
-monthly_tone_reset = monthly_tone_reset.set_index('month_datetime')
-
-# Calculate 6-month rolling average
-rolling_window = 6
-rolling_tone = monthly_tone_reset.drop('month', axis=1).rolling(window=rolling_window, min_periods=1).mean()
 
 # Create figure
 fig = go.Figure()
@@ -315,8 +295,8 @@ fig = go.Figure()
 # Add neutral line
 fig.add_shape(
     type="line",
-    x0=rolling_tone.index.min(),
-    x1=rolling_tone.index.max(),
+    x0=monthly_tone_reset['month_datetime'].min(),
+    x1=monthly_tone_reset['month_datetime'].max(),
     y0=0,
     y1=0,
     line=dict(
@@ -332,27 +312,27 @@ num_frames = 60  # Number of frames in the animation
 animation_frames = []
 
 # Get min and max y-values for consistent axis scaling
-y_min = rolling_tone.min().min() - 0.5
-y_max = rolling_tone.max().max() + 0.5
+y_min = monthly_tone.min().min() - 0.5
+y_max = monthly_tone.max().max() + 0.5
 
 # Create frames for the animation
 for i in range(num_frames):
     frame_data = []
     # Calculate how much of the data to show in this frame
-    cutoff_idx = int((i + 1) * len(rolling_tone) / num_frames)
+    cutoff_idx = int((i + 1) * len(monthly_tone_reset) / num_frames)
     
     # If we're at the last frame, make sure we show all data
     if i == num_frames - 1:
-        cutoff_idx = len(rolling_tone)
+        cutoff_idx = len(monthly_tone_reset)
     
     # Create a trace for each network
-    for column in rolling_tone.columns:
-        visible_data = rolling_tone[column].iloc[:cutoff_idx]
+    for column in monthly_tone.columns:
+        visible_data = monthly_tone_reset.iloc[:cutoff_idx]
         
         frame_data.append(
             go.Scatter(
-                x=visible_data.index,
-                y=visible_data.values,
+                x=visible_data['month_datetime'],
+                y=visible_data[column],
                 mode="lines",
                 name=column,
                 line=dict(color=NETWORK_COLORS[column], width=4),
@@ -364,11 +344,11 @@ for i in range(num_frames):
     animation_frames.append(go.Frame(data=frame_data, name=f"frame_{i}"))
 
 # Add the final state to the initial figure (will be shown before animation starts)
-for column in rolling_tone.columns:
+for column in monthly_tone.columns:
     fig.add_trace(
         go.Scatter(
-            x=[rolling_tone.index[0]],  # Start with just the first point
-            y=[rolling_tone[column].iloc[0]],
+            x=[monthly_tone_reset['month_datetime'].iloc[0]],  # Start with just the first point
+            y=[monthly_tone_reset[column].iloc[0]],
             mode="lines",
             name=column,
             line=dict(color=NETWORK_COLORS[column], width=4)
@@ -378,7 +358,7 @@ for column in rolling_tone.columns:
 # Update the figure layout
 fig.update_layout(
     title=dict(
-        text=f"{rolling_window}-Month Rolling Average Tone by News Network (2015-2025)",
+        text="Monthly Average Tone by News Network (2015-2025)",
         font=dict(size=18, family="Arial, sans-serif"),
         x=0.5,
         xanchor="center"
@@ -408,18 +388,6 @@ fig.update_layout(
     width=900,
     height=500,
     margin=dict(l=50, r=50, t=80, b=100),
-    annotations=[
-        dict(
-            text="Negative values indicate negative sentiment, positive values indicate positive sentiment",
-            showarrow=False,
-            xref="paper",
-            yref="paper",
-            x=0.5,
-            y=-0.15,
-            font=dict(size=12, color="gray"),
-            align="center"
-        )
-    ],
     updatemenus=[
         dict(
             type="buttons",
@@ -453,7 +421,7 @@ fig.update_layout(
             direction="left",
             pad=dict(r=10, t=10),
             x=0.1,
-            y=0,
+            y=-0.2,  # Moved down from y=0 to y=-0.2
             xanchor="right",
             yanchor="top"
         )
@@ -495,3 +463,75 @@ for admin in administrations:
 # Show the figure
 fig.show()
 ```
+
+The background shading marks changes in presidential administrations:
+
+- Blue indicates Democratic leadership (Obama, Biden)
+- Red represents Republican leadership (Trump's terms)
+
+Key insights include:
+
+- Fox News maintains a relatively less negative tone, with a slight increase in sentiment during Trump's presidencies.
+- MSNBC exhibits sharper dips and greater volatility, particularly negative during both Trump terms, reflecting its more critical coverage.
+- ABC News stays consistently negative but comparatively stable, suggesting a more neutral editorial stance.
+
+## Statistical Analysis
+
+
+To test whether these tone differences are statistically meaningful, we conducted independent sample t-tests between each network pair.
+
+- **Fox News vs ABC News**: A large t-statistic (25.91) and a p-value < 0.0001 indicate a **highly significant** difference in tone, with ABC News being significantly more negative.
+- **Fox News vs MSNBC**: A smaller but still significant difference was found (p = 0.0031), suggesting Fox is consistently less negative than MSNBC.
+- **ABC News vs MSNBC**: The negative t-statistic (-19.80) confirms ABC News is **significantly more negative** than MSNBC as well.
+
+All comparisons yielded **statistically significant results** (p < 0.01), reinforcing that tone differences between these networks are not due to random chance but reflect meaningful editorial or coverage differences.
+
+```{python}
+#| echo: false
+#| label: tbl-significance-tests
+#| tbl-cap: "Statistical significance of tone differences between networks"
+
+print("Statistical Significance Testing (t-test for tone differences):")
+networks = df['network'].unique()
+
+significance_results = []
+
+for i in range(len(networks)):
+    for j in range(i+1, len(networks)):
+        network1 = networks[i]
+        network2 = networks[j]
+        tone1 = df[df['network'] == network1]['tone']
+        tone2 = df[df['network'] == network2]['tone']
+        
+        t_stat, p_val = ttest_ind(tone1, tone2, equal_var=False)
+        
+        # Add to results
+        significance_results.append({
+            'Comparison': f"{network1} vs {network2}",
+            't-statistic': round(t_stat, 4),
+            'p-value': round(p_val, 4),
+            'Significant': 'Yes' if p_val < 0.05 else 'No'
+        })
+
+significance_df = pd.DataFrame(significance_results)
+display(significance_df)
+```
+
+# Conclusion
+
+This analysis of tone scores across Fox News, MSNBC, and ABC News from 2015 to 2025 reveals several important patterns in how major U.S. news networks emotionally frame their coverage. Our findings provide empirical evidence for both common assumptions about media bias and more nuanced insights about how news sentiment varies over time.
+
+## Key Findings
+
+1. **Persistent Negative Bias**: All three networks consistently maintain negative average tone scores throughout the decade, supporting the long-established media principle that "if it bleeds, it leads." This industry-wide tendency to emphasize negative stories reflects both commercial incentives and journalistic norms that prioritize conflict, crisis, and controversy.
+
+2. **Network-Specific Patterns**: Despite the overall negative trend, statistically significant differences emerged between networks:
+   - **Fox News** maintains the least negative tone on average (-2.69), with notable upticks during Republican administrations
+   - **MSNBC** shows greater volatility (-2.74 average), with pronounced negative spikes during Trump's terms
+   - **ABC News**, despite its reputation for centrism, displays the most consistently negative tone (-3.10) with the widest distribution of scores
+
+3. **Political Alignment Effects**: The background shading highlighting presidential administrations reveals clear patterns where network tone often aligns with political affiliation. Fox News sentiment improves during Republican leadership, while MSNBC sentiment dips more sharply during these periods, suggesting a substantial relationship between political alignment and emotional framing.
+
+4. **Outlier Analysis**: The significant number of outliers, particularly from ABC News and MSNBC despite its smaller sample size, indicates that extreme framing—especially negative framing—plays an important role in how these networks cover certain stories.
+
+
