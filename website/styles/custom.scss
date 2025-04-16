@@ -1,19 +1,27 @@
-/* Custom styles for calendar */
+/* Custom styles for US Media Coverage Analysis */
+
+/* Year navigation bar */
 .year-nav {
     background-color: white;
     padding: 10px 0;
     border-bottom: 1px solid #dee2e6;
     z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
+/* Year section spacing and positioning */
 .year-section {
     scroll-margin-top: 80px; /* Ensures the heading isn't hidden behind the nav when scrolling */
+    padding-top: 10px;
 }
 
+/* Year heading styles */
 .year-heading {
     color: #495057;
     border-bottom: 2px solid #e9ecef;
     padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 /* Special borders for event cards */
@@ -29,7 +37,7 @@
     border-width: 2px !important;
 }
 
-/* Make cards clickable */
+/* Make cards clickable with hover effect */
 .card {
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -43,4 +51,80 @@
 /* Badge styles */
 .badge {
     font-size: 0.7rem;
+    font-weight: normal;
+    padding: 0.25em 0.6em;
+}
+
+/* Event badge colors */
+.badge.bg-danger {
+    background-color: #ff6b6b !important;
+}
+
+.badge.bg-warning {
+    background-color: #ffd43b !important;
+}
+
+.badge.bg-info {
+    background-color: #4dabf7 !important;
+}
+
+/* Media source card colors in month detail */
+.card-header.fox-header {
+    background-color: #ff8080;
+    color: white;
+}
+
+.card-header.abc-header {
+    background-color: #74c0fc;
+    color: white;
+}
+
+.card-header.msnbc-header {
+    background-color: #748ffc;
+    color: white;
+}
+
+/* Modal improvements */
+.modal-content {
+    border-radius: 0.5rem;
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Chart styles */
+#topicChart rect.bar {
+    opacity: 0.8;
+}
+
+#topicChart rect.bar:hover {
+    opacity: 1;
+}
+
+/* Remove Quarto default margins for full-width layout */
+.quarto-title-block {
+    margin: 0 !important;
+}
+
+.content {
+    padding: 0 !important;
+}
+
+/* Center page title */
+.navbar-brand {
+    margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .year-nav .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .modal-dialog {
+        margin: 0.5rem;
+    }
 }

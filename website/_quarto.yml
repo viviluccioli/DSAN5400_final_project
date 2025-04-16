@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: _site
+  resources: 
+    - data/
+    - scripts/
   
 website:
   title: "Media Coverage Analysis (2015-2025)"

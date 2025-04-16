@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON Loading Test</title>
+</head>
+<body>
+    <h1>JSON Loading Test</h1>
+    <div id="result"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('./data/media_topics.json')
+                .then(response => {
+                    document.getElementById('result').innerHTML = 
+                        `Fetch status: ${response.status} ${response.statusText}`;
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('result').innerHTML += 
+                        `<br>Data loaded successfully! Found data for: ${Object.keys(data).join(', ')}`;
+                })
+                .catch(error => {
+                    document.getElementById('result').innerHTML += 
+                        `<br>Error: ${error.message}`;
+                });
+        });
+    </script>
+</body>
+</html>
