@@ -10,16 +10,31 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-]
 
 [tool.poetry]
 packages = [{include = "nlp_analysis", from = "src"}]
 
+[tool.poetry.dependencies]
+python = ">=3.12"
+pandas = "^1.5.0"
+numpy = "^1.24.0"
+scikit-learn = "^1.3.0"
+matplotlib = "^3.7.0"
+seaborn = "^0.12.0"
+tqdm = "^4.65.0"
+scipy = "^1.10.0"
+nltk = "^3.8.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
+black = "^23.3.0"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+jupyter = "^1.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+run-topic-modeling = "src.nlp_analysis.run_topic_modeling:main"
