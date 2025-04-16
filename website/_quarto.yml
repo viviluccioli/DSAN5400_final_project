@@ -8,8 +8,10 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: about.qmd
-        text: About
+      - href: page-1.qmd
+        text: Page 1
+      - href: page-2.qmd
+        text: Page 2
   page-footer:
     left: "© 2025, DSAN5400 Group Project"
     

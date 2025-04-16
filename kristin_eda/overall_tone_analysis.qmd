@@ -11,7 +11,7 @@ execute:
   message: false
 ---
 
-# Overall Tone Analysis (🔹GDELT Only)
+# Overall Tone Analysis 
 
 This section examines long-term sentiment trends across three major news networks (Fox News, MSNBC, and ABC News) using GDELT tone scores from 2015 to 2025. We analyze how tone varies over time, especially during key periods like elections and major events.
 
@@ -135,7 +135,13 @@ plt.show()
 
 ## Tone Distribution Analysis
 
-Let's examine how tone scores are distributed across the three networks:
+## Distribution of Tone Scores Across Networks
+
+The **dashed horizontal line at 0** represents a **neutral tone**, serving as a visual reference point to highlight how all three networks tend to lean toward negative sentiment in their reporting. This trend may reflect the nature of media content itself, where negative events often receive more attention and coverage due to their perceived newsworthiness.
+
+All three news networks skew slightly negative in their average tone scores, consistent with prior findings that news coverage tends to focus more on conflict, controversy, and crisis. **Fox News** has an average tone score of **–2.69**, **MSNBC** averages **–2.74**, and **ABC News** is the most negative on average at **–3.10**.
+
+While the overall shapes of the tone distributions are broadly similar, a few important distinctions emerge. **ABC News**, despite being considered a centrist outlet, exhibits a slightly **more negative average tone** and a **wider distribution**, indicating greater variability in emotional framing across its stories. This suggests that ABC may present a broader range of sentiment—from highly negative to moderately positive—compared to the other networks, which tend to cluster more tightly around their respective means.
 
 ```{python}
 #| echo: false
@@ -187,7 +193,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-All networks skew slightly negative, with Fox News averaging –2.69, MSNBC –2.74, and ABC News –3.10. While the general shape of the distributions is similar, ABC News has a slightly more negative average and wider spread, suggesting a greater variability in tone across its coverage. The dashed line at 0 represents a neutral tone.
+All three networks center below the neutral tone line, reflecting a general trend toward negative coverage. Fox and ABC News display slightly tighter interquartile ranges, while MSNBC shows more outliers on both the positive and negative ends. ABC News appears to have the most extreme negative outliers, with some scores dipping below –40.
 
 ```{python}
 #| echo: false
@@ -205,8 +211,6 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 ```
-
-All three networks center below the neutral tone line, reflecting a general trend toward negative coverage. Fox and ABC News display slightly tighter interquartile ranges, while MSNBC shows more outliers on both the positive and negative ends. ABC News appears to have the most extreme negative outliers, with some scores dipping below –40.
 
 ### Key Observations:
 
@@ -406,27 +410,13 @@ Across all three networks, negative scores are significantly higher than positiv
 
 ## Statistical Analysis
 
-```{python}
-#| echo: false
-#| label: tbl-tone-stats
-#| tbl-cap: "Tone analysis summary statistics by network"
+To test whether these tone differences are statistically meaningful, we conducted independent sample t-tests between each network pair.
 
-tone_stats = df.groupby('network')['tone'].agg(['mean', 'std', 'median', 'min', 'max']).round(2)
-pos_stats = df.groupby('network')['positive_score'].agg(['mean', 'std']).round(2)
-neg_stats = df.groupby('network')['negative_score'].agg(['mean', 'std']).round(2)
+- **Fox News vs ABC News**: A large t-statistic (25.91) and a p-value < 0.0001 indicate a **highly significant** difference in tone, with ABC News being significantly more negative.
+- **Fox News vs MSNBC**: A smaller but still significant difference was found (p = 0.0031), suggesting Fox is consistently less negative than MSNBC.
+- **ABC News vs MSNBC**: The negative t-statistic (-19.80) confirms ABC News is **significantly more negative** than MSNBC as well.
 
-summary_stats = pd.DataFrame({
-    'Mean Tone': tone_stats['mean'],
-    'Median Tone': tone_stats['median'],
-    'Tone Std Dev': tone_stats['std'],
-    'Min Tone': tone_stats['min'],
-    'Max Tone': tone_stats['max'],
-    'Mean Positive Score': pos_stats['mean'],
-    'Mean Negative Score': neg_stats['mean']
-})
-
-summary_stats
-```
+All comparisons yielded **statistically significant results** (p < 0.01), reinforcing that tone differences between these networks are not due to random chance but reflect meaningful editorial or coverage differences.
 
 ```{python}
 #| echo: false

@@ -1,0 +1,650 @@
+---
+title: "Election Tone Analysis"
+format: 
+  html:
+    code-fold: true
+    toc: true
+    number-sections: true
+execute:
+  warning: false
+  message: false
+---
+
+![](images/intro2.png){width=150px}
+
+# Election Tone Analysis 
+
+```{python}
+#| echo: false
+
+import pandas as pd
+import glob
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+from collections import Counter
+from scipy.stats import ttest_ind
+import matplotlib.dates as mdates
+from matplotlib.ticker import MaxNLocator
+
+# Set visualization style
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+
+# Define network colors
+NETWORK_COLORS = {
+    'Fox News': '#E41A1C',    # Red for Fox
+    'MSNBC': '#377EB8',       # Blue for MSNBC
+    'ABC News': '#984EA3'     # Purple for ABC
+}
+
+# Import data files
+csv_files = (
+    glob.glob("../data/fox/fox*.csv") +
+    glob.glob("../data/abc/abc*.csv") +
+    glob.glob("../data/msnbc/msnbc*.csv")
+)
+
+df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+# Select relevant columns
+columns_of_interest = [
+    "parsed_date", "url", "headline_from_url",
+    "V2Themes", "V2Locations", "V2Persons",
+    "V2Organizations", "V2Tone"
+]
+df = df[columns_of_interest]
+
+# Convert date and extract network information
+df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+
+# Extract network source from URLs
+def extract_network(url):
+    if 'fox' in url.lower():
+        return 'Fox News'
+    elif 'abc' in url.lower():
+        return 'ABC News'
+    elif 'msnbc' in url.lower():
+        return 'MSNBC'
+    else:
+        return 'Unknown'
+
+# Add network column
+df['network'] = df['url'].apply(extract_network)
+
+# Extract tone components
+tone_split = df["V2Tone"].str.split(",", expand=True)
+df["tone"] = pd.to_numeric(tone_split[0], errors="coerce")
+df["positive_score"] = pd.to_numeric(tone_split[1], errors="coerce")
+df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
+
+# Create month and year columns for aggregation
+df['month'] = df['parsed_date'].dt.to_period('M')
+df['year'] = df['parsed_date'].dt.year
+df['month_year'] = df['parsed_date'].dt.strftime('%Y-%m')
+
+```
+
+This animated line plot shows average monthly tone scores for MSNBC, ABC News, and Fox News over a 60-day window centered around the 2016 U.S. presidential election. 
+
+A **red dashed vertical line** marks **Election Day (November 8, 2016)**, helping to visually distinguish sentiment trends before and after the election.
+
+Each network's tone is plotted over time, revealing how sentiment shifted in the lead-up to and aftermath of the election.
+
+```{python}
+#| echo: false
+#| label: fig-animated-monthly-tone-2016-window
+#| fig-cap: "Animated tone trends around the 2016 election (Oct 9–Dec 8)"
+
+import plotly.graph_objects as go
+import pandas as pd
+import numpy as np
+from plotly.subplots import make_subplots
+import datetime as dt
+
+# Network color definitions
+NETWORK_COLORS = {
+    'MSNBC': '#3366CC',
+    'ABC News': '#6633CC',
+    'Fox News': '#CC3366'
+}
+
+# Define the 30-day window around the 2016 election
+start_date = pd.to_datetime("2016-10-09")
+end_date = pd.to_datetime("2016-12-08")
+
+# Filter the dataframe to this window using parsed_date instead of month
+df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
+
+# Calculate daily average tone by network for more granular view around election
+df_window['date'] = df_window['parsed_date'].dt.date
+daily_tone = df_window.groupby(['date', 'network'])['tone'].mean().unstack()
+
+# Reset index and convert date to datetime for plotting
+daily_tone_reset = daily_tone.reset_index()
+daily_tone_reset['date_datetime'] = pd.to_datetime(daily_tone_reset['date'])
+
+# Set up plot
+fig = go.Figure()
+
+# Add neutral tone line
+fig.add_shape(
+    type="line",
+    x0=daily_tone_reset['date_datetime'].min(),
+    x1=daily_tone_reset['date_datetime'].max(),
+    y0=0,
+    y1=0,
+    line=dict(color="black", width=2, dash="dash"),
+    name="Neutral Tone"
+)
+
+# Set animation parameters
+num_frames = 30
+animation_frames = []
+
+# Axis range
+y_min = daily_tone.min().min() - 0.5
+y_max = daily_tone.max().max() + 0.5
+
+# Create animation frames
+for i in range(num_frames):
+    frame_data = []
+    cutoff_idx = int((i + 1) * len(daily_tone_reset) / num_frames)
+    if i == num_frames - 1:
+        cutoff_idx = len(daily_tone_reset)
+
+    for column in daily_tone.columns:
+        visible_data = daily_tone_reset.iloc[:cutoff_idx]
+        frame_data.append(
+            go.Scatter(
+                x=visible_data['date_datetime'],
+                y=visible_data[column],
+                mode="lines",
+                name=column,
+                line=dict(color=NETWORK_COLORS[column], width=4),
+                showlegend=(i == num_frames - 1)
+            )
+        )
+    animation_frames.append(go.Frame(data=frame_data, name=f"frame_{i}"))
+
+# Add initial trace (first point only)
+for column in daily_tone.columns:
+    if column in daily_tone_reset.columns and len(daily_tone_reset) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=[daily_tone_reset['date_datetime'].iloc[0]],
+                y=[daily_tone_reset[column].iloc[0]],
+                mode="lines",
+                name=column,
+                line=dict(color=NETWORK_COLORS[column], width=4)
+            )
+        )
+
+# Update layout
+fig.update_layout(
+    title=dict(
+        text="Daily Average Tone by News Network (Oct 9–Dec 8, 2016)",
+        font=dict(size=18, family="Arial, sans-serif"),
+        x=0.5,
+        xanchor="center"
+    ),
+    xaxis=dict(
+        title="Date",
+        titlefont=dict(size=14),
+        tickformat="%b %d",
+        gridcolor="#E5E5E5",
+        showgrid=True
+    ),
+    yaxis=dict(
+        title="Average Tone Score",
+        titlefont=dict(size=14),
+        gridcolor="#E5E5E5",
+        showgrid=True,
+        range=[y_min, y_max]
+    ),
+    legend=dict(
+        title="News Networks",
+        orientation="h",
+        y=-0.2,
+        x=0.5,
+        xanchor="center"
+    ),
+    plot_bgcolor="white",
+    width=900,
+    height=500,
+    margin=dict(l=50, r=50, t=80, b=100),
+    updatemenus=[
+        dict(
+            type="buttons",
+            showactive=False,
+            buttons=[
+                dict(
+                    label="Play",
+                    method="animate",
+                    args=[
+                        None,
+                        dict(
+                            frame=dict(duration=100, redraw=True),
+                            fromcurrent=True,
+                            transition=dict(duration=50, easing="cubic-in-out")
+                        )
+                    ]
+                ),
+                dict(
+                    label="Pause",
+                    method="animate",
+                    args=[
+                        [None],
+                        dict(
+                            frame=dict(duration=0, redraw=True),
+                            mode="immediate",
+                            transition=dict(duration=0)
+                        )
+                    ]
+                )
+            ],
+            direction="left",
+            pad=dict(r=10, t=10),
+            x=0.1,
+            y=-0.2,
+            xanchor="right",
+            yanchor="top"
+        )
+    ]
+)
+
+# Add frames to figure
+fig.frames = animation_frames
+
+# Add election day (Nov 8, 2016)
+election_date = pd.to_datetime("2016-11-08")
+fig.add_vline(
+    x=election_date,
+    line=dict(color="red", width=2, dash="dot")
+)
+
+# Show figure
+fig.show()
+```
+
+Key Observations:
+
+- MSNBC (blue) displays high variability, with frequent spikes in both positive and negative tone. Notably, it has the most extreme fluctuations, including a sharp dip shortly after the election and a spike in tone near the end of November.
+- Fox News (red) and ABC News (purple) exhibit more stable, consistently negative tone scores, staying fairly close together across the period.
+- While Fox News remains mostly steady, ABC News dips slightly more negative in mid-October and again right after the election.
+- Despite its volatility, MSNBC shows a tendency to become more negative in the immediate days after the election, then rapidly oscillates.
+
+```{python}
+
+#| echo: false
+#| label: fig-animated-monthly-tone-2020-window
+#| fig-cap: "Animated tone trends around the 2020 election (Oct 4–Dec 3)"
+
+import plotly.graph_objects as go
+import pandas as pd
+import numpy as np
+from plotly.subplots import make_subplots
+import datetime as dt
+
+# Network color definitions
+NETWORK_COLORS = {
+    'MSNBC': '#3366CC',
+    'ABC News': '#6633CC',
+    'Fox News': '#CC3366'
+}
+
+# Define the window around the 2020 election
+start_date = pd.to_datetime("2020-10-04")
+end_date = pd.to_datetime("2020-12-03")
+
+# Filter the dataframe to this window using parsed_date instead of month
+df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
+
+# Calculate daily average tone by network for more granular view around election
+df_window['date'] = df_window['parsed_date'].dt.date
+daily_tone = df_window.groupby(['date', 'network'])['tone'].mean().unstack()
+
+# Reset index and convert date to datetime for plotting
+daily_tone_reset = daily_tone.reset_index()
+daily_tone_reset['date_datetime'] = pd.to_datetime(daily_tone_reset['date'])
+
+# Set up plot
+fig = go.Figure()
+
+# Add neutral tone line
+fig.add_shape(
+    type="line",
+    x0=daily_tone_reset['date_datetime'].min(),
+    x1=daily_tone_reset['date_datetime'].max(),
+    y0=0,
+    y1=0,
+    line=dict(color="black", width=2, dash="dash"),
+    name="Neutral Tone"
+)
+
+# Set animation parameters
+num_frames = 30
+animation_frames = []
+
+# Axis range
+y_min = daily_tone.min().min() - 0.5
+y_max = daily_tone.max().max() + 0.5
+
+# Create animation frames
+for i in range(num_frames):
+    frame_data = []
+    cutoff_idx = int((i + 1) * len(daily_tone_reset) / num_frames)
+    if i == num_frames - 1:
+        cutoff_idx = len(daily_tone_reset)
+
+    for column in daily_tone.columns:
+        visible_data = daily_tone_reset.iloc[:cutoff_idx]
+        frame_data.append(
+            go.Scatter(
+                x=visible_data['date_datetime'],
+                y=visible_data[column],
+                mode="lines",
+                name=column,
+                line=dict(color=NETWORK_COLORS[column], width=4),
+                showlegend=(i == num_frames - 1)
+            )
+        )
+    animation_frames.append(go.Frame(data=frame_data, name=f"frame_{i}"))
+
+# Add initial trace (first point only)
+for column in daily_tone.columns:
+    if column in daily_tone_reset.columns and len(daily_tone_reset) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=[daily_tone_reset['date_datetime'].iloc[0]],
+                y=[daily_tone_reset[column].iloc[0]],
+                mode="lines",
+                name=column,
+                line=dict(color=NETWORK_COLORS[column], width=4)
+            )
+        )
+
+# Update layout
+fig.update_layout(
+    title=dict(
+        text="Daily Average Tone by News Network (Oct 4–Dec 3, 2020)",
+        font=dict(size=18, family="Arial, sans-serif"),
+        x=0.5,
+        xanchor="center"
+    ),
+    xaxis=dict(
+        title="Date",
+        titlefont=dict(size=14),
+        tickformat="%b %d",
+        gridcolor="#E5E5E5",
+        showgrid=True
+    ),
+    yaxis=dict(
+        title="Average Tone Score",
+        titlefont=dict(size=14),
+        gridcolor="#E5E5E5",
+        showgrid=True,
+        range=[y_min, y_max]
+    ),
+    legend=dict(
+        title="News Networks",
+        orientation="h",
+        y=-0.2,
+        x=0.5,
+        xanchor="center"
+    ),
+    plot_bgcolor="white",
+    width=900,
+    height=500,
+    margin=dict(l=50, r=50, t=80, b=100),
+    updatemenus=[
+        dict(
+            type="buttons",
+            showactive=False,
+            buttons=[
+                dict(
+                    label="Play",
+                    method="animate",
+                    args=[
+                        None,
+                        dict(
+                            frame=dict(duration=100, redraw=True),
+                            fromcurrent=True,
+                            transition=dict(duration=50, easing="cubic-in-out")
+                        )
+                    ]
+                ),
+                dict(
+                    label="Pause",
+                    method="animate",
+                    args=[
+                        [None],
+                        dict(
+                            frame=dict(duration=0, redraw=True),
+                            mode="immediate",
+                            transition=dict(duration=0)
+                        )
+                    ]
+                )
+            ],
+            direction="left",
+            pad=dict(r=10, t=10),
+            x=0.1,
+            y=-0.2,
+            xanchor="right",
+            yanchor="top"
+        )
+    ]
+)
+
+# Add frames to figure
+fig.frames = animation_frames
+
+# Add election day (Nov 3, 2020)
+election_date = pd.to_datetime("2020-11-03")
+fig.add_vline(
+    x=election_date,
+    line=dict(color="red", width=2, dash="dot")
+)
+
+# Add election day annotation
+fig.add_annotation(
+    x=election_date,
+    y=y_max - 0.3,
+    text="Election Day",
+    showarrow=False,
+    font=dict(size=10)
+)
+
+# Show figure
+fig.show()
+```
+
+conclusions
+
+```{python}
+#| echo: false
+#| label: fig-animated-monthly-tone-2024-window
+#| fig-cap: "Animated tone trends around the 2024 election (Oct 6–Dec 5)"
+
+import plotly.graph_objects as go
+import pandas as pd
+import numpy as np
+from plotly.subplots import make_subplots
+import datetime as dt
+
+# Network color definitions
+NETWORK_COLORS = {
+    'MSNBC': '#3366CC',
+    'ABC News': '#6633CC',
+    'Fox News': '#CC3366'
+}
+
+# Define the window around the 2024 election
+start_date = pd.to_datetime("2024-10-06")
+end_date = pd.to_datetime("2024-12-05")
+
+# Filter the dataframe to this window using parsed_date instead of month
+df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
+
+# Calculate daily average tone by network for more granular view around election
+df_window['date'] = df_window['parsed_date'].dt.date
+daily_tone = df_window.groupby(['date', 'network'])['tone'].mean().unstack()
+
+# Reset index and convert date to datetime for plotting
+daily_tone_reset = daily_tone.reset_index()
+daily_tone_reset['date_datetime'] = pd.to_datetime(daily_tone_reset['date'])
+
+# Set up plot
+fig = go.Figure()
+
+# Add neutral tone line
+fig.add_shape(
+    type="line",
+    x0=daily_tone_reset['date_datetime'].min(),
+    x1=daily_tone_reset['date_datetime'].max(),
+    y0=0,
+    y1=0,
+    line=dict(color="black", width=2, dash="dash"),
+    name="Neutral Tone"
+)
+
+# Set animation parameters
+num_frames = 30
+animation_frames = []
+
+# Axis range
+y_min = daily_tone.min().min() - 0.5
+y_max = daily_tone.max().max() + 0.5
+
+# Create animation frames
+for i in range(num_frames):
+    frame_data = []
+    cutoff_idx = int((i + 1) * len(daily_tone_reset) / num_frames)
+    if i == num_frames - 1:
+        cutoff_idx = len(daily_tone_reset)
+
+    for column in daily_tone.columns:
+        visible_data = daily_tone_reset.iloc[:cutoff_idx]
+        frame_data.append(
+            go.Scatter(
+                x=visible_data['date_datetime'],
+                y=visible_data[column],
+                mode="lines",
+                name=column,
+                line=dict(color=NETWORK_COLORS[column], width=4),
+                showlegend=(i == num_frames - 1)
+            )
+        )
+    animation_frames.append(go.Frame(data=frame_data, name=f"frame_{i}"))
+
+# Add initial trace (first point only)
+for column in daily_tone.columns:
+    if column in daily_tone_reset.columns and len(daily_tone_reset) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=[daily_tone_reset['date_datetime'].iloc[0]],
+                y=[daily_tone_reset[column].iloc[0]],
+                mode="lines",
+                name=column,
+                line=dict(color=NETWORK_COLORS[column], width=4)
+            )
+        )
+
+# Update layout
+fig.update_layout(
+    title=dict(
+        text="Daily Average Tone by News Network (Oct 6–Dec 5, 2024)",
+        font=dict(size=18, family="Arial, sans-serif"),
+        x=0.5,
+        xanchor="center"
+    ),
+    xaxis=dict(
+        title="Date",
+        titlefont=dict(size=14),
+        tickformat="%b %d",
+        gridcolor="#E5E5E5",
+        showgrid=True
+    ),
+    yaxis=dict(
+        title="Average Tone Score",
+        titlefont=dict(size=14),
+        gridcolor="#E5E5E5",
+        showgrid=True,
+        range=[y_min, y_max]
+    ),
+    legend=dict(
+        title="News Networks",
+        orientation="h",
+        y=-0.2,
+        x=0.5,
+        xanchor="center"
+    ),
+    plot_bgcolor="white",
+    width=900,
+    height=500,
+    margin=dict(l=50, r=50, t=80, b=100),
+    updatemenus=[
+        dict(
+            type="buttons",
+            showactive=False,
+            buttons=[
+                dict(
+                    label="Play",
+                    method="animate",
+                    args=[
+                        None,
+                        dict(
+                            frame=dict(duration=100, redraw=True),
+                            fromcurrent=True,
+                            transition=dict(duration=50, easing="cubic-in-out")
+                        )
+                    ]
+                ),
+                dict(
+                    label="Pause",
+                    method="animate",
+                    args=[
+                        [None],
+                        dict(
+                            frame=dict(duration=0, redraw=True),
+                            mode="immediate",
+                            transition=dict(duration=0)
+                        )
+                    ]
+                )
+            ],
+            direction="left",
+            pad=dict(r=10, t=10),
+            x=0.1,
+            y=-0.2,
+            xanchor="right",
+            yanchor="top"
+        )
+    ]
+)
+
+# Add frames to figure
+fig.frames = animation_frames
+
+# Add election day (Nov 5, 2024)
+election_date = pd.to_datetime("2024-11-05")
+fig.add_vline(
+    x=election_date,
+    line=dict(color="red", width=2, dash="dot")
+)
+
+# Add election day annotation
+fig.add_annotation(
+    x=election_date,
+    y=y_max - 0.3,
+    text="Election Day",
+    showarrow=False,
+    font=dict(size=10)
+)
+
+# Show figure
+fig.show()
+
+```
