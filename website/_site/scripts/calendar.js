@@ -5436,8 +5436,18 @@ function getTopicsForSource(source, year, month) {
     ];
 }
 
+// Updated functions for calendar.js
+
+// Keep track of current month and year in modal
+let currentModalYear = 2015;
+let currentModalMonth = 1;
+let isScrollingInModal = false;
+
+// Modified showMonthDetails function
 function showMonthDetails(year, month) {
-    console.log(`Showing details for year ${year}, month ${month}`);
+    // Update current modal month/year
+    currentModalYear = year;
+    currentModalMonth = month;
     
     const monthNames = [
         "January", "February", "March", "April", 
@@ -5455,9 +5465,9 @@ function showMonthDetails(year, month) {
     const abcTopics = getTopicsForSource('abc', year, month);
     const msnbcTopics = getTopicsForSource('msnbc', year, month);
     
-    // Content would be populated from your data
+    // Content populated with topics only, no sentiment or tone
     content.innerHTML = `
-        <div class="row mb-4">
+        <div class="row mb-4" id="month-content-${year}-${month}">
             <div class="col-md-4">
                 <div class="card h-100">
                     <div class="card-header bg-light">
@@ -5470,10 +5480,6 @@ function showMonthDetails(year, month) {
                             <li>${foxTopics[1]?.topic || 'No data'}</li>
                             <li>${foxTopics[2]?.topic || 'No data'}</li>
                         </ol>
-                        <h6>Sentiment</h6>
-                        <p class="text-success">Positive</p>
-                        <h6>Tone</h6>
-                        <p class="text-danger">Aggressive</p>
                     </div>
                 </div>
             </div>
@@ -5490,10 +5496,6 @@ function showMonthDetails(year, month) {
                             <li>${abcTopics[1]?.topic || 'No data'}</li>
                             <li>${abcTopics[2]?.topic || 'No data'}</li>
                         </ol>
-                        <h6>Sentiment</h6>
-                        <p class="text-secondary">Neutral</p>
-                        <h6>Tone</h6>
-                        <p class="text-info">Objective</p>
                     </div>
                 </div>
             </div>
@@ -5510,10 +5512,6 @@ function showMonthDetails(year, month) {
                             <li>${msnbcTopics[1]?.topic || 'No data'}</li>
                             <li>${msnbcTopics[2]?.topic || 'No data'}</li>
                         </ol>
-                        <h6>Sentiment</h6>
-                        <p class="text-danger">Negative</p>
-                        <h6>Tone</h6>
-                        <p class="text-warning">Critical</p>
                     </div>
                 </div>
             </div>
@@ -5529,11 +5527,125 @@ function showMonthDetails(year, month) {
                 </div>
             </div>
         </div>
+        
+        <!-- Add vertical scrolling hint -->
+        <div class="text-center mt-3 text-muted small">
+            <p>Scroll up/down to navigate between months</p>
+        </div>
     `;
     
-    // Show the modal
-    const modal = new bootstrap.Modal(document.getElementById('monthDetailModal'));
-    modal.show();
+    // First time showing the modal
+    const modalElement = document.getElementById('monthDetailModal');
+    if (!modalElement.classList.contains('initialized')) {
+        // Show the modal
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+        
+        // Set up scroll handler after modal is shown
+        setTimeout(() => {
+            setupModalScrolling();
+            modalElement.classList.add('initialized');
+        }, 300);
+    } else {
+        // Just update the content for smooth transitions
+        document.getElementById('monthDetailContent').scrollTop = 0;
+    }
+}
+
+function setupModalScrolling() {
+    const modalBody = document.querySelector('.modal-body');
+    if (!modalBody) return;
+    
+    // Add wheel event listener for scrolling
+    modalBody.addEventListener('wheel', handleModalScroll);
+    
+    // Add keyboard navigation
+    document.addEventListener('keydown', handleModalKeyNav);
+    
+    // Handle modal close to remove event listeners
+    const modalElement = document.getElementById('monthDetailModal');
+    modalElement.addEventListener('hidden.bs.modal', function() {
+        document.removeEventListener('keydown', handleModalKeyNav);
+    });
+}
+
+function handleModalScroll(e) {
+    // Prevent too frequent scrolling
+    if (isScrollingInModal) return;
+    isScrollingInModal = true;
+    
+    // Determine scroll direction
+    const direction = e.deltaY > 0 ? 1 : -1;
+    
+    // Navigate to next/previous month
+    navigateMonth(direction);
+    
+    // Reset scrolling lock after a short delay
+    setTimeout(() => {
+        isScrollingInModal = false;
+    }, 600); // Longer delay for smoother navigation
+    
+    // Prevent default scrolling
+    e.preventDefault();
+}
+
+function handleModalKeyNav(e) {
+    // Only process key events if modal is open
+    const modal = document.getElementById('monthDetailModal');
+    if (!modal || window.getComputedStyle(modal).display === 'none') return;
+    
+    switch (e.key) {
+        case 'ArrowUp':
+            navigateMonth(-1);
+            e.preventDefault();
+            break;
+        case 'ArrowDown':
+            navigateMonth(1);
+            e.preventDefault();
+            break;
+        case 'Escape':
+            // Modal should already handle this, but just in case
+            const bootstrapModal = bootstrap.Modal.getInstance(modal);
+            if (bootstrapModal) bootstrapModal.hide();
+            break;
+    }
+}
+
+function navigateMonth(direction) {
+    // Calculate new month and year
+    let newMonth = currentModalMonth + direction;
+    let newYear = currentModalYear;
+    
+    // Handle month overflow/underflow
+    if (newMonth > 12) {
+        newMonth = 1;
+        newYear++;
+    } else if (newMonth < 1) {
+        newMonth = 12;
+        newYear--;
+    }
+    
+    // Check year bounds
+    if (newYear < 2015 || newYear > 2025) {
+        return; // Outside valid range
+    }
+    
+    // Check April 2025 bound
+    if (newYear === 2025 && newMonth > 4) {
+        return; // Beyond April 2025
+    }
+    
+    // Update the modal with new month/year
+    showMonthDetails(newYear, newMonth);
+    
+    // Add a visual indicator for direction
+    const contentElement = document.getElementById('month-content-' + newYear + '-' + newMonth);
+    if (contentElement) {
+        contentElement.classList.add(direction > 0 ? 'slide-down' : 'slide-up');
+        setTimeout(() => {
+            contentElement.classList.remove('slide-down', 'slide-up');
+        }, 300);
+    }
 }
 
 function scrollToYear(year) {

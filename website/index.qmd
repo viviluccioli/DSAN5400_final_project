@@ -146,12 +146,21 @@ format:
             <div class="modal-body" id="monthDetailContent">
               <!-- Content will be populated by JavaScript -->
             </div>
+            <div class="modal-footer">
+              <div class="text-center w-100">
+                <div class="scroll-indicator">
+                  <div class="scroll-icon"></div>
+                  <span class="small text-muted">Scroll to navigate between months</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <script src="scripts/calendar.js"></script>
 ```
