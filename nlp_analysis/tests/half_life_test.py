@@ -1,5 +1,5 @@
 import pandas as pd
-from topic_half_life import estimate_half_life
+from half_life import estimate_half_life
 
 def test_half_life_basic_decay():
     # Create fake decaying topic counts
