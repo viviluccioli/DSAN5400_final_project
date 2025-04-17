@@ -131,5 +131,110 @@
     "title": "Election Tone Analysis",
     "section": "Outlier Days in News Network Tone (Oct 9–Dec 8, 2020)",
     "text": "Outlier Days in News Network Tone (Oct 9–Dec 8, 2020)\n\n\n\n\n                                                \n\n\nFigure 3: Outlier days in news network tone around the 2024 election (Oct 6–Dec 5)\n\n\n\n\n\nBefore the Election (Oct 6 – Nov 4)\n\nOctober 6, 2024 – MSNBC: Registered a significantly negative tone at the start of the observation window, possibly reflecting heightened tensions at the beginning of the final election month.\nOctober 10, 2024 – Fox News: Recorded a strong negative tone, potentially linked to early October campaign developments or controversies.\nOctober 20, 2024 – Fox News: Displayed a notably neutral or positive tone, standing out amid otherwise negative trends — possibly corresponding to favorable coverage of a candidate or event.\nOctober 27, 2024 – ABC News: Exhibited a sharp negative tone shortly before the election, likely driven by intensified coverage of campaign attacks or election security concerns.\n\n\n\nAfter the Election (Nov 5 – Dec 5)\n\nNovember 6, 2024 – ABC News: Reported an unusually positive tone the day after the election, suggesting early acceptance of results or focus on transition coverage.\nNovember 10, 2024 – ABC News: Showed another unusually positive tone, which may relate to continuing post-election transition developments.\nNovember 10, 2024 – MSNBC: Also displayed an uptick in tone, consistent with positive reporting about the election outcome or transition progress.\nNovember 11, 2024 – MSNBC: Continued its positive trend, possibly reflecting a stabilization of political coverage after election day uncertainty.\nNovember 17, 2024 – Fox News: Highlighted a strongly positive tone, which may correspond to a favorable news cycle for Republican candidates or political figures during post-election transitions.\nNovember 22, 2024 – Fox News: Switched back to a strongly negative tone, potentially reflecting renewed disputes, policy criticism, or election-related tensions.\nDecember 1, 2024 – MSNBC: Recorded a sharp negative tone late in the observation window, possibly tied to emerging post-election challenges or early critiques of the incoming administration."
+  },
+  {
+    "objectID": "page-2.html#add-negativity-before-and-after-election-here",
+    "href": "page-2.html#add-negativity-before-and-after-election-here",
+    "title": "Election Tone Analysis",
+    "section": "add negativity before and after election here",
+    "text": "add negativity before and after election here\n\n\nCode\nimport pandas as pd\nfrom scipy import stats\n\n# Define the 2020 election date\nelection_date_2020 = pd.to_datetime(\"2020-11-03\")\n\n# Filter data for 2020 only\ndf_2020 = df[df['year'] == 2020]\n\n# Create election period labels\ndf_2020[\"election_period\"] = \"outside\"\nbefore_mask = (df_2020[\"parsed_date\"] &gt;= (election_date_2020 - pd.Timedelta(days=30))) & (df_2020[\"parsed_date\"] &lt; election_date_2020)\nafter_mask = (df_2020[\"parsed_date\"] &gt; election_date_2020) & (df_2020[\"parsed_date\"] &lt;= (election_date_2020 + pd.Timedelta(days=30)))\n\ndf_2020.loc[before_mask, \"election_period\"] = \"Before\"\ndf_2020.loc[after_mask, \"election_period\"] = \"After\"\n\n# Filter only before/after\nelection_df_2020 = df_2020[df_2020[\"election_period\"].isin([\"Before\", \"After\"])]\n\n# List of networks\nnetworks = [\"Fox News\", \"MSNBC\", \"ABC News\"]"
+  },
+  {
+    "objectID": "page-2.html#add-statistical-testing-here",
+    "href": "page-2.html#add-statistical-testing-here",
+    "title": "Election Tone Analysis",
+    "section": "add statistical testing here",
+    "text": "add statistical testing here"
+  },
+  {
+    "objectID": "page-2.html#add-polarization-here",
+    "href": "page-2.html#add-polarization-here",
+    "title": "Election Tone Analysis",
+    "section": "ADD POLARIZATION HERE",
+    "text": "ADD POLARIZATION HERE"
+  },
+  {
+    "objectID": "page-2.html#add-negativity-before-and-after-election-here-1",
+    "href": "page-2.html#add-negativity-before-and-after-election-here-1",
+    "title": "Election Tone Analysis",
+    "section": "add negativity before and after election here",
+    "text": "add negativity before and after election here"
+  },
+  {
+    "objectID": "page-2.html#add-statistical-testing-here-1",
+    "href": "page-2.html#add-statistical-testing-here-1",
+    "title": "Election Tone Analysis",
+    "section": "add statistical testing here",
+    "text": "add statistical testing here"
+  },
+  {
+    "objectID": "page-2.html#add-polarization-here-1",
+    "href": "page-2.html#add-polarization-here-1",
+    "title": "Election Tone Analysis",
+    "section": "ADD POLARIZATION HERE",
+    "text": "ADD POLARIZATION HERE"
+  },
+  {
+    "objectID": "page-2.html#add-negativity-before-and-after-election-here-2",
+    "href": "page-2.html#add-negativity-before-and-after-election-here-2",
+    "title": "Election Tone Analysis",
+    "section": "add negativity before and after election here",
+    "text": "add negativity before and after election here"
+  },
+  {
+    "objectID": "page-2.html#add-statistical-testing-here-2",
+    "href": "page-2.html#add-statistical-testing-here-2",
+    "title": "Election Tone Analysis",
+    "section": "add statistical testing here",
+    "text": "add statistical testing here"
+  },
+  {
+    "objectID": "page-2.html#add-polarization-here-2",
+    "href": "page-2.html#add-polarization-here-2",
+    "title": "Election Tone Analysis",
+    "section": "ADD POLARIZATION HERE",
+    "text": "ADD POLARIZATION HERE"
+  },
+  {
+    "objectID": "page-2.html#sentiment-comparison-before-vs-after-2016-election",
+    "href": "page-2.html#sentiment-comparison-before-vs-after-2016-election",
+    "title": "Election Tone Analysis",
+    "section": "Sentiment Comparison Before vs After 2016 Election",
+    "text": "Sentiment Comparison Before vs After 2016 Election\n\n\nCode\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Election day for 2016\nelection_day = pd.to_datetime(\"2016-11-08\")\n\n# Create election_period labels\ndf[\"election_period\"] = \"outside\"\n\nbefore_mask = (df[\"year\"] == 2016) & (df[\"parsed_date\"] &gt;= (election_day - pd.Timedelta(days=30))) & (df[\"parsed_date\"] &lt; election_day)\nafter_mask  = (df[\"year\"] == 2016) & (df[\"parsed_date\"] &gt; election_day) & (df[\"parsed_date\"] &lt;= (election_day + pd.Timedelta(days=30)))\n\ndf.loc[before_mask, \"election_period\"] = \"Before\"\ndf.loc[after_mask, \"election_period\"] = \"After\"\n\n# Filter for 2016 and Before/After\nelection_df = df[(df[\"year\"] == 2016) & (df[\"election_period\"].isin([\"Before\", \"After\"]))]\n\n# ---- First Plot: GDELT Tone (your 'tone' column) ----\nmean_gdelt = election_df.groupby([\"network\", \"election_period\"])[\"tone\"].mean().reset_index()\n\nplt.figure(figsize=(8, 6))\nsns.barplot(\n    data=mean_gdelt,\n    x=\"network\",\n    y=\"tone\",\n    hue=\"election_period\",\n    hue_order=[\"Before\", \"After\"]\n)\nplt.title(\"GDELT Tone Comparison Before vs After 2016 Election\")\nplt.ylabel(\"Mean GDELT Tone Score\")\nplt.xlabel(\"News Network\")\nplt.legend(title=\"Election Period\")\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "page-2.html#t-test-analysis-of-tone-shifts",
+    "href": "page-2.html#t-test-analysis-of-tone-shifts",
+    "title": "Election Tone Analysis",
+    "section": "T-Test Analysis of Tone Shifts",
+    "text": "T-Test Analysis of Tone Shifts\n\n\nCode\nfrom scipy import stats\n\nelection_date = pd.to_datetime(\"2016-11-08\")\n\ndf_2016 = df[df[\"year\"] == 2016]\n\nbefore_mask = (df_2016['parsed_date'] &gt;= (election_date - pd.Timedelta(days=30))) & (df_2016['parsed_date'] &lt; election_date)\nafter_mask = (df_2016['parsed_date'] &gt; election_date) & (df_2016['parsed_date'] &lt;= (election_date + pd.Timedelta(days=30)))\n\n# Loop over each network\nfor network in df_2016['network'].unique():\n    print(f\"\\n=== {network} ===\")\n    \n    # Subset data for this network\n    net_df = df_2016[df_2016['network'] == network]\n    \n    \n    # GDELT scores\n    gdelt_before = net_df.loc[before_mask, 'tone'].dropna()\n    gdelt_after = net_df.loc[after_mask, 'tone'].dropna()\n    \n\n    if len(gdelt_before) &gt; 1 and len(gdelt_after) &gt; 1:\n        t_gdelt, p_gdelt = stats.ttest_ind(gdelt_before, gdelt_after, equal_var=False)\n        print(f\"GDELT t = {t_gdelt:.3f}, p = {p_gdelt:.3f}\")\n    else:\n        print(\"GDELT: Not enough data\")\n\n\n\n=== Fox News ===\nGDELT t = -0.320, p = 0.749\n\n=== ABC News ===\nGDELT t = -1.818, p = 0.069\n\n=== MSNBC ===\nGDELT t = -2.572, p = 0.011\n\n\nWe conducted independent two-sample t-tests to compare average GDELT tone scores before and after the 2016 U.S. presidential election for each major news network.\nResults indicated no significant difference in tone for Fox News and only a marginal, non-significant difference for ABC News. In contrast, MSNBC exhibited a statistically significant shift in tone following the election, suggesting that MSNBC’s reporting tone became meaningfully different in the post-election period compared to the month leading up to Election Day."
+  },
+  {
+    "objectID": "page-2.html#t-test-analysis-of-tone-shifts-1",
+    "href": "page-2.html#t-test-analysis-of-tone-shifts-1",
+    "title": "Election Tone Analysis",
+    "section": "T-Test Analysis of Tone Shifts",
+    "text": "T-Test Analysis of Tone Shifts\n\n\nCode\n# Loop through each network and run t-tests\nfor network in networks:\n    print(f\"--- {network} ---\")\n    \n    network_df = election_df_2020[election_df_2020[\"network\"] == network]\n    \n    # GDELT Tone\n    tone_before = network_df[network_df[\"election_period\"] == \"Before\"][\"tone\"].dropna()\n    tone_after = network_df[network_df[\"election_period\"] == \"After\"][\"tone\"].dropna()\n    t_gdelt, p_gdelt = stats.ttest_ind(tone_before, tone_after, equal_var=False)\n    \n    print(f\"GDELT Tone: t-statistic = {t_gdelt:.3f}, p-value = {p_gdelt:.3f}\")\n\n\n--- Fox News ---\nGDELT Tone: t-statistic = -3.105, p-value = 0.002\n--- MSNBC ---\nGDELT Tone: t-statistic = -1.981, p-value = 0.048\n--- ABC News ---\nGDELT Tone: t-statistic = -2.920, p-value = 0.004\n\n\nAll three networks—Fox News, MSNBC, and ABC News—exhibited statistically significant shifts in GDELT tone scores surrounding the 2020 election, with Fox News and ABC News showing particularly strong changes (p &lt; 0.005), and MSNBC showing a moderate shift (p = 0.048)."
+  },
+  {
+    "objectID": "page-2.html#sentiment-comparison-before-vs-after-2020-election",
+    "href": "page-2.html#sentiment-comparison-before-vs-after-2020-election",
+    "title": "Election Tone Analysis",
+    "section": "Sentiment Comparison Before vs After 2020 Election",
+    "text": "Sentiment Comparison Before vs After 2020 Election\n\n\nCode\nimport pandas as pd\nfrom scipy import stats\n\n# Define the 2020 election date\nelection_date_2020 = pd.to_datetime(\"2020-11-03\")\n\n# Filter data for 2020 only\ndf_2020 = df[df['year'] == 2020]\n\n# Create election period labels\ndf_2020[\"election_period\"] = \"outside\"\nbefore_mask = (df_2020[\"parsed_date\"] &gt;= (election_date_2020 - pd.Timedelta(days=30))) & (df_2020[\"parsed_date\"] &lt; election_date_2020)\nafter_mask = (df_2020[\"parsed_date\"] &gt; election_date_2020) & (df_2020[\"parsed_date\"] &lt;= (election_date_2020 + pd.Timedelta(days=30)))\n\ndf_2020.loc[before_mask, \"election_period\"] = \"Before\"\ndf_2020.loc[after_mask, \"election_period\"] = \"After\"\n\n# Filter only before/after\nelection_df_2020 = df_2020[df_2020[\"election_period\"].isin([\"Before\", \"After\"])]\n\n# List of networks\nnetworks = [\"Fox News\", \"MSNBC\", \"ABC News\"]\n\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Define the 2020 election date\nelection_day_2020 = pd.to_datetime(\"2020-11-03\")\n\n# Create election period labels\ndf[\"election_period\"] = \"outside\"\n\nbefore_mask = (df[\"year\"] == 2020) & (df[\"parsed_date\"] &gt;= (election_day_2020 - pd.Timedelta(days=30))) & (df[\"parsed_date\"] &lt; election_day_2020)\nafter_mask = (df[\"year\"] == 2020) & (df[\"parsed_date\"] &gt; election_day_2020) & (df[\"parsed_date\"] &lt;= (election_day_2020 + pd.Timedelta(days=30)))\n\ndf.loc[before_mask, \"election_period\"] = \"Before\"\ndf.loc[after_mask, \"election_period\"] = \"After\"\n\n# Filter only 2020 election before/after\nelection_df_2020 = df[(df[\"year\"] == 2020) & (df[\"election_period\"].isin([\"Before\", \"After\"]))]\n\n# --- GDELT Plot ---\n\nmean_gdelt = election_df_2020.groupby([\"network\", \"election_period\"])[\"tone\"].mean().reset_index()\n\nplt.figure(figsize=(8, 6))\nsns.barplot(\n    data=mean_gdelt,\n    x=\"network\",\n    y=\"tone\",\n    hue=\"election_period\",\n    hue_order=[\"Before\", \"After\"]\n)\nplt.title(\"GDELT Tone Comparison Before vs After 2020 Election\")\nplt.ylabel(\"Mean GDELT Tone Score\")\nplt.xlabel(\"News Network\")\nplt.legend(title=\"Election Period\")\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "page-2.html#sentiment-comparison-before-vs-after-2024-election",
+    "href": "page-2.html#sentiment-comparison-before-vs-after-2024-election",
+    "title": "Election Tone Analysis",
+    "section": "Sentiment Comparison Before vs After 2024 Election",
+    "text": "Sentiment Comparison Before vs After 2024 Election\n\n\nCode\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Define the 2024 election date\nelection_day_2024 = pd.to_datetime(\"2024-11-05\")\n\n# Create election period labels\ndf[\"election_period\"] = \"outside\"\n\nbefore_mask = (df[\"year\"] == 2024) & (df[\"parsed_date\"] &gt;= (election_day_2024 - pd.Timedelta(days=30))) & (df[\"parsed_date\"] &lt; election_day_2024)\nafter_mask = (df[\"year\"] == 2024) & (df[\"parsed_date\"] &gt; election_day_2024) & (df[\"parsed_date\"] &lt;= (election_day_2024 + pd.Timedelta(days=30)))\n\ndf.loc[before_mask, \"election_period\"] = \"Before\"\ndf.loc[after_mask, \"election_period\"] = \"After\"\n\n# Filter only 2024 election before/after\nelection_df_2024 = df[(df[\"year\"] == 2024) & (df[\"election_period\"].isin([\"Before\", \"After\"]))]\n\n# --- GDELT Plot ---\n\nmean_gdelt = election_df_2024.groupby([\"network\", \"election_period\"])[\"tone\"].mean().reset_index()\n\nplt.figure(figsize=(8, 6))\nsns.barplot(\n    data=mean_gdelt,\n    x=\"network\",\n    y=\"tone\",\n    hue=\"election_period\",\n    hue_order=[\"Before\", \"After\"]\n)\nplt.title(\"GDELT Tone Comparison Before vs After 2024 Election\")\nplt.ylabel(\"Mean GDELT Tone Score\")\nplt.xlabel(\"News Network\")\nplt.legend(title=\"Election Period\")\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "page-2.html#t-test-analysis-of-tone-shifts-2",
+    "href": "page-2.html#t-test-analysis-of-tone-shifts-2",
+    "title": "Election Tone Analysis",
+    "section": "T-Test Analysis of Tone Shifts",
+    "text": "T-Test Analysis of Tone Shifts\n\n\nCode\nimport pandas as pd\nfrom scipy import stats\n\n# Define the 2024 election date\nelection_date_2024 = pd.to_datetime(\"2024-11-05\")\n\n# Filter data for 2024 only\ndf_2024 = df[df['year'] == 2024]\n\n# Create election period labels\ndf_2024[\"election_period\"] = \"outside\"\nbefore_mask = (df_2024[\"parsed_date\"] &gt;= (election_date_2024 - pd.Timedelta(days=30))) & (df_2024[\"parsed_date\"] &lt; election_date_2024)\nafter_mask = (df_2024[\"parsed_date\"] &gt; election_date_2024) & (df_2024[\"parsed_date\"] &lt;= (election_date_2024 + pd.Timedelta(days=30)))\n\ndf_2024.loc[before_mask, \"election_period\"] = \"Before\"\ndf_2024.loc[after_mask, \"election_period\"] = \"After\"\n\n# Filter only before/after\nelection_df_2024 = df_2024[df_2024[\"election_period\"].isin([\"Before\", \"After\"])]\n\n# List of networks\nnetworks = [\"Fox News\", \"MSNBC\", \"ABC News\"]\n\n# Loop through each network and run t-tests\nfor network in networks:\n    print(f\"--- {network} ---\")\n    \n    network_df = election_df_2024[election_df_2024[\"network\"] == network]\n    \n    # GDELT Tone\n    tone_before = network_df[network_df[\"election_period\"] == \"Before\"][\"tone\"].dropna()\n    tone_after = network_df[network_df[\"election_period\"] == \"After\"][\"tone\"].dropna()\n    t_gdelt, p_gdelt = stats.ttest_ind(tone_before, tone_after, equal_var=False)\n    \n    print(f\"GDELT Tone: t-statistic = {t_gdelt:.3f}, p-value = {p_gdelt:.3f}\")\n\n\n--- Fox News ---\nGDELT Tone: t-statistic = -1.409, p-value = 0.159\n--- MSNBC ---\nGDELT Tone: t-statistic = -3.686, p-value = 0.000\n--- ABC News ---\nGDELT Tone: t-statistic = -3.229, p-value = 0.001\n\n\nSignificant changes in GDELT tone were observed for MSNBC (p &lt; 0.001) and ABC News (p = 0.001) following the 2020 election, while Fox News maintained a relatively consistent tone (p = 0.159)."
   }
 ]
