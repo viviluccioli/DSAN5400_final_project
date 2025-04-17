@@ -18,3 +18,6 @@ def test_half_life_basic_decay():
     assert not result.empty, "Half-life result should not be empty"
     assert "half_life_days" in result.columns, "Result should contain half_life_days"
     assert result.iloc[0]["half_life_days"] > 0, "Half-life should be positive"
+    print("test_half_life_basic_decay passed")
+
+test_half_life_basic_decay()
