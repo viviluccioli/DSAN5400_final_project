@@ -14,6 +14,12 @@ execute:
 
 # Election Tone Analysis 
 
+## 5-Day Average Tone Around the 2016 Election
+
+This figure shows the 5-day rolling average tone scores for MSNBC, ABC News, and Fox News during the 60-day period surrounding the 2016 U.S. presidential election (October 9–December 8). Tone was measured using GDELT’s tone scores, where lower values represent more negative sentiment.
+
+Leading up to Election Day (marked by the red dashed line), all three networks maintained negative overall tone, with MSNBC generally exhibiting the most negative coverage, followed by ABC News and Fox News. Tone across networks reached its least negative point around Election Day itself, suggesting a temporary moderation in reporting tone during the immediate election period.
+
 ```{python}
 #| echo: false
 
@@ -85,12 +91,6 @@ df['year'] = df['parsed_date'].dt.year
 df['month_year'] = df['parsed_date'].dt.strftime('%Y-%m')
 
 ```
-
-## 5-Day Average Tone Around the 2016 Election
-
-This figure shows the 5-day rolling average tone scores for MSNBC, ABC News, and Fox News during the 60-day period surrounding the 2016 U.S. presidential election (October 9–December 8). Tone was measured using GDELT’s tone scores, where lower values represent more negative sentiment.
-
-Leading up to Election Day (marked by the red dashed line), all three networks maintained negative overall tone, with MSNBC generally exhibiting the most negative coverage, followed by ABC News and Fox News. Tone across networks reached its least negative point around Election Day itself, suggesting a temporary moderation in reporting tone during the immediate election period.
 
 In the post-election period, MSNBC's tone shifted sharply toward a more neutral or even slightly positive direction, peaking roughly two to three weeks after the election. ABC News displayed a smaller but similarly positive shift, while Fox News' tone remained comparatively stable with only minor fluctuations. These post-election trends may reflect different editorial responses to the election outcome: MSNBC and ABC News may have covered post-election reactions, protests, or policy uncertainty with varied tone shifts, while Fox News' steadier sentiment suggests less divergence from its pre-election reporting tone.
 
