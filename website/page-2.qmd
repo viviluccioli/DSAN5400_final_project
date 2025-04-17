@@ -424,6 +424,12 @@ Several major spikes and dips can be observed, particularly for MSNBC, which exp
 
 * **December 8, 2016 – ABC News**: Exhibited a significant positive tone. As the year-end approached, the network may have focused on more positive stories or retrospectives, contributing to this tonal shift.
 
+## add negativity before and after election here
+
+## add statistical testing here
+
+## add polarization here
+
 ## 5-Day Average Tone Around the 2020 Election
 
 ![](images/2020.png){width=400px}
@@ -765,6 +771,12 @@ This section highlights days when MSNBC, ABC News, or Fox News showed unusually 
 
 * **December 3, 2020 – Fox News**: Registered a positive tone. By this time, reporting may have shifted toward acknowledging the Biden transition more openly, despite lingering contestations.
 
+## add negativity before and after election here
+
+## add statistical testing here
+
+## add polarization here
+
 ## 5-Day Average Tone Around the 2024 Election
 
 ![](images/2024.png){width=400px}
@@ -1099,6 +1111,12 @@ fig.show()
 * **November 22, 2024 – Fox News**: Switched back to a strongly negative tone, potentially reflecting renewed disputes, policy criticism, or election-related tensions.
 
 * **December 1, 2024 – MSNBC**: Recorded a sharp negative tone late in the observation window, possibly tied to emerging post-election challenges or early critiques of the incoming administration.
+
+## add negativity before and after election here
+
+## add statistical testing here
+
+## add polarization here
 
 # Conclusion
 
