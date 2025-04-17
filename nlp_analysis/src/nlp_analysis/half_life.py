@@ -1,6 +1,7 @@
 import pandas as pd
 import glob
 import numpy as np
+import os
 from sklearn.linear_model import LinearRegression
 
 def load_and_label_data(source_paths: dict) -> pd.DataFrame:
@@ -23,7 +24,9 @@ def preprocess_combined_df(df: pd.DataFrame) -> pd.DataFrame:
     df = df[columns]
     df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
     df = df.dropna(subset=["parsed_date", "V2Themes"])
-    df["V2Themes"] = df["V2Themes"].str.split(";").explode().str.strip()
+    df["V2Themes"] = df["V2Themes"].str.split(";")
+    df = df.explode("V2Themes")
+    df["V2Themes"] = df["V2Themes"].str.strip()
     df["V2Tone"] = pd.to_numeric(df["V2Tone"], errors="coerce")
     return df
 
@@ -83,35 +86,30 @@ def filter_topic(half_life_df: pd.DataFrame, keyword: str) -> pd.DataFrame:
     """Return subset of topics matching keyword prefix."""
     return half_life_df[half_life_df["topic"].str.startswith(keyword)]
 
-def categorize_by_tone(half_life_df: pd.DataFrame, tone_threshold: float = 0.0) -> pd.DataFrame:
-    """Add tone category column (positive/negative/neutral)."""
-    def tone_label(t):
-        if pd.isna(t):
-            return "unknown"
-        elif t > tone_threshold:
-            return "positive"
-        elif t < -tone_threshold:
-            return "negative"
-        else:
-            return "neutral"
-    half_life_df["tone_category"] = half_life_df["avg_tone"].apply(tone_label)
-    return half_life_df
-
-#sample script for site
-""" from half_life import (
-    load_and_label_data, preprocess_combined_df,
-    get_topic_daily, estimate_half_life,
-    average_half_life_by_source, get_yearly_trends,
-    filter_topic, categorize_by_tone
-)
-
+#load sources and export dataframes
 sources = {
     'msnbc': glob.glob("../data/msnbc/msnbc*.csv"),
     'abc': glob.glob("../data/abc/abc*.csv"),
     'fox': glob.glob("../data/fox/fox*.csv"),
 }
 
+print(f"Loaded {len(raw_df)} rows total")
+print(f"MSNBC files found: {sources['msnbc']}")
+print(f"ABC files found: {sources['abc']}")
+print(f"FOX files found: {sources['fox']}")
+
 raw_df = load_and_label_data(sources)
 clean_df = preprocess_combined_df(raw_df)
 topic_df = get_topic_daily(clean_df)
-half_life_df = estimate_half_life(topic_df) """
+half_life_df = estimate_half_life(topic_df)
+average_half_life_df = average_half_life_by_source(half_life_df)
+yearly_trends_df = get_yearly_trends(half_life_df)
+topic_tax_df = filter_topic(half_life_df, "TAX")
+
+export_dir = os.path.abspath("nlp_analysis/results/half_life")
+os.makedirs(export_dir, exist_ok=True)
+
+half_life_df.to_csv(os.path.join(export_dir, "half_life_data.csv"), index=False)
+average_half_life_df.to_csv(os.path.join(export_dir, "avg_half_life_by_source.csv"))
+yearly_trends_df.to_csv(os.path.join(export_dir, "yearly_trends.csv"))
+topic_tax_df.to_csv(os.path.join(export_dir, "tax_topics.csv"), index=False)
