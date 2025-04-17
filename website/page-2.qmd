@@ -86,21 +86,25 @@ df['month_year'] = df['parsed_date'].dt.strftime('%Y-%m')
 
 ```
 
-This animated line plot shows average monthly tone scores for MSNBC, ABC News, and Fox News over a 60-day window centered around the 2016 U.S. presidential election. 
+## 5-Day Average Tone Around the 2016 Election
 
-A **red dashed vertical line** marks **Election Day (November 8, 2016)**, helping to visually distinguish sentiment trends before and after the election.
+This figure shows the 5-day rolling average tone scores for MSNBC, ABC News, and Fox News during the 60-day period surrounding the 2016 U.S. presidential election (October 9–December 8). Tone was measured using GDELT’s tone scores, where lower values represent more negative sentiment.
 
-Each network's tone is plotted over time, revealing how sentiment shifted in the lead-up to and aftermath of the election.
+Leading up to Election Day (marked by the red dashed line), all three networks maintained negative overall tone, with MSNBC generally exhibiting the most negative coverage, followed by ABC News and Fox News. Tone across networks reached its least negative point around Election Day itself, suggesting a temporary moderation in reporting tone during the immediate election period.
+
+In the post-election period, MSNBC's tone shifted sharply toward a more neutral or even slightly positive direction, peaking roughly two to three weeks after the election. ABC News displayed a smaller but similarly positive shift, while Fox News' tone remained comparatively stable with only minor fluctuations. These post-election trends may reflect different editorial responses to the election outcome: MSNBC and ABC News may have covered post-election reactions, protests, or policy uncertainty with varied tone shifts, while Fox News' steadier sentiment suggests less divergence from its pre-election reporting tone.
+
+Notably, at the very end of the 60-day window, both MSNBC and ABC News show large positive spikes in average tone scores. These sharp increases could be due to several factors, such as the seasonal effect of late-November and December news coverage shifting toward holiday stories, end-of-year recaps, or less election-focused reporting, all of which typically feature more positive or neutral language. Fox News did not show a comparable spike, indicating that editorial or thematic focus during this time may have differed significantly across networks.
+
+Overall, these patterns highlight both a convergence of reporting tone during the election and a divergence afterward, with clear differences emerging between the networks in their post-election coverage tone trajectories.
 
 ```{python}
+
 #| echo: false
-#| label: fig-animated-monthly-tone-2016-window
-#| fig-cap: "Animated tone trends around the 2016 election (Oct 9–Dec 8)"
 
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
-from plotly.subplots import make_subplots
 import datetime as dt
 
 # Network color definitions
@@ -113,88 +117,80 @@ NETWORK_COLORS = {
 # Define the 30-day window around the 2016 election
 start_date = pd.to_datetime("2016-10-09")
 end_date = pd.to_datetime("2016-12-08")
+election_date = pd.to_datetime("2016-11-08")
 
-# Filter the dataframe to this window using parsed_date instead of month
+# Filter the dataframe to this window using parsed_date 
 df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
 
-# Calculate daily average tone by network for more granular view around election
-df_window['date'] = df_window['parsed_date'].dt.date
-daily_tone = df_window.groupby(['date', 'network'])['tone'].mean().unstack()
+# Create a column for 5-day periods
+# First, calculate days since start
+df_window['days_since_start'] = (df_window['parsed_date'] - start_date).dt.days
+# Then, group into 5-day periods (0-4, 5-9, etc.)
+df_window['period_num'] = df_window['days_since_start'] // 5
+# Create period start dates for plotting
+period_start_dates = [start_date + pd.Timedelta(days=i*5) for i in range(13)]  # 60 days / 5 = 12 periods (0-11)
 
-# Reset index and convert date to datetime for plotting
-daily_tone_reset = daily_tone.reset_index()
-daily_tone_reset['date_datetime'] = pd.to_datetime(daily_tone_reset['date'])
+# Calculate average tone by network and 5-day period
+avg_tone = df_window.groupby(['network', 'period_num'])['tone'].mean().reset_index()
 
-# Set up plot
+# Convert to wide format for easier plotting
+pivot_data = avg_tone.pivot(index='period_num', columns='network', values='tone').reset_index()
+
+# Create period dates for x-axis
+period_dates = period_start_dates[:len(pivot_data)]
+
+# Create the plot
 fig = go.Figure()
+
+# Add lines for each network
+for network in NETWORK_COLORS.keys():
+    if network in pivot_data.columns:
+        fig.add_trace(go.Scatter(
+            x=period_dates,
+            y=pivot_data[network].values,
+            mode='lines+markers',
+            name=network,
+            line=dict(color=NETWORK_COLORS[network], width=4),
+            marker=dict(size=8)
+        ))
 
 # Add neutral tone line
 fig.add_shape(
     type="line",
-    x0=daily_tone_reset['date_datetime'].min(),
-    x1=daily_tone_reset['date_datetime'].max(),
+    x0=start_date,
+    x1=end_date,
     y0=0,
     y1=0,
-    line=dict(color="black", width=2, dash="dash"),
-    name="Neutral Tone"
+    line=dict(color="black", width=2, dash="dash")
 )
 
-# Set animation parameters
-num_frames = 30
-animation_frames = []
+# Add election day vertical line
+fig.add_vline(
+    x=election_date,
+    line=dict(color="red", width=2, dash="dot")
+)
 
-# Axis range
-y_min = daily_tone.min().min() - 0.5
-y_max = daily_tone.max().max() + 0.5
-
-# Create animation frames
-for i in range(num_frames):
-    frame_data = []
-    cutoff_idx = int((i + 1) * len(daily_tone_reset) / num_frames)
-    if i == num_frames - 1:
-        cutoff_idx = len(daily_tone_reset)
-
-    for column in daily_tone.columns:
-        visible_data = daily_tone_reset.iloc[:cutoff_idx]
-        frame_data.append(
-            go.Scatter(
-                x=visible_data['date_datetime'],
-                y=visible_data[column],
-                mode="lines",
-                name=column,
-                line=dict(color=NETWORK_COLORS[column], width=4),
-                showlegend=(i == num_frames - 1)
-            )
-        )
-    animation_frames.append(go.Frame(data=frame_data, name=f"frame_{i}"))
-
-# Add initial trace (first point only)
-for column in daily_tone.columns:
-    if column in daily_tone_reset.columns and len(daily_tone_reset) > 0:
-        fig.add_trace(
-            go.Scatter(
-                x=[daily_tone_reset['date_datetime'].iloc[0]],
-                y=[daily_tone_reset[column].iloc[0]],
-                mode="lines",
-                name=column,
-                line=dict(color=NETWORK_COLORS[column], width=4)
-            )
-        )
+# Calculate y-axis range
+y_values = pivot_data[['MSNBC', 'ABC News', 'Fox News']].values.flatten()
+y_min = min([v for v in y_values if not np.isnan(v)]) - 0.5
+y_max = max([v for v in y_values if not np.isnan(v)]) + 0.5
 
 # Update layout
 fig.update_layout(
     title=dict(
-        text="Daily Average Tone by News Network (Oct 9–Dec 8, 2016)",
+        text="5-Day Average Tone by News Network Around 2016 Election",
         font=dict(size=18, family="Arial, sans-serif"),
         x=0.5,
         xanchor="center"
     ),
     xaxis=dict(
-        title="Date",
+        title="5-Day Periods (Oct 9 - Dec 8, 2016)",
         titlefont=dict(size=14),
         tickformat="%b %d",
         gridcolor="#E5E5E5",
-        showgrid=True
+        showgrid=True,
+        tickvals=[pd.to_datetime("2016-11-08")],  # Only mark election day
+        ticktext=["Election Day (Nov 8)"]
     ),
     yaxis=dict(
         title="Average Tone Score",
@@ -213,67 +209,13 @@ fig.update_layout(
     plot_bgcolor="white",
     width=900,
     height=500,
-    margin=dict(l=50, r=50, t=80, b=100),
-    updatemenus=[
-        dict(
-            type="buttons",
-            showactive=False,
-            buttons=[
-                dict(
-                    label="Play",
-                    method="animate",
-                    args=[
-                        None,
-                        dict(
-                            frame=dict(duration=100, redraw=True),
-                            fromcurrent=True,
-                            transition=dict(duration=50, easing="cubic-in-out")
-                        )
-                    ]
-                ),
-                dict(
-                    label="Pause",
-                    method="animate",
-                    args=[
-                        [None],
-                        dict(
-                            frame=dict(duration=0, redraw=True),
-                            mode="immediate",
-                            transition=dict(duration=0)
-                        )
-                    ]
-                )
-            ],
-            direction="left",
-            pad=dict(r=10, t=10),
-            x=0.1,
-            y=-0.2,
-            xanchor="right",
-            yanchor="top"
-        )
-    ]
-)
-
-# Add frames to figure
-fig.frames = animation_frames
-
-# Add election day (Nov 8, 2016)
-election_date = pd.to_datetime("2016-11-08")
-fig.add_vline(
-    x=election_date,
-    line=dict(color="red", width=2, dash="dot")
+    margin=dict(l=50, r=50, t=80, b=100)
 )
 
 # Show figure
 fig.show()
+
 ```
-
-Key Observations:
-
-- MSNBC (blue) displays high variability, with frequent spikes in both positive and negative tone. Notably, it has the most extreme fluctuations, including a sharp dip shortly after the election and a spike in tone near the end of November.
-- Fox News (red) and ABC News (purple) exhibit more stable, consistently negative tone scores, staying fairly close together across the period.
-- While Fox News remains mostly steady, ABC News dips slightly more negative in mid-October and again right after the election.
-- Despite its volatility, MSNBC shows a tendency to become more negative in the immediate days after the election, then rapidly oscillates.
 
 ```{python}
 
