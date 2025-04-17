@@ -9,3 +9,60 @@ execute:
   warning: false
   message: false
 ---
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# Load the datasets
+fox_data = pd.read_csv('../data/topic_modeling/fox_headline_topics.csv')
+abc_data = pd.read_csv('../data/topic_modeling/abc_headline_topics.csv')
+msnbc_data = pd.read_csv('../data/topic_modeling/msnbc_headline_topics.csv')
+
+# Add source column to each dataset
+fox_data['source'] = 'Fox'
+abc_data['source'] = 'ABC'
+msnbc_data['source'] = 'MSNBC'
+
+# Combine datasets
+combined_data = pd.concat([fox_data, abc_data, msnbc_data], ignore_index=True)
+
+```
+
+```{python}
+
+# Function to create a topic trends visualization
+def plot_topic_trends(data, news_source, top_n=10):
+    # Get top topics by total count
+    topic_counts = data[data['source'] == news_source].groupby('topic')['count'].sum().nlargest(top_n)
+    top_topics = topic_counts.index.tolist()
+    
+    # Filter for only top topics and rank 1
+    filtered_data = data[(data['source'] == news_source) & 
+                         (data['topic'].isin(top_topics)) &
+                         (data['rank'] == 1)]
+    
+    # Group by year and topic, calculate the sum of counts
+    yearly_topic_counts = filtered_data.groupby(['year', 'topic'])['count'].sum().reset_index()
+    
+    # Pivot for heatmap format
+    pivot_data = yearly_topic_counts.pivot(index='topic', columns='year', values='count').fillna(0)
+    
+    # Plot
+    plt.figure(figsize=(10, 6))
+    ax = sns.heatmap(pivot_data, cmap='YlOrRd', annot=True, fmt='.0f')
+    plt.title(f'Top {top_n} Topics for {news_source} by Year', fontsize=16)
+    plt.ylabel('Topic')
+    plt.xlabel('Year')
+    plt.tight_layout()
+    plt.savefig(f'{news_source.lower()}_topic_trends.png', dpi=300)
+    plt.show()
+
+# Create trend plots for each source
+plot_topic_trends(combined_data, 'Fox')
+plot_topic_trends(combined_data, 'ABC')
+plot_topic_trends(combined_data, 'MSNBC')
+
+```
