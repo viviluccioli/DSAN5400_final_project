@@ -4,7 +4,6 @@ format:
   html:
     code-fold: true
     toc: true
-    number-sections: true
 execute:
   warning: false
   message: false
