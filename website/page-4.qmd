@@ -235,7 +235,7 @@ On MSNBC, Trump-related topics overwhelmingly dominated overall mentions.
 
 ### Topic Coverage Trends Over Time
 
-To understand how Fox News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:
+To understand how MSNBC News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:
 
 ```{python}
 
@@ -397,15 +397,18 @@ plt.show()
 
 On ABC, Police incidents dominated coverage from 2016 onward, peaking sharply in 2022. General deaths and Obama-related mentions were mainly concentrated around 2016–2017, while Trump-related coverage appeared notably later in 2025.
 
-## Conclusion
+## Presidential Candidate Analysis
 
-
-
+i dont know why this is only saying like 500 trumps this needs to be fixed 
 
 ```{python}
 
+combined_data = pd.concat([fox_data, abc_data, msnbc_data], ignore_index=True)
 # Filter Trump topics
-trump_mentions = combined_data[combined_data['topic'].str.contains('trump', case=False, na=False)]
+trump_mentions = combined_data[
+    combined_data['topic'].str.contains('trump', case=False, na=False) |
+    combined_data['topic'].str.contains('donald', case=False, na=False)
+]
 
 # Filter Hillary, Biden, OR Kamala topics
 hbk_mentions = combined_data[
@@ -429,12 +432,12 @@ sources = merged['source'].unique()
 x = np.arange(len(sources))  # the label locations
 width = 0.35  # width of the bars
 
-plt.figure(figsize=(8, 6))
+plt.figure(figsize=(6, 4))
 
 plt.bar(x - width/2, merged['count_trump'], width=width, label='Trump', color='red', alpha=0.8)
 plt.bar(x + width/2, merged['count_hbk'], width=width, label='Hillary/Biden/Kamala', color='blue', alpha=0.8)
 
-plt.title('Overall Mentions of Trump vs Hillary/Biden/Kamala by News Source', fontsize=16)
+plt.title('Overall Mentions of Trump vs Hillary/Biden/Kamala by News Source', fontsize=12)
 plt.xlabel('News Source')
 plt.ylabel('Total Mentions')
 plt.xticks(x, sources)
@@ -443,3 +446,7 @@ plt.tight_layout()
 plt.show()
 
 ```
+
+Trump overwhelmingly consumes the media. 
+
+## Conclusion

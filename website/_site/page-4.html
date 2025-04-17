@@ -172,6 +172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#topic-coverage-trends-over-time-2" id="toc-topic-coverage-trends-over-time-2" class="nav-link" data-scroll-target="#topic-coverage-trends-over-time-2">Topic Coverage Trends Over Time</a></li>
   </ul></li>
+  <li><a href="#presidential-candidate-analysis" id="toc-presidential-candidate-analysis" class="nav-link" data-scroll-target="#presidential-candidate-analysis">Presidential Candidate Analysis</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
@@ -210,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fox-news-topic-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="fox-news-topic-distribution">Fox News Topic Distribution</h2>
 <p>Now we’ll visualize how Fox News distributes its coverage across our identified topic categories. First, we will look at the top ten topics identified.</p>
-<div id="88541652" class="cell" data-execution_count="2">
+<div id="05c13754" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>                               topic  count
 177                   police man say   1190
@@ -227,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Topics were grouped as follows: Police incidents combined mentions like “police man say” and “man police florida”; New York news combined messy duplicates like “new york new york”; Trump presidency captured “trump president president trump”; Man accused cleaned “html man accused” from scraping artifacts; and Business and politics represented “html business president”. This condenses the top 10 topics into 5 cleaned topics.</p>
 <p>The stacked bar chart below shows the relative proportion of each topic in overall Fox News coverage:</p>
-<div id="55b241c5" class="cell" data-execution_count="4">
+<div id="97045fde" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_cleaned_stacked_bar(source_name):</span>
@@ -276,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="topic-coverage-trends-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="topic-coverage-trends-over-time">Topic Coverage Trends Over Time</h3>
 <p>To understand how Fox News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
-<div id="14a4a85c" class="cell" data-execution_count="5">
+<div id="fe92a4bc" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -311,7 +312,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="msnbc-news-topic-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="msnbc-news-topic-distribution">MSNBC News Topic Distribution</h2>
 <p>Now we’ll visualize how MSNBC News distributes its coverage across our identified topic categories. First, we will look at the top ten topics identified.</p>
-<div id="3251e08d" class="cell" data-execution_count="6">
+<div id="69acaa33" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>                                   topic  count
 230            trump donald donald trump   1711
@@ -327,7 +328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We grouped similar MSNBC topics together by combining all mentions related to Trump, including elections, impeachment, and Ukraine, into a single Trump-related category. Separate categories were created for Biden, Obama, Supreme Court, COVID vaccine, and DeSantis to better reflect the main themes while reducing repetition across topics.</p>
-<div id="8dadb0a0" class="cell" data-execution_count="7">
+<div id="aba55a7f" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -397,8 +398,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>On MSNBC, Trump-related topics overwhelmingly dominated overall mentions.</p>
 <section id="topic-coverage-trends-over-time-1" class="level3">
 <h3 class="anchored" data-anchor-id="topic-coverage-trends-over-time-1">Topic Coverage Trends Over Time</h3>
-<p>To understand how Fox News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
-<div id="4dbbb688" class="cell" data-execution_count="8">
+<p>To understand how MSNBC News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
+<div id="5aa77744" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -457,7 +458,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="abc-news-topic-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="abc-news-topic-distribution">ABC News Topic Distribution</h2>
 <p>Now we’ll visualize how ABC News distributes its coverage across our identified topic categories. First, we will look at the top ten topics identified.</p>
-<div id="c5f2b1c9" class="cell" data-execution_count="9">
+<div id="f3238404" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>                   topic  count
 211    police man killed    813
@@ -473,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>For ABC, the majority of top topics were grouped under Police incidents, combining various mentions of police shootings, deaths, and related events. General deaths (unrelated to police) were kept separate, while mentions of Obama and Trump were grouped into their own categories based on political coverage.</p>
-<div id="fbe41b70" class="cell" data-execution_count="10">
+<div id="39255270" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Define new mapping function for ABC</span></span>
@@ -540,7 +541,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="topic-coverage-trends-over-time-2" class="level3">
 <h3 class="anchored" data-anchor-id="topic-coverage-trends-over-time-2">Topic Coverage Trends Over Time</h3>
 <p>To understand how ABC News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
-<div id="50e3a26a" class="cell" data-execution_count="11">
+<div id="74b0437c" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -580,57 +581,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>On ABC, Police incidents dominated coverage from 2016 onward, peaking sharply in 2022. General deaths and Obama-related mentions were mainly concentrated around 2016–2017, while Trump-related coverage appeared notably later in 2025.</p>
 </section>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<div id="c294df7d" class="cell" data-execution_count="12">
+<section id="presidential-candidate-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="presidential-candidate-analysis">Presidential Candidate Analysis</h2>
+<p>i dont know why this is only saying like 500 trumps this needs to be fixed</p>
+<div id="b3a7ae9c" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter Trump topics</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>trump_mentions <span class="op">=</span> combined_data[combined_data[<span class="st">'topic'</span>].<span class="bu">str</span>.contains(<span class="st">'trump'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>)]</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter Hillary, Biden, OR Kamala topics</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>hbk_mentions <span class="op">=</span> combined_data[</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    combined_data[<span class="st">'topic'</span>].<span class="bu">str</span>.contains(<span class="st">'hillary'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>) <span class="op">|</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    combined_data[<span class="st">'topic'</span>].<span class="bu">str</span>.contains(<span class="st">'biden'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>) <span class="op">|</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    combined_data[<span class="st">'topic'</span>].<span class="bu">str</span>.contains(<span class="st">'kamala'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by source only (no year)</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>trump_counts <span class="op">=</span> trump_mentions.groupby(<span class="st">'source'</span>).size().reset_index(name<span class="op">=</span><span class="st">'count_trump'</span>)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>hbk_counts <span class="op">=</span> hbk_mentions.groupby(<span class="st">'source'</span>).size().reset_index(name<span class="op">=</span><span class="st">'count_hbk'</span>)</span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>combined_data <span class="op">=</span> pd.concat([fox_data, abc_data, msnbc_data], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter Trump topics</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>trump_mentions <span class="op">=</span> combined_data[</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    combined_data[<span class="st">'topic'</span>].<span class="bu">str</span>.contains(<span class="st">'trump'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>) <span class="op">|</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    combined_data[<span class="st">'topic'</span>].<span class="bu">str</span>.contains(<span class="st">'donald'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter Hillary, Biden, OR Kamala topics</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>hbk_mentions <span class="op">=</span> combined_data[</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    combined_data[<span class="st">'topic'</span>].<span class="bu">str</span>.contains(<span class="st">'hillary'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>) <span class="op">|</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    combined_data[<span class="st">'topic'</span>].<span class="bu">str</span>.contains(<span class="st">'biden'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>) <span class="op">|</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    combined_data[<span class="st">'topic'</span>].<span class="bu">str</span>.contains(<span class="st">'kamala'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge Trump and Hillary/Biden/Kamala counts</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge(trump_counts, hbk_counts, on<span class="op">=</span><span class="st">'source'</span>, how<span class="op">=</span><span class="st">'outer'</span>).fillna(<span class="dv">0</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by source only (no year)</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>trump_counts <span class="op">=</span> trump_mentions.groupby(<span class="st">'source'</span>).size().reset_index(name<span class="op">=</span><span class="st">'count_trump'</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>hbk_counts <span class="op">=</span> hbk_mentions.groupby(<span class="st">'source'</span>).size().reset_index(name<span class="op">=</span><span class="st">'count_hbk'</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge Trump and Hillary/Biden/Kamala counts</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge(trump_counts, hbk_counts, on<span class="op">=</span><span class="st">'source'</span>, how<span class="op">=</span><span class="st">'outer'</span>).fillna(<span class="dv">0</span>)</span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>sources <span class="op">=</span> merged[<span class="st">'source'</span>].unique()</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">len</span>(sources))  <span class="co"># the label locations</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="fl">0.35</span>  <span class="co"># width of the bars</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>plt.bar(x <span class="op">-</span> width<span class="op">/</span><span class="dv">2</span>, merged[<span class="st">'count_trump'</span>], width<span class="op">=</span>width, label<span class="op">=</span><span class="st">'Trump'</span>, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>plt.bar(x <span class="op">+</span> width<span class="op">/</span><span class="dv">2</span>, merged[<span class="st">'count_hbk'</span>], width<span class="op">=</span>width, label<span class="op">=</span><span class="st">'Hillary/Biden/Kamala'</span>, color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Overall Mentions of Trump vs Hillary/Biden/Kamala by News Source'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'News Source'</span>)</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Total Mentions'</span>)</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>plt.xticks(x, sources)</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>sources <span class="op">=</span> merged[<span class="st">'source'</span>].unique()</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">len</span>(sources))  <span class="co"># the label locations</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="fl">0.35</span>  <span class="co"># width of the bars</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>plt.bar(x <span class="op">-</span> width<span class="op">/</span><span class="dv">2</span>, merged[<span class="st">'count_trump'</span>], width<span class="op">=</span>width, label<span class="op">=</span><span class="st">'Trump'</span>, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>plt.bar(x <span class="op">+</span> width<span class="op">/</span><span class="dv">2</span>, merged[<span class="st">'count_hbk'</span>], width<span class="op">=</span>width, label<span class="op">=</span><span class="st">'Hillary/Biden/Kamala'</span>, color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Overall Mentions of Trump vs Hillary/Biden/Kamala by News Source'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'News Source'</span>)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Total Mentions'</span>)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>plt.xticks(x, sources)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="page-4_files/figure-html/cell-13-output-1.png" width="774" height="567" class="figure-img"></p>
+<p><img src="page-4_files/figure-html/cell-13-output-1.png" width="588" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>Trump overwhelmingly consumes the media.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 
 
 </section>
