@@ -6203,6 +6203,100 @@ let currentModalYear = 2015;
 let currentModalMonth = 1;
 let isScrollingInModal = false;
 
+
+// Add this function to get tone color for a specific source
+function getSourceToneColor(source, year, month) {
+  // Convert to strings to match JSON format
+  const yearStr = year.toString();
+  const monthStr = month.toString();
+  
+  // Check if we have tone data for this source, year, and month
+  if (toneData.source_tone && 
+      toneData.source_tone[source] && 
+      toneData.source_tone[source][yearStr] && 
+      toneData.source_tone[source][yearStr][monthStr]) {
+      
+      const toneValue = toneData.source_tone[source][yearStr][monthStr];
+      
+      // Define a narrower range focused on your actual data
+      const minTone = -3.5;  // Most negative tone in your dataset
+      const maxTone = -2.0;   // Least negative tone in your dataset
+      
+      // Normalize tone to 0-1 scale within this narrower range
+      let normalizedTone = (toneValue - minTone) / (maxTone - minTone);
+      
+      // Clamp the value between 0 and 1 (in case some values are outside our expected range)
+      normalizedTone = Math.max(0, Math.min(1, normalizedTone));
+      
+      // Use an orange color palette similar to the main view
+      const r = 255; // Red component stays at max
+      const g = Math.round(100 + (normalizedTone * 155)); // Green varies from 100 to 255
+      const b = Math.round(normalizedTone * 100); // Blue varies from 0 to 100
+      
+      // Return rgba color with alpha for visualizing the tone
+      return `rgba(${r}, ${g}, ${b}, 0.4)`;
+  }
+  
+  // Return default color if no tone data available
+  return 'rgba(255, 255, 255, 0)';
+}
+
+// Add this function to add source-specific tone information to the month detail view
+function addSourceToneInfo(source, year, month) {
+  // Convert to strings to match JSON format
+  const yearStr = year.toString();
+  const monthStr = month.toString();
+  
+  if (toneData.source_tone && 
+      toneData.source_tone[source] && 
+      toneData.source_tone[source][yearStr] && 
+      toneData.source_tone[source][yearStr][monthStr]) {
+      
+      const toneValue = toneData.source_tone[source][yearStr][monthStr];
+      
+      // Calculate percentage for the mini progress bar
+      const minTone = -3.5;
+      const maxTone = -2.0;
+      const range = maxTone - minTone;
+      
+      // Calculate percentage (value of -3.5 = 0%, value of -2.0 = 100%)
+      let percentage = ((toneValue - minTone) / range) * 100;
+      // Clamp to 0-100 range
+      percentage = Math.max(0, Math.min(100, percentage));
+      
+      // Get tone description
+      let toneDescription = "";
+      if (toneValue <= -3.0) {
+          toneDescription = "Highly negative";
+      } else if (toneValue <= -2.5) {
+          toneDescription = "Moderately negative";
+      } else {
+          toneDescription = "Slightly negative";
+      }
+      
+      return `
+          <div class="mt-2 source-tone-info">
+              <div class="d-flex justify-content-between small mb-1">
+                  <span>Tone: ${toneValue.toFixed(2)}</span>
+                  <span class="text-muted">${toneDescription}</span>
+              </div>
+              <div class="progress" style="height: 8px;">
+                  <div class="progress-bar" 
+                      style="width: ${percentage}%; background-color: ${getSourceToneColor(source, year, month)};" 
+                      aria-valuenow="${toneValue}" 
+                      aria-valuemin="${minTone}" 
+                      aria-valuemax="${maxTone}">
+                  </div>
+              </div>
+          </div>
+      `;
+  }
+  
+  return '<div class="mt-2 text-muted small">No tone data available</div>';
+}
+
+
+
 // Modified showMonthDetails function
 // This modifies the existing function to add tone data to the modal
 function showMonthDetails(year, month) {
@@ -6226,8 +6320,10 @@ function showMonthDetails(year, month) {
   const abcTopics = getTopicsForSource('abc', year, month);
   const msnbcTopics = getTopicsForSource('msnbc', year, month);
   
-  // Get tone color for this month
-  const toneColor = getToneColor(year, month);
+  // Get tone colors for each source
+  const foxToneColor = getSourceToneColor('fox', year, month);
+  const abcToneColor = getSourceToneColor('abc', year, month);
+  const msnbcToneColor = getSourceToneColor('msnbc', year, month);
   
   // Content populated with topics and tone data
   content.innerHTML = `
@@ -6238,12 +6334,13 @@ function showMonthDetails(year, month) {
       </div>
       <div class="row mb-4" id="month-content-${year}-${month}">
           <div class="col-md-4">
-              <div class="card h-100">
+              <div class="card h-100" style="background-color: ${foxToneColor};">
                   <div class="card-header bg-light">
                       Fox News (Right-leaning)
                   </div>
                   <div class="card-body">
-                      <h6>Top Topics</h6>
+                      ${addSourceToneInfo('fox', year, month)}
+                      <h6 class="mt-3">Top Topics</h6>
                       <ol>
                           <li>${foxTopics[0]?.topic || 'No data'}</li>
                           <li>${foxTopics[1]?.topic || 'No data'}</li>
@@ -6254,12 +6351,13 @@ function showMonthDetails(year, month) {
           </div>
           
           <div class="col-md-4">
-              <div class="card h-100">
+              <div class="card h-100" style="background-color: ${abcToneColor};">
                   <div class="card-header bg-light">
                       ABC News (Neutral)
                   </div>
                   <div class="card-body">
-                      <h6>Top Topics</h6>
+                      ${addSourceToneInfo('abc', year, month)}
+                      <h6 class="mt-3">Top Topics</h6>
                       <ol>
                           <li>${abcTopics[0]?.topic || 'No data'}</li>
                           <li>${abcTopics[1]?.topic || 'No data'}</li>
@@ -6270,12 +6368,13 @@ function showMonthDetails(year, month) {
           </div>
           
           <div class="col-md-4">
-              <div class="card h-100">
+              <div class="card h-100" style="background-color: ${msnbcToneColor};">
                   <div class="card-header bg-light">
                       MSNBC (Left-leaning)
                   </div>
                   <div class="card-body">
-                      <h6>Top Topics</h6>
+                      ${addSourceToneInfo('msnbc', year, month)}
+                      <h6 class="mt-3">Top Topics</h6>
                       <ol>
                           <li>${msnbcTopics[0]?.topic || 'No data'}</li>
                           <li>${msnbcTopics[1]?.topic || 'No data'}</li>
@@ -6288,10 +6387,50 @@ function showMonthDetails(year, month) {
       
       <div class="card">
           <div class="card-header bg-light">
+              Tone Comparison
+          </div>
+          <div class="card-body">
+              <div id="toneComparisonChart" style="height: 100px;">
+                  <div class="row">
+                      <div class="col-4">
+                          <div class="text-center mb-1">Fox News</div>
+                          <div class="progress" style="height: 20px;">
+                              <div class="progress-bar" style="width: ${getTonePercentage('fox', year, month)}%; background-color: ${foxToneColor}; color: #000; font-weight: bold;">
+                                  ${getToneValue('fox', year, month).toFixed(2)}
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-4">
+                          <div class="text-center mb-1">ABC News</div>
+                          <div class="progress" style="height: 20px;">
+                              <div class="progress-bar" style="width: ${getTonePercentage('abc', year, month)}%; background-color: ${abcToneColor}; color: #000; font-weight: bold;">
+                                  ${getToneValue('abc', year, month).toFixed(2)}
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-4">
+                          <div class="text-center mb-1">MSNBC</div>
+                          <div class="progress" style="height: 20px;">
+                              <div class="progress-bar" style="width: ${getTonePercentage('msnbc', year, month)}%; background-color: ${msnbcToneColor}; color: #000; font-weight: bold;">
+                                  ${getToneValue('msnbc', year, month).toFixed(2)}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="d-flex justify-content-between mt-1 small text-muted">
+                      <span>More Negative (-3.5)</span>
+                      <span>Less Negative (-2.0)</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <div class="card mt-3">
+          <div class="card-header bg-light">
               Topic Distribution
           </div>
           <div class="card-body">
-              <div id="topicChart" style="height: 300px;">
+              <div id="topicChart" style="height: 200px;">
                   <p class="text-center text-muted">Topic comparison chart would appear here.</p>
               </div>
           </div>
@@ -6320,6 +6459,40 @@ function showMonthDetails(year, month) {
       document.getElementById('monthDetailContent').scrollTop = 0;
   }
 }
+
+
+// Helper function to get tone value for a source
+function getToneValue(source, year, month) {
+  const yearStr = year.toString();
+  const monthStr = month.toString();
+  
+  if (toneData.source_tone && 
+      toneData.source_tone[source] && 
+      toneData.source_tone[source][yearStr] && 
+      toneData.source_tone[source][yearStr][monthStr]) {
+      return toneData.source_tone[source][yearStr][monthStr];
+  }
+  
+  return -2.5; // Default value if no tone data available
+}
+
+// Helper function to calculate tone percentage for progress bars
+function getTonePercentage(source, year, month) {
+  const toneValue = getToneValue(source, year, month);
+  
+  // Define range
+  const minTone = -3.5;
+  const maxTone = -2.0;
+  const range = maxTone - minTone;
+  
+  // Calculate percentage
+  let percentage = ((toneValue - minTone) / range) * 100;
+  
+  // Clamp to 0-100 range
+  return Math.max(0, Math.min(100, percentage));
+}
+
+
 
 function setupModalScrolling() {
     const modalBody = document.querySelector('.modal-body');
