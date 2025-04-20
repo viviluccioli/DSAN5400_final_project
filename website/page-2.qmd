@@ -505,6 +505,80 @@ Results indicated no significant difference in tone for Fox News and only a marg
 
 ## ADD POLARIZATION HERE
 
+```{python}
+import os
+import pandas as pd
+from dateutil import parser
+
+years = list(range(2015, 2026))
+media_sources = ["abc", "msnbc", "fox"]
+all_dfs = []
+
+# read
+for media in media_sources:
+    for year in years:
+        path = f"../data/{media}/{media}{year}.csv"
+        if os.path.exists(path):
+            df = pd.read_csv(path, on_bad_lines="skip")
+            df["media"] = media
+            df["year_file"] = year
+            all_dfs.append(df)
+
+df_all = pd.concat(all_dfs, ignore_index=True)
+
+# analyze parsed_data
+def safe_parse(x):
+    try:
+        return parser.parse(str(x))
+    except:
+        return pd.NaT
+
+df_all["parsed_date"] = df_all["parsed_date"].apply(safe_parse)
+df_all = df_all.dropna(subset=["parsed_date"])
+df_all["parsed_date"] = pd.to_datetime(df_all["parsed_date"], errors="coerce", utc=True)
+df_all = df_all.dropna(subset=["parsed_date"])
+df_all["year"] = df_all["parsed_date"].dt.year
+df_all["date"] = df_all["parsed_date"].dt.date
+
+```
+
+```{python}
+# Ensure that the sentiment label field exists (classified by the sentiment model)
+
+df_all["sentiment_label"] = df_all["sentiment_label"].str.upper()
+
+# Preparing for a polarized day chart
+daily = (
+    df_all.groupby(["date", "media", "year"])["sentiment_label"]
+    .value_counts()
+    .unstack()
+    .fillna(0)
+    .reset_index()
+)
+
+# Calculate the polarization value: 1 - (neutral / total)
+daily["total"] = daily[["POSITIVE", "NEGATIVE", "NEUTRAL"]].sum(axis=1)
+daily["polarization"] = 1 - (daily["NEUTRAL"] / daily["total"])
+
+# Aggregated into polarization lists at the media × year level
+polar_agg = daily[["media", "year", "polarization"]].dropna()
+
+```
+
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(8, 5))
+sns.boxplot(data=polar_agg[polar_agg["year"] == 2016], x="media", y="polarization", palette="Set2")
+plt.title("Polarization Distribution by Media — 2016")
+plt.ylabel("Polarization")
+plt.xlabel("Media")
+plt.tight_layout()
+plt.show()
+
+```
+
 ## 5-Day Average Tone Around the 2020 Election
 
 ![](images/2020.png){width=400px}
@@ -933,6 +1007,17 @@ All three networks—Fox News, MSNBC, and ABC News—exhibited statistically sig
 
 ## ADD POLARIZATION HERE
 
+```{python}
+plt.figure(figsize=(8, 5))
+sns.boxplot(data=polar_agg[polar_agg["year"] == 2020], x="media", y="polarization", palette="Set2")
+plt.title("Polarization Distribution by Media — 2020")
+plt.ylabel("Polarization")
+plt.xlabel("Media")
+plt.tight_layout()
+plt.show()
+
+```
+
 ## 5-Day Average Tone Around the 2024 Election
 
 ![](images/2024.png){width=400px}
@@ -1356,6 +1441,17 @@ for network in networks:
 Significant changes in GDELT tone were observed for MSNBC (p < 0.001) and ABC News (p = 0.001) following the 2020 election, while Fox News maintained a relatively consistent tone (p = 0.159).
 
 ## ADD POLARIZATION HERE
+
+```{python}
+plt.figure(figsize=(8, 5))
+sns.boxplot(data=polar_agg[polar_agg["year"] == 2024], x="media", y="polarization", palette="Set2")
+plt.title("Polarization Distribution by Media — 2024")
+plt.ylabel("Polarization")
+plt.xlabel("Media")
+plt.tight_layout()
+plt.show()
+
+```
 
 # Conclusion
 
