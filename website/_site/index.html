@@ -11313,62 +11313,6 @@ function showMonthDetails(year, month) {
               </div>
           </div>
       </div>
-      
-      <div class="card">
-          <div class="card-header bg-light">
-              Tone Comparison
-          </div>
-          <div class="card-body">
-              <div id="toneComparisonChart" style="height: 100px;">
-                  <div class="row">
-                      <div class="col-4">
-                          <div class="text-center mb-1">Fox News</div>
-                          <div class="progress" style="height: 20px;">
-                              <div class="progress-bar" style="width: ${getTonePercentage('fox', year, month)}%; background-color: ${foxToneColor}; color: #000; font-weight: bold;">
-                                  ${getToneValue('fox', year, month).toFixed(2)}
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-4">
-                          <div class="text-center mb-1">ABC News</div>
-                          <div class="progress" style="height: 20px;">
-                              <div class="progress-bar" style="width: ${getTonePercentage('abc', year, month)}%; background-color: ${abcToneColor}; color: #000; font-weight: bold;">
-                                  ${getToneValue('abc', year, month).toFixed(2)}
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-4">
-                          <div class="text-center mb-1">MSNBC</div>
-                          <div class="progress" style="height: 20px;">
-                              <div class="progress-bar" style="width: ${getTonePercentage('msnbc', year, month)}%; background-color: ${msnbcToneColor}; color: #000; font-weight: bold;">
-                                  ${getToneValue('msnbc', year, month).toFixed(2)}
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="d-flex justify-content-between mt-1 small text-muted">
-                      <span>More Negative (-3.5)</span>
-                      <span>Less Negative (-2.0)</span>
-                  </div>
-              </div>
-          </div>
-      </div>
-      
-      <div class="card mt-3">
-          <div class="card-header bg-light">
-              Topic Distribution
-          </div>
-          <div class="card-body">
-              <div id="topicChart" style="height: 200px;">
-                  <p class="text-center text-muted">Topic comparison chart would appear here.</p>
-              </div>
-          </div>
-      </div>
-      
-      <!-- Add vertical scrolling hint -->
-      <div class="text-center mt-3 text-muted small">
-          <p>Scroll up/down to navigate between months</p>
-      </div>
   `;
   
   // First time showing the modal
