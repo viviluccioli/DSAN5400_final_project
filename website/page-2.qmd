@@ -20,7 +20,6 @@ This figure shows the 5-day rolling average tone scores for MSNBC, ABC News, and
 Leading up to Election Day (marked by the red dashed line), all three networks maintained negative overall tone, with MSNBC generally exhibiting the most negative coverage, followed by ABC News and Fox News. Tone across networks reached its least negative point around Election Day itself, suggesting a temporary moderation in reporting tone during the immediate election period.
 
 ```{python}
-#| echo: false
 
 import pandas as pd
 import glob
@@ -50,7 +49,15 @@ csv_files = (
     glob.glob("../data/msnbc/msnbc*.csv")
 )
 
-df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+# Try reading files, fallback to latin1 if utf-8 fails
+dfs = []
+for file in csv_files:
+    try:
+        dfs.append(pd.read_csv(file))
+    except UnicodeDecodeError:
+        dfs.append(pd.read_csv(file, encoding='latin1'))
+
+df = pd.concat(dfs, ignore_index=True)
 
 # Select relevant columns
 columns_of_interest = [
@@ -91,6 +98,73 @@ df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
 df['month'] = df['parsed_date'].dt.to_period('M')
 df['year'] = df['parsed_date'].dt.year
 df['month_year'] = df['parsed_date'].dt.strftime('%Y-%m')
+
+```
+
+```{python}
+#| echo: false
+
+# import pandas as pd
+# import glob
+# import matplotlib.pyplot as plt
+# import numpy as np
+# import seaborn as sns
+# from collections import Counter
+# from scipy.stats import ttest_ind
+# import matplotlib.dates as mdates
+# from matplotlib.ticker import MaxNLocator
+
+# plt.style.use('seaborn-v0_8-whitegrid')
+# plt.rcParams['font.family'] = 'sans-serif'
+# plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+
+# NETWORK_COLORS = {
+#     'Fox News': '#E41A1C',
+#     'MSNBC': '#377EB8', 
+#     'ABC News': '#984EA3'   
+# }
+
+# csv_files = (
+#     glob.glob("../data/fox/fox*.csv") +
+#     glob.glob("../data/abc/abc*.csv") +
+#     glob.glob("../data/msnbc/msnbc*.csv")
+# )
+
+# df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+
+# columns_of_interest = [
+#     "parsed_date", "url", "headline_from_url",
+#     "V2Themes", "V2Locations", "V2Persons",
+#     "V2Organizations", "V2Tone"
+# ]
+# df = df[columns_of_interest]
+
+# df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
+
+# def extract_network(url):
+#     try:
+#         url = url.lower()
+#         if 'fox' in url:
+#             return 'Fox News'
+#         elif 'abc' in url:
+#             return 'ABC News'
+#         elif 'msnbc' in url:
+#             return 'MSNBC'
+#         else:
+#             return 'Unknown'
+#     except AttributeError:
+#         return 'Unknown'
+
+# df['network'] = df['url'].apply(extract_network)
+
+# tone_split = df["V2Tone"].str.split(",", expand=True)
+# df["tone"] = pd.to_numeric(tone_split[0], errors="coerce")
+# df["positive_score"] = pd.to_numeric(tone_split[1], errors="coerce")
+# df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
+
+# df['month'] = df['parsed_date'].dt.to_period('M')
+# df['year'] = df['parsed_date'].dt.year
+# df['month_year'] = df['parsed_date'].dt.strftime('%Y-%m')
 
 ```
 
@@ -524,12 +598,15 @@ years = list(range(2015, 2026))
 media_sources = ["abc", "msnbc", "fox"]
 all_dfs = []
 
-# Correct version: don't overwrite df
+# Corrected version: safe read_csv with fallback
 for media in media_sources:
     for year in years:
         path = f"../data/{media}/{media}{year}.csv"
         if os.path.exists(path):
-            df_temp = pd.read_csv(path, on_bad_lines="skip")  # <- use df_temp
+            try:
+                df_temp = pd.read_csv(path, on_bad_lines="skip")
+            except UnicodeDecodeError:
+                df_temp = pd.read_csv(path, encoding="latin1", on_bad_lines="skip")
             df_temp["media"] = media
             df_temp["year_file"] = year
             all_dfs.append(df_temp)
