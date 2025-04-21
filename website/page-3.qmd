@@ -21,7 +21,6 @@ from scipy.stats import ttest_ind
 import matplotlib.dates as mdates
 from matplotlib.ticker import MaxNLocator
 
-# Set visualization style
 plt.style.use('seaborn-v0_8-whitegrid')
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
@@ -40,7 +39,15 @@ csv_files = (
     glob.glob("../data/msnbc/msnbc*.csv")
 )
 
-df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+# Read with fallback for encoding issues
+dfs = []
+for file in csv_files:
+    try:
+        dfs.append(pd.read_csv(file))
+    except UnicodeDecodeError:
+        dfs.append(pd.read_csv(file, encoding='latin1'))
+
+df = pd.concat(dfs, ignore_index=True)
 
 # Select relevant columns
 columns_of_interest = [
@@ -83,6 +90,7 @@ df["negative_score"] = pd.to_numeric(tone_split[2], errors="coerce")
 df['month'] = df['parsed_date'].dt.to_period('M')
 df['year'] = df['parsed_date'].dt.year
 df['month_year'] = df['parsed_date'].dt.strftime('%Y-%m')
+
 ```
 
 ```{python}
@@ -165,7 +173,15 @@ csv_files = (
     glob.glob("../data/msnbc/msnbc*.csv")
 )
 
-df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+# Read CSVs safely with fallback
+dfs = []
+for file in csv_files:
+    try:
+        dfs.append(pd.read_csv(file))
+    except UnicodeDecodeError:
+        dfs.append(pd.read_csv(file, encoding="latin1"))
+
+df = pd.concat(dfs, ignore_index=True)
 
 # Select relevant columns
 columns_of_interest = [
@@ -209,6 +225,7 @@ df['month'] = df['parsed_date'].dt.to_period('M')
 df['year'] = df['parsed_date'].dt.year
 df['month_year'] = df['parsed_date'].dt.strftime('%Y-%m')
 
+# Define election dates
 elections = {
     "2016": pd.to_datetime("2016-11-08"),
     "2020": pd.to_datetime("2020-11-03"),
