@@ -65,13 +65,17 @@ df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_loc
 
 # Extract network source from URLs
 def extract_network(url):
-    if 'fox' in url.lower():
-        return 'Fox News'
-    elif 'abc' in url.lower():
-        return 'ABC News'
-    elif 'msnbc' in url.lower():
-        return 'MSNBC'
-    else:
+    try:
+        url = url.lower()
+        if 'fox' in url:
+            return 'Fox News'
+        elif 'abc' in url:
+            return 'ABC News'
+        elif 'msnbc' in url:
+            return 'MSNBC'
+        else:
+            return 'Unknown'
+    except AttributeError:
         return 'Unknown'
 
 # Add network column
@@ -118,6 +122,9 @@ end_date = pd.to_datetime("2016-12-08")
 election_date = pd.to_datetime("2016-11-08")
 
 # Filter the dataframe to this window using parsed_date 
+
+df['parsed_date'] = pd.to_datetime(df['parsed_date'], errors='coerce')
+
 df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
 
 # Create a column for 5-day periods
@@ -241,6 +248,9 @@ end_date = pd.to_datetime("2016-12-08")
 election_date = pd.to_datetime("2016-11-08")
 
 # Filter the dataframe to this window using parsed_date 
+
+df['parsed_date'] = pd.to_datetime(df['parsed_date'], errors='coerce')
+
 df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
 
 # Calculate daily average tone by network
@@ -514,19 +524,19 @@ years = list(range(2015, 2026))
 media_sources = ["abc", "msnbc", "fox"]
 all_dfs = []
 
-# read
+# Correct version: don't overwrite df
 for media in media_sources:
     for year in years:
         path = f"../data/{media}/{media}{year}.csv"
         if os.path.exists(path):
-            df = pd.read_csv(path, on_bad_lines="skip")
-            df["media"] = media
-            df["year_file"] = year
-            all_dfs.append(df)
+            df_temp = pd.read_csv(path, on_bad_lines="skip")  # <- use df_temp
+            df_temp["media"] = media
+            df_temp["year_file"] = year
+            all_dfs.append(df_temp)
 
 df_all = pd.concat(all_dfs, ignore_index=True)
 
-# analyze parsed_data
+# parsed_date handling
 def safe_parse(x):
     try:
         return parser.parse(str(x))
@@ -609,16 +619,15 @@ start_date = pd.to_datetime("2020-10-04")
 end_date = pd.to_datetime("2020-12-03")
 election_date = pd.to_datetime("2020-11-03")
 
-# Filter the dataframe to this window using parsed_date
-df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
+df['network'] = df['url'].apply(extract_network)
+
+# Now filter safely
+df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)].copy()
 
 # Create a column for 5-day periods
-# First, calculate days since start
 df_window['days_since_start'] = (df_window['parsed_date'] - start_date).dt.days
-# Then, group into 5-day periods (0-4, 5-9, etc.)
 df_window['period_num'] = df_window['days_since_start'] // 5
-# Create period start dates for plotting
-period_start_dates = [start_date + pd.Timedelta(days=i*5) for i in range(13)]  # 60 days / 5 = 12 periods (0-11)
+period_start_dates = [start_date + pd.Timedelta(days=i*5) for i in range(13)]  # 12 periods
 
 # Calculate average tone by network and 5-day period
 avg_tone = df_window.groupby(['network', 'period_num'])['tone'].mean().reset_index()
@@ -674,13 +683,12 @@ fig.update_layout(
         xanchor="center"
     ),
     xaxis=dict(
-        title="5-Day Periods (Oct 4 - Dec 3, 2020)",
+        title="Date (Oct 4 - Dec 3, 2020)",
         titlefont=dict(size=14),
-        tickformat="%b %d",
         gridcolor="#E5E5E5",
         showgrid=True,
-        tickvals=[pd.to_datetime("2020-11-03")],  # Only mark election day
-        ticktext=["Election Day (Nov 3)"]
+        tickformat="%b %d",
+        dtick="M5"  # Tick about every 5 days
     ),
     yaxis=dict(
         title="Average Tone Score",
@@ -704,6 +712,7 @@ fig.update_layout(
 
 # Show figure
 fig.show()
+
 ```
 
 ## Outlier Days in News Network Tone (Oct 4–Dec 3, 2020)
@@ -732,6 +741,9 @@ end_date = pd.to_datetime("2020-12-03")
 election_date = pd.to_datetime("2020-11-03")
 
 # Filter the dataframe to this window using parsed_date 
+
+df['parsed_date'] = pd.to_datetime(df['parsed_date'], errors='coerce')
+
 df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
 
 # Calculate daily average tone by network
@@ -1044,6 +1056,8 @@ end_date = pd.to_datetime("2024-12-05")
 election_date = pd.to_datetime("2024-11-05")
 
 # Filter the dataframe to this window using parsed_date 
+df['parsed_date'] = pd.to_datetime(df['parsed_date'], errors='coerce')
+
 df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
 
 # Create a column for 5-day periods
@@ -1172,6 +1186,7 @@ start_date = pd.to_datetime("2024-10-06")
 end_date = pd.to_datetime("2024-12-05")
 election_date = pd.to_datetime("2024-11-05")
 
+df['parsed_date'] = pd.to_datetime(df['parsed_date'], errors='coerce')
 # Filter the dataframe to this window
 df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
 
