@@ -34,8 +34,6 @@ Before diving into the analysis, it’s essential to understand how **GDELT tone
 Higher tone scores indicate a stronger presence of positive language, while lower scores reflect more negative framing. These values allow us to track and visualize long-term sentiment trends, evaluate tone consistency or volatility, and compare differences in emotional framing across news networks with varying political orientations.
 
 ```{python}
-#| echo: false
-
 import pandas as pd
 import glob
 import matplotlib.pyplot as plt
@@ -65,7 +63,16 @@ csv_files = (
     glob.glob("../data/msnbc/msnbc*.csv")
 )
 
-df = pd.concat([pd.read_csv(file) for file in csv_files], ignore_index=True)
+# Read CSVs with safe fallback and warn if fallback needed
+dfs = []
+for file in csv_files:
+    try:
+        dfs.append(pd.read_csv(file))
+    except UnicodeDecodeError:
+        print(f"⚠️  Warning: Unicode error in '{file}', reading with latin1 fallback.")
+        dfs.append(pd.read_csv(file, encoding='latin1'))
+
+df = pd.concat(dfs, ignore_index=True)
 
 # Select relevant columns
 columns_of_interest = [
