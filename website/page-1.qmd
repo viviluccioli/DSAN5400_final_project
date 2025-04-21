@@ -80,13 +80,17 @@ df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_loc
 
 # Extract network source from URLs
 def extract_network(url):
-    if 'fox' in url.lower():
-        return 'Fox News'
-    elif 'abc' in url.lower():
-        return 'ABC News'
-    elif 'msnbc' in url.lower():
-        return 'MSNBC'
-    else:
+    try:
+        url = url.lower()
+        if 'fox' in url:
+            return 'Fox News'
+        elif 'abc' in url:
+            return 'ABC News'
+        elif 'msnbc' in url:
+            return 'MSNBC'
+        else:
+            return 'Unknown'
+    except AttributeError:
         return 'Unknown'
 
 # Add network column

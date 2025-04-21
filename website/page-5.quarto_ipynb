@@ -42,7 +42,7 @@
         "\n",
         "By analyzing topic half-lives across different news sources, we can evaluate how media outlets differ in their treatment of recurring themes. This enables insights into editorial emphasis, agenda-setting patterns, and the longevity of political narratives across the ideological spectrum.\n"
       ],
-      "id": "e0af0ddb"
+      "id": "6b4d0c6b"
     },
     {
       "cell_type": "code",
@@ -190,7 +190,7 @@
         "average_half_life_df = average_half_life_by_source(half_life_df)\n",
         "yearly_trends_df = get_yearly_trends(half_life_df)"
       ],
-      "id": "08226b28",
+      "id": "31a0cc22",
       "execution_count": null,
       "outputs": []
     },
@@ -200,7 +200,7 @@
       "source": [
         "## Average Topic Half-Life\n"
       ],
-      "id": "6f7ae6ea"
+      "id": "b6c73cc6"
     },
     {
       "cell_type": "code",
@@ -227,7 +227,7 @@
         "half_life_df[\"half_life_days\"] = half_life_df[\"half_life_days\"].clip(upper=1000)\n",
         "plot_average_half_life(half_life_df)"
       ],
-      "id": "70104a05",
+      "id": "f4749a63",
       "execution_count": null,
       "outputs": []
     },
@@ -251,7 +251,7 @@
         "\t•\tAfter clipping, the results reflect a more realistic view of typical media attention spans, showing that topic persistence is fairly consistent across major networks when extreme cases are excluded.\n",
         "## Half-Life over Time\n"
       ],
-      "id": "23b9a5d9"
+      "id": "8f0487b2"
     },
     {
       "cell_type": "code",
@@ -290,7 +290,7 @@
         "\n",
         "plot_yearly_half_life_trends(half_life_df)"
       ],
-      "id": "39fe1415",
+      "id": "29fa2a64",
       "execution_count": null,
       "outputs": []
     },
@@ -314,7 +314,7 @@
         "\n",
         "We also ran the Kruskal-Wallis test on a clipped dataset (capping topic half-life at 1000 days) to assess whether long-lived outliers were influencing results. In this filtered version, the test was not significant (H = 0.857, p = 0.355), suggesting that while extreme topic persistence differs by source, short- to medium-term attention cycles may be more comparable across networks.\n"
       ],
-      "id": "0c1d0e54"
+      "id": "a7561de2"
     },
     {
       "cell_type": "code",
@@ -348,7 +348,7 @@
         "plt.tight_layout()\n",
         "plt.show()"
       ],
-      "id": "52b3626f",
+      "id": "fe055b68",
       "execution_count": null,
       "outputs": []
     },
@@ -375,7 +375,7 @@
         "\t•\tThese results suggest that, in terms of short- to medium-term coverage, mainstream news outlets tend to sustain political topics for similar durations.\n",
         "\t•\tHowever, differences in long-term or ideologically anchored narratives may still exist and require more targeted investigation.\n"
       ],
-      "id": "ed7547e5"
+      "id": "1bf25651"
     }
   ],
   "metadata": {
