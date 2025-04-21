@@ -599,8 +599,6 @@ Notably, at the very end of the 60-day window, both MSNBC and ABC News show larg
 
 ```{python}
 #| echo: false
-#| label: fig-five-day-tone-2020
-#| fig-cap: "5-Day average tone trends around the 2020 election (Oct 4–Dec 3)"
 
 import plotly.graph_objects as go
 import pandas as pd
@@ -614,25 +612,28 @@ NETWORK_COLORS = {
     'Fox News': '#CC3366'
 }
 
-# Define the window around the 2020 election
+# Define the 30-day window around the 2020 election
 start_date = pd.to_datetime("2020-10-04")
 end_date = pd.to_datetime("2020-12-03")
 election_date = pd.to_datetime("2020-11-03")
 
-df['network'] = df['url'].apply(extract_network)
+# Make sure parsed_date is parsed once
+df['parsed_date'] = pd.to_datetime(df['parsed_date'], errors='coerce')
 
-# Now filter safely
-df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)].copy()
+# Filter the dataframe to this window using parsed_date
+df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
 
 # Create a column for 5-day periods
 df_window['days_since_start'] = (df_window['parsed_date'] - start_date).dt.days
 df_window['period_num'] = df_window['days_since_start'] // 5
-period_start_dates = [start_date + pd.Timedelta(days=i*5) for i in range(13)]  # 12 periods
+
+# Create period start dates for plotting
+period_start_dates = [start_date + pd.Timedelta(days=i*5) for i in range(13)]
 
 # Calculate average tone by network and 5-day period
 avg_tone = df_window.groupby(['network', 'period_num'])['tone'].mean().reset_index()
 
-# Convert to wide format for easier plotting
+# Convert to wide format
 pivot_data = avg_tone.pivot(index='period_num', columns='network', values='tone').reset_index()
 
 # Create period dates for x-axis
@@ -683,12 +684,11 @@ fig.update_layout(
         xanchor="center"
     ),
     xaxis=dict(
-        title="Date (Oct 4 - Dec 3, 2020)",
+        title="5-Day Periods (Oct 4 - Dec 3, 2020)",
         titlefont=dict(size=14),
         gridcolor="#E5E5E5",
         showgrid=True,
-        tickformat="%b %d",
-        dtick="M5"  # Tick about every 5 days
+        tickformat="%b %d"
     ),
     yaxis=dict(
         title="Average Tone Score",
@@ -741,8 +741,6 @@ end_date = pd.to_datetime("2020-12-03")
 election_date = pd.to_datetime("2020-11-03")
 
 # Filter the dataframe to this window using parsed_date 
-
-df['parsed_date'] = pd.to_datetime(df['parsed_date'], errors='coerce')
 
 df_window = df[(df['parsed_date'] >= start_date) & (df['parsed_date'] <= end_date)]
 
