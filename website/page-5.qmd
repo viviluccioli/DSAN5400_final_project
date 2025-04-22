@@ -67,22 +67,20 @@ def load_and_label_data(source_paths: dict) -> pd.DataFrame:
     df_list = []
     for source_name, file_list in source_paths.items():
         for file in file_list:
-            df = pd.read_csv(file)
+            df = pd.read_csv(file, encoding='latin1')             
             df['source'] = source_name
             df_list.append(df)
     return pd.concat(df_list, ignore_index=True)
 
 def preprocess_combined_df(df: pd.DataFrame) -> pd.DataFrame:
     """Clean and structure the dataset for topic half-life modeling."""
-    # Keep only relevant columns
     columns = [
         "parsed_date", "url", "headline_from_url",
         "V2Themes", "V2Locations", "V2Persons",
         "V2Organizations", "V2Tone", "source"
     ]
-    df = df.loc[:, columns].copy()  # <-- Ensures this is a new, independent DataFrame
+    df = df.loc[:, columns].copy()
 
-    # Remove trailing ' UTC' and strip whitespace
     df["parsed_date"] = (
         df["parsed_date"]
         .astype(str)
@@ -90,18 +88,14 @@ def preprocess_combined_df(df: pd.DataFrame) -> pd.DataFrame:
         .str.strip()
     )
     
-    # Convert to datetime and remove timezone info
     df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
     
-    # Drop rows with missing essential info
     df = df.dropna(subset=["parsed_date", "V2Themes"])
     
-    # Process themes: split and explode into one row per theme
     df["V2Themes"] = df["V2Themes"].str.split(";")
     df = df.explode("V2Themes")
     df["V2Themes"] = df["V2Themes"].str.strip()
     
-    # Convert tone to numeric
     df["V2Tone"] = pd.to_numeric(df["V2Tone"], errors="coerce")
     
     return df
