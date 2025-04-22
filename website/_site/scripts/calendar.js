@@ -6110,6 +6110,8 @@ function createYearSections() {
               cardClass += ' border-info'; // BLM
           } else if (year === 2024 && month === 5) {
               cardClass += ' border-info'; // Campus protests
+          } else if (year === 2015 && month === 6) {
+            cardClass += ' border-info'; // same sex marriage
           }
           
           // Get tone-based background color
@@ -6165,6 +6167,10 @@ function addEventBadges(year, month) {
         badges += '<span class="badge bg-info me-1">Campus Protests</span>';
     }
     
+    // same sex marriage
+    if (year === 2015 && month === 5) {
+      badges += '<span class="badge bg-info me-1">Same Sex Marriage Legalized</span>';
+    }
     return badges ? `<div class="mt-2">${badges}</div>` : '';
 }
 
