@@ -587,7 +587,7 @@ We conducted independent two-sample t-tests to compare average GDELT tone scores
 
 Results indicated no significant difference in tone for Fox News and only a marginal, non-significant difference for ABC News. In contrast, MSNBC exhibited a statistically significant shift in tone following the election, suggesting that MSNBC’s reporting tone became meaningfully different in the post-election period compared to the month leading up to Election Day.
 
-## ADD POLARIZATION HERE
+## Polarization Analysis
 
 ```{python}
 import os
@@ -657,7 +657,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 plt.figure(figsize=(8, 5))
-sns.boxplot(data=polar_agg[polar_agg["year"] == 2016], x="media", y="polarization", palette="Set2")
+sns.boxplot(data=polar_agg[polar_agg["year"] == 2016], x="media", y="polarization", palette=palette={"abc": "purple", "fox": "red", "msnbc": "blue"})
 plt.title("Polarization Distribution by Media — 2016")
 plt.ylabel("Polarization")
 plt.xlabel("Media")
@@ -1092,11 +1092,12 @@ for network in networks:
 
 All three networks—Fox News, MSNBC, and ABC News—exhibited statistically significant shifts in GDELT tone scores surrounding the 2020 election, with Fox News and ABC News showing particularly strong changes (p < 0.005), and MSNBC showing a moderate shift (p = 0.048).
 
-## ADD POLARIZATION HERE
+## Polarization Analysis
 
 ```{python}
 plt.figure(figsize=(8, 5))
-sns.boxplot(data=polar_agg[polar_agg["year"] == 2020], x="media", y="polarization", palette="Set2")
+sns.boxplot(data=polar_agg[polar_agg["year"] == 2020], x="media", y="polarization", palette={"abc": "purple", "fox": "red", "msnbc": "blue"}
+)
 plt.title("Polarization Distribution by Media — 2020")
 plt.ylabel("Polarization")
 plt.xlabel("Media")
@@ -1530,11 +1531,11 @@ for network in networks:
 
 Significant changes in GDELT tone were observed for MSNBC (p < 0.001) and ABC News (p = 0.001) following the 2020 election, while Fox News maintained a relatively consistent tone (p = 0.159).
 
-## ADD POLARIZATION HERE
+## Polarization Analysis
 
 ```{python}
 plt.figure(figsize=(8, 5))
-sns.boxplot(data=polar_agg[polar_agg["year"] == 2024], x="media", y="polarization", palette="Set2")
+sns.boxplot(data=polar_agg[polar_agg["year"] == 2024], x="media", y="polarization", palette={"abc": "purple", "fox": "red", "msnbc": "blue"})
 plt.title("Polarization Distribution by Media — 2024")
 plt.ylabel("Polarization")
 plt.xlabel("Media")
