@@ -11045,6 +11045,14 @@ function createYearSections() {
               cardClass += ' border-info'; // Campus protests
           } else if (year === 2015 && month === 6) {
             cardClass += ' border-info'; // same sex marriage
+          } else if (year === 2021 && month === 1) {
+            cardClass += 'border-warning'; // jan 6
+          } else if (year === 2020 && month === 10) {
+            cardClass += ' border-info'; // brett kavanaugh
+          } else if (year === 2020 && month === 8) {
+            cardClass += ' border-info'; // RBG
+          } else if (year === 2017 && month === 10) {
+            cardClass += ' border-info'; // metoo
           }
           
           // Get tone-based background color
@@ -11104,6 +11112,27 @@ function addEventBadges(year, month) {
     if (year === 2015 && month === 5) {
       badges += '<span class="badge bg-info me-1">Same Sex Marriage Legalized</span>';
     }
+
+    // #MeToo movement
+    if (year === 2017 && month === 10) {
+      badges += '<span class="badge bg-info me-1">#MeToo Movement Gains Momentum</span>';
+    }
+
+    // brett kavanaugh
+    if (year === 2020 && month === 10) {
+      badges += '<span class="badge bg-info me-1">Brett Kavanaugh Confirmed to Supreme Court</span>';
+    }
+
+    // Capitol attack Jan 6
+    if (year === 2021 && month === 1) {
+      badges += '<span class="badge bg-info me-1">Jan. 6 U.S. Capitol Attack</span>';
+    }
+
+    // RBG
+    if (year === 2020 && month === 8) {
+      badges += '<span class="badge bg-info me-1">Ruth Bader Ginsburg Passes</span>';
+    }
+
     return badges ? `<div class="mt-2">${badges}</div>` : '';
 }
 
