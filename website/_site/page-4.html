@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,10 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5462d0dc975739fea4b7814f85fabdb2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -141,6 +141,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link active" href="./page-4.html" aria-current="page"> 
 <span class="menu-text">Page 4</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./page-5.html"> 
+<span class="menu-text">Page 5</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -211,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fox-news-topic-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="fox-news-topic-distribution">Fox News Topic Distribution</h2>
 <p>Now we’ll visualize how Fox News distributes its coverage across our identified topic categories. First, we will look at the top ten topics identified.</p>
-<div id="ad3c9d00" class="cell" data-execution_count="2">
+<div id="e3f86d3a" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>                               topic  count
 177                   police man say   1190
@@ -228,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Topics were grouped as follows: Police incidents combined mentions like “police man say” and “man police florida”; New York news combined messy duplicates like “new york new york”; Trump presidency captured “trump president president trump”; Man accused cleaned “html man accused” from scraping artifacts; and Business and politics represented “html business president”. This condenses the top 10 topics into 5 cleaned topics.</p>
 <p>The stacked bar chart below shows the relative proportion of each topic in overall Fox News coverage:</p>
-<div id="d4ee4e88" class="cell" data-execution_count="4">
+<div id="34b7ba14" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_cleaned_stacked_bar(source_name):</span>
@@ -268,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="page-4_files/figure-html/cell-5-output-1.png" width="749" height="471" class="figure-img"></p>
+<p><img src="page-4_files/figure-html/cell-5-output-1.png" width="751" height="469" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -277,7 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="topic-coverage-trends-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="topic-coverage-trends-over-time">Topic Coverage Trends Over Time</h3>
 <p>To understand how Fox News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
-<div id="ad73b0e5" class="cell" data-execution_count="5">
+<div id="fa76d539" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -301,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="page-4_files/figure-html/cell-6-output-1.png" width="893" height="375" class="figure-img"></p>
+<p><img src="page-4_files/figure-html/cell-6-output-1.png" width="893" height="373" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -312,7 +316,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="msnbc-news-topic-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="msnbc-news-topic-distribution">MSNBC News Topic Distribution</h2>
 <p>Now we’ll visualize how MSNBC News distributes its coverage across our identified topic categories. First, we will look at the top ten topics identified.</p>
-<div id="b3715cbd" class="cell" data-execution_count="6">
+<div id="858d1967" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>                                   topic  count
 230            trump donald donald trump   1711
@@ -328,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We grouped similar MSNBC topics together by combining all mentions related to Trump, including elections, impeachment, and Ukraine, into a single Trump-related category. Separate categories were created for Biden, Obama, Supreme Court, COVID vaccine, and DeSantis to better reflect the main themes while reducing repetition across topics.</p>
-<div id="d0815255" class="cell" data-execution_count="7">
+<div id="82c1d74a" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -390,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="page-4_files/figure-html/cell-8-output-1.png" width="751" height="471" class="figure-img"></p>
+<p><img src="page-4_files/figure-html/cell-8-output-1.png" width="752" height="469" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -399,7 +403,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="topic-coverage-trends-over-time-1" class="level3">
 <h3 class="anchored" data-anchor-id="topic-coverage-trends-over-time-1">Topic Coverage Trends Over Time</h3>
 <p>To understand how MSNBC News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
-<div id="68ecb9f2" class="cell" data-execution_count="8">
+<div id="95f1eab2" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -447,7 +451,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="page-4_files/figure-html/cell-9-output-1.png" width="888" height="375" class="figure-img"></p>
+<p><img src="page-4_files/figure-html/cell-9-output-1.png" width="888" height="373" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -458,7 +462,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="abc-news-topic-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="abc-news-topic-distribution">ABC News Topic Distribution</h2>
 <p>Now we’ll visualize how ABC News distributes its coverage across our identified topic categories. First, we will look at the top ten topics identified.</p>
-<div id="8cfc4c78" class="cell" data-execution_count="9">
+<div id="e5aa84f2" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>                   topic  count
 211    police man killed    813
@@ -474,7 +478,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>For ABC, the majority of top topics were grouped under Police incidents, combining various mentions of police shootings, deaths, and related events. General deaths (unrelated to police) were kept separate, while mentions of Obama and Trump were grouped into their own categories based on political coverage.</p>
-<div id="3d56c851" class="cell" data-execution_count="10">
+<div id="abf5275b" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Define new mapping function for ABC</span></span>
@@ -533,7 +537,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="page-4_files/figure-html/cell-11-output-1.png" width="751" height="471" class="figure-img"></p>
+<p><img src="page-4_files/figure-html/cell-11-output-1.png" width="752" height="469" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -541,7 +545,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="topic-coverage-trends-over-time-2" class="level3">
 <h3 class="anchored" data-anchor-id="topic-coverage-trends-over-time-2">Topic Coverage Trends Over Time</h3>
 <p>To understand how ABC News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
-<div id="ace2ba3f" class="cell" data-execution_count="11">
+<div id="d3570b76" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -573,7 +577,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="page-4_files/figure-html/cell-12-output-1.png" width="887" height="375" class="figure-img"></p>
+<p><img src="page-4_files/figure-html/cell-12-output-1.png" width="887" height="373" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -584,7 +588,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="presidential-candidate-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="presidential-candidate-analysis">Presidential Candidate Analysis</h2>
 <p>i dont know why this is only saying like 500 trumps this needs to be fixed</p>
-<div id="ad7ec643" class="cell" data-execution_count="12">
+<div id="48b43a6b" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>combined_data <span class="op">=</span> pd.concat([fox_data, abc_data, msnbc_data], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
@@ -632,7 +636,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="page-4_files/figure-html/cell-13-output-1.png" width="588" height="374" class="figure-img"></p>
+<p><img src="page-4_files/figure-html/cell-13-output-1.png" width="588" height="372" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -728,8 +732,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -840,7 +842,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

@@ -33,140 +33,37 @@ Before examining the results, it’s important to understand the concept of topi
 
 By analyzing topic half-lives across different news sources, we can evaluate how media outlets differ in their treatment of recurring themes. This enables insights into editorial emphasis, agenda-setting patterns, and the longevity of political narratives across the ideological spectrum.
 
+# Overall Half-Life Analysis
+
 ```{python}
-#| echo: false
+#| cache: true
+
+#| cache: true
 
 import pandas as pd
-import glob
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.linear_model import LinearRegression
 
-# Set visualization style
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
-
-# Define network colors
 NETWORK_COLORS = {
-    'Fox News': '#E41A1C',    # Red for Fox
-    'MSNBC': '#377EB8',       # Blue for MSNBC
-    'ABC News': '#984EA3'     # Purple for ABC
+    'Fox News': '#E41A1C',
+    'MSNBC': '#377EB8',
+    'ABC News': '#984EA3'
 }
 
-# Import data files
-sources = {
-    "Fox News": glob.glob("../data/fox/fox*.csv"),
-    "ABC News": glob.glob("../data/abc/abc*.csv"),
-    "MSNBC": glob.glob("../data/msnbc/msnbc*.csv")
-}
+# Load saved half-life summary
+half_life_df = pd.read_csv("data/half_life_summary.csv")
+half_life_df["first_date"] = pd.to_datetime(half_life_df["first_date"])
 
-def load_and_label_data(source_paths: dict) -> pd.DataFrame:
-    """Load CSV files and label them by source."""
-    df_list = []
-    for source_name, file_list in source_paths.items():
-        for file in file_list:
-            df = pd.read_csv(file, encoding='latin1')             
-            df['source'] = source_name
-            df_list.append(df)
-    return pd.concat(df_list, ignore_index=True)
-
-def preprocess_combined_df(df: pd.DataFrame) -> pd.DataFrame:
-    """Clean and structure the dataset for topic half-life modeling."""
-    columns = [
-        "parsed_date", "url", "headline_from_url",
-        "V2Themes", "V2Locations", "V2Persons",
-        "V2Organizations", "V2Tone", "source"
-    ]
-    df = df.loc[:, columns].copy()
-
-    df["parsed_date"] = (
-        df["parsed_date"]
-        .astype(str)
-        .str.replace(" UTC", "", regex=False)
-        .str.strip()
-    )
-    
-    df["parsed_date"] = pd.to_datetime(df["parsed_date"], errors="coerce").dt.tz_localize(None)
-    
-    df = df.dropna(subset=["parsed_date", "V2Themes"])
-    
-    df["V2Themes"] = df["V2Themes"].str.split(";")
-    df = df.explode("V2Themes")
-    df["V2Themes"] = df["V2Themes"].str.strip()
-    
-    df["V2Tone"] = pd.to_numeric(df["V2Tone"], errors="coerce")
-    
-    return df
-
-def get_topic_daily(df: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate article counts and average tone by source, theme, and date."""
-    topic_daily = (
-        df.groupby(["source", "V2Themes", "parsed_date"])
-        .agg(count=("headline_from_url", "count"), tone=("V2Tone", "mean"))
-        .reset_index()
-    )
-    topic_daily["parsed_date"] = pd.to_datetime(topic_daily["parsed_date"])
-    first_dates = (
-        topic_daily.groupby(["source", "V2Themes"])["parsed_date"]
-        .min().reset_index().rename(columns={"parsed_date": "first_date"})
-    )
-    topic_daily = topic_daily.merge(first_dates, on=["source", "V2Themes"])
-    topic_daily["first_date"] = pd.to_datetime(topic_daily["first_date"])
-    topic_daily["days_since"] = (topic_daily["parsed_date"] - topic_daily["first_date"]).dt.days
-    return topic_daily
-
-def estimate_half_life(topic_daily: pd.DataFrame, min_obs: int = 2, min_lambda: float = 1e-5) -> pd.DataFrame:
-    """Estimate topic half-life via exponential decay for each source-theme pair."""
-    from sklearn.linear_model import LinearRegression
-    import numpy as np
-    import pandas as pd
-
-    decay_results = []
-
-    for (source, topic), group in topic_daily.groupby(["source", "V2Themes"]):
-        if len(group) < min_obs:
-            continue
-
-        X = group["days_since"].values.reshape(-1, 1)
-        y = np.log1p(group["count"].values)
-
-        model = LinearRegression().fit(X, y)
-        lambda_ = -model.coef_[0]
-        r2 = model.score(X, y)
-
-        if lambda_ <= 0 or lambda_ < min_lambda:
-            continue
-
-        half_life = np.log(2) / lambda_
-
-        decay_results.append({
-            "source": source,
-            "topic": topic,
-            "decay_rate": lambda_,
-            "half_life_days": half_life,
-            "r2": r2,
-            "n_obs": len(group),
-            "avg_tone": group["tone"].mean(),
-            "first_date": group["parsed_date"].min()
-        })
-
-    return pd.DataFrame(decay_results)
-
+# Recreate the two missing functions
 def average_half_life_by_source(half_life_df: pd.DataFrame) -> pd.Series:
-    """Compute average half-life per source."""
     return half_life_df.groupby("source")["half_life_days"].mean().sort_values()
 
 def get_yearly_trends(half_life_df: pd.DataFrame) -> pd.DataFrame:
-    """Return average half-life by source per year."""
     half_life_df["year"] = half_life_df["first_date"].dt.year
     return half_life_df.groupby(["source", "year"])["half_life_days"].mean().unstack()
 
-raw_df = load_and_label_data(sources)
-clean_df = preprocess_combined_df(raw_df)
-topic_df = get_topic_daily(clean_df)
-half_life_df = estimate_half_life(topic_df)
+# Now you can generate them instantly
 average_half_life_df = average_half_life_by_source(half_life_df)
 yearly_trends_df = get_yearly_trends(half_life_df)
 
@@ -175,6 +72,7 @@ yearly_trends_df = get_yearly_trends(half_life_df)
 ## Average Topic Half-Life
 
 ```{python}
+#| cache: true
 
 def plot_average_half_life(half_life_df: pd.DataFrame):
     avg_half_life = average_half_life_by_source(half_life_df)
@@ -215,6 +113,7 @@ Interpretation:
 ## Half-Life over Time
 
 ```{python}
+#| cache: true
 def plot_yearly_half_life_trends(half_life_df: pd.DataFrame):
     """Plot average half-life over time by news source."""
     # Ensure year column exists
