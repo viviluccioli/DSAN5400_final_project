@@ -657,7 +657,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 plt.figure(figsize=(8, 5))
-sns.boxplot(data=polar_agg[polar_agg["year"] == 2016], x="media", y="polarization", palette=palette={"abc": "purple", "fox": "red", "msnbc": "blue"})
+sns.boxplot(data=polar_agg[polar_agg["year"] == 2016], x="media", y="polarization", palette={"abc": "purple", "fox": "red", "msnbc": "blue"})
 plt.title("Polarization Distribution by Media — 2016")
 plt.ylabel("Polarization")
 plt.xlabel("Media")
