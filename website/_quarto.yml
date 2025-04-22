@@ -19,6 +19,8 @@ website:
         text: Page 3
       - href: page-4.qmd
         text: Page 4
+      - href: page-5.qmd
+        text: Page 5
   page-footer:
     left: "© 2025, DSAN5400 Group Project"
     
