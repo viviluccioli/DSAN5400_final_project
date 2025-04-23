@@ -320,9 +320,109 @@ It's also worth noting that GDELT and AFINN seem to have similar distributions d
 
 ```{python}
 
-# Add this after your existing code
+# Import required libraries
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.patheffects as path_effects
 
-# Create a new figure for the scatter plot
+# Create a new figure with a larger size for better readability
+plt.figure(figsize=(10, 8))
+
+# Calculate correlation coefficient
+correlation = df_elections['tone'].corr(df_elections['afinn_tone_score'])
+
+# Create a scatter plot with larger points and more transparency
+scatter = plt.scatter(
+    df_elections['tone'], 
+    df_elections['afinn_tone_score'],
+    alpha=0.6,                           # Slightly increased opacity
+    c=df_elections['vader_tone_score'],  # Color points by VADER score
+    cmap='coolwarm',                     # Keep the same color scheme
+    s=70,                                # Larger point size
+    edgecolor='w',                       # White edge for better point visibility
+    linewidth=0.5                        # Thin edge
+)
+
+# Add a more prominent color bar with a clearer label
+cbar = plt.colorbar(scatter, pad=0.02)
+cbar.set_label('VADER Score', fontsize=12, fontweight='bold')
+cbar.ax.tick_params(labelsize=10)
+
+# Add correlation information in a more visible box
+corr_text = plt.annotate(
+    f'Correlation: {correlation:.3f}', 
+    xy=(0.05, 0.95), 
+    xycoords='axes fraction', 
+    fontsize=12,
+    fontweight='bold',
+    bbox=dict(boxstyle="round,pad=0.5", fc="white", ec="gray", alpha=0.9)
+)
+
+# Add reference lines at 0 with better styling
+plt.axhline(y=0, color='gray', linestyle='-', alpha=0.5, linewidth=1.5)
+plt.axvline(x=0, color='gray', linestyle='-', alpha=0.5, linewidth=1.5)
+
+# Create a light background for the quadrant labels for better visibility
+# Define quadrant boundaries using data ranges
+x_max, x_min = df_elections['tone'].max(), df_elections['tone'].min()
+y_max, y_min = df_elections['afinn_tone_score'].max(), df_elections['afinn_tone_score'].min()
+
+# Add quadrant labels with better visibility
+q1_text = plt.text(x_max*0.7, y_max*0.7, 'Both Positive', 
+         fontsize=12, ha='center', fontweight='bold',
+         bbox=dict(boxstyle="round,pad=0.3", fc="lightgreen", ec="green", alpha=0.3))
+
+q2_text = plt.text(x_min*0.7, y_max*0.7, 'GDELT Negative\nAFINN Positive', 
+         fontsize=11, ha='center', fontweight='bold',
+         bbox=dict(boxstyle="round,pad=0.3", fc="lightyellow", ec="orange", alpha=0.3))
+
+q3_text = plt.text(x_max*0.7, y_min*0.7, 'GDELT Positive\nAFINN Negative', 
+         fontsize=11, ha='center', fontweight='bold',
+         bbox=dict(boxstyle="round,pad=0.3", fc="lightyellow", ec="orange", alpha=0.3))
+
+q4_text = plt.text(x_min*0.7, y_min*0.7, 'Both Negative', 
+         fontsize=12, ha='center', fontweight='bold',
+         bbox=dict(boxstyle="round,pad=0.3", fc="mistyrose", ec="red", alpha=0.3))
+
+# Add clearer labels and title
+plt.xlabel('GDELT Tone Score', fontsize=14, fontweight='bold')
+plt.ylabel('AFINN Tone Score', fontsize=14, fontweight='bold')
+plt.title('Correlation between GDELT and AFINN Sentiment Scores\nColored by VADER Score', 
+          fontsize=16, fontweight='bold', pad=20)
+
+# Add a subtle grid for better readability
+plt.grid(True, alpha=0.3, linestyle='-')
+
+# Add tick marks with more space and larger font
+plt.xticks(fontsize=11)
+plt.yticks(fontsize=11)
+
+# Add a legend explaining the quadrants
+legend_elements = [
+    plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='blue', markersize=10, 
+               label='Positive VADER Score'),
+    plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='red', markersize=10, 
+               label='Negative VADER Score')
+]
+plt.legend(handles=legend_elements, loc='upper center', 
+           bbox_to_anchor=(0.5, -0.08), frameon=True, ncol=2, fontsize=11)
+
+# Add a text explaining the visualization
+plt.figtext(0.5, 0.01, 
+            "This plot shows the relationship between GDELT and AFINN sentiment scoring systems.\n"
+            "Points are colored by VADER sentiment score (blue = positive, red = negative).",
+            ha="center", fontsize=10, bbox=dict(boxstyle="round,pad=0.5", fc="white", ec="gray", alpha=0.8))
+
+# Tight layout with adjusted margins to fit all elements
+plt.tight_layout(rect=[0, 0.03, 1, 0.97])
+
+# Show the plot
+plt.show()
+
+```
+
+```{python}
+
 plt.figure(figsize=(8, 5))
 
 # Calculate correlation coefficient
@@ -385,3 +485,57 @@ A significant cluster of points falls in the "Both Negative" quadrant, confirmin
 There are very few points in the "GDELT Positive, AFINN Negative" quadrant, suggesting that when GDELT finds positive sentiment, AFINN rarely strongly disagrees.
 
 However, there are a fair number of points in the "GDELT Negative, AFINN Positive" quadrant, indicating some systematic differences in how these two metrics evaluate certain types of content.
+
+```{python}
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(8, 5))
+
+correlation = df_elections['tone'].corr(df_elections['afinn_tone_score'])
+
+scatter = plt.scatter(
+    df_elections['tone'], 
+    df_elections['afinn_tone_score'],
+    alpha=0.5,
+    color='red' 
+)
+
+# Add correlation information
+plt.annotate(
+    f'Correlation: {correlation:.3f}', 
+    xy=(0.05, 0.95), 
+    xycoords='axes fraction', 
+    fontsize=8,
+    bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="gray", alpha=0.8)
+)
+
+# Add a horizontal and vertical line at 0 to indicate neutral sentiment
+plt.axhline(y=0, color='blue', linestyle='--', alpha=0.7)
+plt.axvline(x=0, color='blue', linestyle='--', alpha=0.7)
+
+# Label the quadrants
+plt.text(df_elections['tone'].max()*0.7, df_elections['afinn_tone_score'].max()*0.7, 
+         'Both Positive', fontsize=10, ha='center')
+plt.text(df_elections['tone'].min()*0.7, df_elections['afinn_tone_score'].max()*0.7, 
+         'GDELT Negative\nAFINN Positive', fontsize=8, ha='center')
+plt.text(df_elections['tone'].max()*0.7, df_elections['afinn_tone_score'].min()*0.7, 
+         'GDELT Positive\nAFINN Negative', fontsize=8, ha='center')
+plt.text(df_elections['tone'].min()*0.7, df_elections['afinn_tone_score'].min()*0.7, 
+         'Both Negative', fontsize=10, ha='center')
+
+# Add labels and title
+plt.xlabel('GDELT Tone Score')
+plt.ylabel('AFINN Tone Score')
+plt.title('GDELT vs. AFINN Sentiment Comparison', fontsize=10)
+
+# Add a grid for better readability
+plt.grid(True, alpha=0.3)
+
+# Tight layout
+plt.tight_layout()
+
+# Show the plot
+plt.show()
+
+```
