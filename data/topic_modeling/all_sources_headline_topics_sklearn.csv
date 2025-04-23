@@ -176,42 +176,6 @@ month,year,topic,topic_id,rank,count,total_articles,percentage,source
 12,2019,impeachment/trump,4,1,237,1000,23.7,fox
 12,2019,christmas/new,1,2,226,1000,22.6,fox
 12,2019,florida/police,2,3,198,1000,19.8,fox
-1,2020,coronavirus/outbreak,2,1,273,1000,27.3,fox
-1,2020,impeachment/trump,0,2,240,1000,24.0,fox
-1,2020,new/york,1,3,165,1000,16.5,fox
-2,2020,coronavirus/outbreak,2,1,273,1000,27.3,fox
-2,2020,impeachment/trump,0,2,240,1000,24.0,fox
-2,2020,new/york,1,3,165,1000,16.5,fox
-3,2020,coronavirus/outbreak,2,1,273,1000,27.3,fox
-3,2020,impeachment/trump,0,2,240,1000,24.0,fox
-3,2020,new/york,1,3,165,1000,16.5,fox
-4,2020,coronavirus/police,1,1,301,1000,30.099999999999998,fox
-4,2020,coronavirus/trump,2,2,195,1000,19.5,fox
-4,2020,coronavirus/new,0,3,179,1000,17.9,fox
-5,2020,coronavirus/police,1,1,301,1000,30.099999999999998,fox
-5,2020,coronavirus/trump,2,2,195,1000,19.5,fox
-5,2020,coronavirus/new,0,3,179,1000,17.9,fox
-6,2020,coronavirus/police,1,1,301,1000,30.099999999999998,fox
-6,2020,coronavirus/trump,2,2,195,1000,19.5,fox
-6,2020,coronavirus/new,0,3,179,1000,17.9,fox
-7,2020,biden/trump,4,1,250,1000,25.0,fox
-7,2020,court/supreme court,3,2,211,1000,21.099999999999998,fox
-7,2020,coronavirus/police,2,3,208,1000,20.8,fox
-8,2020,biden/trump,4,1,250,1000,25.0,fox
-8,2020,court/supreme court,3,2,211,1000,21.099999999999998,fox
-8,2020,coronavirus/police,2,3,208,1000,20.8,fox
-9,2020,biden/trump,4,1,250,1000,25.0,fox
-9,2020,court/supreme court,3,2,211,1000,21.099999999999998,fox
-9,2020,coronavirus/police,2,3,208,1000,20.8,fox
-10,2020,election/trump,4,1,222,1000,22.2,fox
-10,2020,biden/trump,2,2,217,1000,21.7,fox
-10,2020,biden/trump,3,3,204,1000,20.4,fox
-11,2020,election/trump,4,1,222,1000,22.2,fox
-11,2020,biden/trump,2,2,217,1000,21.7,fox
-11,2020,biden/trump,3,3,204,1000,20.4,fox
-12,2020,election/trump,4,1,222,1000,22.2,fox
-12,2020,biden/trump,2,2,217,1000,21.7,fox
-12,2020,biden/trump,3,3,204,1000,20.4,fox
 1,2021,biden/trump,1,1,249,1000,24.9,fox
 1,2021,covid/covid 19,4,2,222,1000,22.2,fox
 1,2021,2021/meghan,2,3,191,1000,19.1,fox

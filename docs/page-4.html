@@ -128,23 +128,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./page-1.html"> 
-<span class="menu-text">Page 1</span></a>
+<span class="menu-text">Network Tone Analysis 1</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./page-2.html"> 
-<span class="menu-text">Page 2</span></a>
+<span class="menu-text">Election Tone Analysis</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./page-3.html"> 
-<span class="menu-text">Page 3</span></a>
+<span class="menu-text">Network Tone Analysis 2</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./page-4.html" aria-current="page"> 
-<span class="menu-text">Page 4</span></a>
+<span class="menu-text">Topic Modeling</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./page-5.html"> 
-<span class="menu-text">Page 5</span></a>
+<span class="menu-text">Half-Life Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./page-6.html"> 
+<span class="menu-text">Conclusions</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -215,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fox-news-topic-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="fox-news-topic-distribution">Fox News Topic Distribution</h2>
 <p>Now we’ll visualize how Fox News distributes its coverage across our identified topic categories. First, we will look at the top ten topics identified.</p>
-<div id="b395d35b" class="cell" data-execution_count="2">
+<div id="e7565f3d" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>                               topic  count
 177                   police man say   1190
@@ -232,7 +236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Topics were grouped as follows: Police incidents combined mentions like “police man say” and “man police florida”; New York news combined messy duplicates like “new york new york”; Trump presidency captured “trump president president trump”; Man accused cleaned “html man accused” from scraping artifacts; and Business and politics represented “html business president”. This condenses the top 10 topics into 5 cleaned topics.</p>
 <p>The stacked bar chart below shows the relative proportion of each topic in overall Fox News coverage:</p>
-<div id="86468786" class="cell" data-execution_count="4">
+<div id="4a1409a5" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_cleaned_stacked_bar(source_name):</span>
@@ -281,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="topic-coverage-trends-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="topic-coverage-trends-over-time">Topic Coverage Trends Over Time</h3>
 <p>To understand how Fox News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
-<div id="d1cd24cb" class="cell" data-execution_count="5">
+<div id="81070f3f" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -316,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="msnbc-news-topic-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="msnbc-news-topic-distribution">MSNBC News Topic Distribution</h2>
 <p>Now we’ll visualize how MSNBC News distributes its coverage across our identified topic categories. First, we will look at the top ten topics identified.</p>
-<div id="4c48bcdc" class="cell" data-execution_count="6">
+<div id="b21a17d4" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>                                   topic  count
 230            trump donald donald trump   1711
@@ -332,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We grouped similar MSNBC topics together by combining all mentions related to Trump, including elections, impeachment, and Ukraine, into a single Trump-related category. Separate categories were created for Biden, Obama, Supreme Court, COVID vaccine, and DeSantis to better reflect the main themes while reducing repetition across topics.</p>
-<div id="f854a24f" class="cell" data-execution_count="7">
+<div id="f60cdd98" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -403,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="topic-coverage-trends-over-time-1" class="level3">
 <h3 class="anchored" data-anchor-id="topic-coverage-trends-over-time-1">Topic Coverage Trends Over Time</h3>
 <p>To understand how MSNBC News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
-<div id="27318618" class="cell" data-execution_count="8">
+<div id="9aa6d883" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -462,7 +466,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="abc-news-topic-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="abc-news-topic-distribution">ABC News Topic Distribution</h2>
 <p>Now we’ll visualize how ABC News distributes its coverage across our identified topic categories. First, we will look at the top ten topics identified.</p>
-<div id="30d07cc3" class="cell" data-execution_count="9">
+<div id="44299063" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>                   topic  count
 211    police man killed    813
@@ -478,7 +482,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>For ABC, the majority of top topics were grouped under Police incidents, combining various mentions of police shootings, deaths, and related events. General deaths (unrelated to police) were kept separate, while mentions of Obama and Trump were grouped into their own categories based on political coverage.</p>
-<div id="5b0543a6" class="cell" data-execution_count="10">
+<div id="cb5cece9" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Define new mapping function for ABC</span></span>
@@ -545,7 +549,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="topic-coverage-trends-over-time-2" class="level3">
 <h3 class="anchored" data-anchor-id="topic-coverage-trends-over-time-2">Topic Coverage Trends Over Time</h3>
 <p>To understand how ABC News’ coverage has evolved, we’ll create a heatmap showing topic mentions by year. This visualization helps identify shifting priorities in news coverage:</p>
-<div id="00a87706" class="cell" data-execution_count="11">
+<div id="f3ba56bb" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -588,7 +592,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="presidential-candidate-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="presidential-candidate-analysis">Presidential Candidate Analysis</h2>
 <p>i dont know why this is only saying like 500 trumps this needs to be fixed</p>
-<div id="0ff76721" class="cell" data-execution_count="12">
+<div id="e5c0eaa4" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>combined_data <span class="op">=</span> pd.concat([fox_data, abc_data, msnbc_data], ignore_index<span class="op">=</span><span class="va">True</span>)</span>

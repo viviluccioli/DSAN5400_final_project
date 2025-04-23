@@ -4747,23 +4747,27 @@ vertical-align: -.125em;
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./page-1.html"> 
-<span class="menu-text">Page 1</span></a>
+<span class="menu-text">Network Tone Analysis 1</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./page-2.html"> 
-<span class="menu-text">Page 2</span></a>
+<span class="menu-text">Election Tone Analysis</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./page-3.html"> 
-<span class="menu-text">Page 3</span></a>
+<span class="menu-text">Network Tone Analysis 2</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./page-4.html"> 
-<span class="menu-text">Page 4</span></a>
+<span class="menu-text">Topic Modeling</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./page-5.html"> 
-<span class="menu-text">Page 5</span></a>
+<span class="menu-text">Half-Life Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./page-6.html"> 
+<span class="menu-text">Conclusions</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -4786,101 +4790,38 @@ vertical-align: -.125em;
     <div class="col-12">
       <h1 class="text-center">US Media Coverage Analysis (2015-2025)</h1>
       <p class="text-center">Explore how different media sources cover major topics over time</p>
+      
+      <!-- Data info section moved to the top -->
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">About This Analysis</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <p>This visualization presents a decade of US media coverage analysis, examining how different news sources frame major events and topics. The analysis uses topic modeling and sentiment analysis to identify patterns in coverage between right-leaning, neutral, and left-leaning news organizations.</p>
+              <p>Month background colors indicate the average tone of media coverage (lighter colors represent more positive coverage).</p>
+            </div>
+            <div class="col-md-4">
+              <h6>Data Sources:</h6>
+              <ul>
+                <li>Fox News (Right-leaning, 2015-2025)</li>
+                <li>ABC News (Neutral, 2015-2025)</li>
+                <li>MSNBC (Left-leaning, 2015-2025)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-12 col-md-3">
-      <div class="card">
-        <div class="card-header">
-          Filters
-        </div>
-        <div class="card-body">
-          <div class="mb-3">
-            <label for="yearSelect" class="form-label">Year</label>
-            <select class="form-select" id="yearSelect">
-              <option value="2015">2015</option>
-              <option value="2016">2016</option>
-              <option value="2017">2017</option>
-              <option value="2018">2018</option>
-              <option value="2019">2019</option>
-              <option value="2020">2020</option>
-              <option value="2021">2021</option>
-              <option value="2022">2022</option>
-              <option value="2023">2023</option>
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
-            </select>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Sources</label>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="fox" id="foxCheck" checked>
-              <label class="form-check-label" for="foxCheck">
-                Fox News (Right-leaning)
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="abc" id="abcCheck" checked>
-              <label class="form-check-label" for="abcCheck">
-                ABC News (Neutral)
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="msnbc" id="msnbcCheck" checked>
-              <label class="form-check-label" for="msnbcCheck">
-                MSNBC (Left-leaning)
-              </label>
-            </div>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Event Overlays</label>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="elections" id="electionsCheck" checked>
-              <label class="form-check-label" for="electionsCheck">
-                Elections
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="covid" id="covidCheck" checked>
-              <label class="form-check-label" for="covidCheck">
-                COVID-19
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="social" id="socialCheck" checked>
-              <label class="form-check-label" for="socialCheck">
-                Social Movements
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Add a data info card -->
-      <div class="card mt-3">
-        <div class="card-header">
-          Data Sources
-        </div>
-        <div class="card-body">
-          <p class="small mb-1">Topic modeling data based on:</p>
-          <ul class="small">
-            <li>Fox News (2015-2025)</li>
-            <li>ABC News (2015-2025)</li>
-            <li>MSNBC (2015-2025)</li>
-          </ul>
-          <p class="small mb-0">Analysis includes sentiment and tone evaluation for media coverage comparison.</p>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Main Calendar View -->
-    <div class="col-12 col-md-9">
+    <!-- Main Calendar View (now full-width) -->
+    <div class="col-12">
       <!-- Year navigation -->
       <div class="year-nav sticky-top" id="yearNav">
-        <div class="btn-toolbar justify-content-center" role="toolbar">
+        <div class="btn-toolbar justify-content-center mb-3" role="toolbar">
           <div class="btn-group me-2" role="group">
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2015)">2015</button>
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2016)">2016</button>
@@ -4888,13 +4829,27 @@ vertical-align: -.125em;
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2018)">2018</button>
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2019)">2019</button>
           </div>
-          <div class="btn-group me-2" role="group">
+          <div class="btn-group" role="group">
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2020)">2020</button>
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2021)">2021</button>
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2022)">2022</button>
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2023)">2023</button>
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2024)">2024</button>
             <button type="button" class="btn btn-outline-primary" onclick="scrollToYear(2025)">2025</button>
+          </div>
+        </div>
+        
+        <!-- Legend for understanding visualization -->
+        <div class="d-flex justify-content-center mb-4">
+          <div class="card">
+            <div class="card-body py-2">
+              <div class="d-flex align-items-center">
+                <span class="me-3">Tone Scale:</span>
+                <div class="gradient-bar me-2" style="background: linear-gradient(to right, #ffcccc, #ffffcc, #ccffcc); width: 150px; height: 20px;"></div>
+                <span class="small me-2">More Negative</span>
+                <span class="small">Less Negative</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -4929,7 +4884,6 @@ vertical-align: -.125em;
     </div>
   </div>
 </div>
-
 
 <script>// calendar.js with embedded data
 
