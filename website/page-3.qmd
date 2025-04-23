@@ -379,8 +379,6 @@ There are very few points in the "GDELT Positive, AFINN Negative" quadrant, sugg
 However, there are a fair number of points in the "GDELT Negative, AFINN Positive" quadrant, indicating some systematic differences in how these two metrics evaluate certain types of content.
 
 ```{python}
-
-```{python}
 #| echo: false
 #| label: fig-animated-monthly-tone
 #| fig-cap: "Animated monthly average tone trends by news network (2015-2025)"
@@ -579,7 +577,6 @@ for admin in administrations:
 
 # Show the figure
 fig.show()
-
 ```
 
 ```{python}
