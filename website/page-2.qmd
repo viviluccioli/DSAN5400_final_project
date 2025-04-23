@@ -589,6 +589,16 @@ Results indicated no significant difference in tone for Fox News and only a marg
 
 ## Polarization Analysis
 
+In this project, polarization is defined as the proportion of emotionally charged headlines, based on the assumption that headlines labeled as positive or negative express stronger sentiment, while neutral headlines are more balanced or factual.
+Using HuggingFace model "distilbert-base-uncased-finetuned-sst-2-english", we calculate daily polarization as:
+Polarization=1−Neutral HeadlinesTotal Headline/Total Headlines This gives us a value between 0 and 1:
+A higher score means more polarized (fewer neutral headlines).
+A lower score suggests more neutrality or emotional restraint in reporting.
+
+In 2016, overall polarization levels were similar across all three networks.
+However, Fox News exhibited a slightly higher proportion of extreme (non-neutral) headlines compared to ABC and MSNBC.
+This suggests that while all networks were emotionally charged during the Clinton–Trump race, Fox leaned a bit more into polarized language.
+
 ```{python}
 import os
 import pandas as pd
@@ -1094,6 +1104,10 @@ All three networks—Fox News, MSNBC, and ABC News—exhibited statistically sig
 
 ## Polarization Analysis
 
+The polarization distribution showed more variance, with many outliers across all networks.
+Despite the noise, Fox News had noticeably lower median polarization than ABC, indicating more neutral or balanced tone in the core of its coverage.
+This could reflect a shift in strategy or focus on more consistent reporting during a highly chaotic election period.
+
 ```{python}
 plt.figure(figsize=(8, 5))
 sns.boxplot(data=polar_agg[polar_agg["year"] == 2020], x="media", y="polarization", palette={"abc": "purple", "fox": "red", "msnbc": "blue"}
@@ -1532,6 +1546,10 @@ for network in networks:
 Significant changes in GDELT tone were observed for MSNBC (p < 0.001) and ABC News (p = 0.001) following the 2020 election, while Fox News maintained a relatively consistent tone (p = 0.159).
 
 ## Polarization Analysis
+
+Polarization increased again, and this time the difference was stark.
+Fox News exhibited the most extreme polarization, with values over 10 percentage points higher than both ABC and MSNBC.
+This indicates a significant tilt toward emotionally charged coverage, possibly reflecting stronger editorial framing or more divisive narratives during the election cycle.
 
 ```{python}
 plt.figure(figsize=(8, 5))

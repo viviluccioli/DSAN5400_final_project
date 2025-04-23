@@ -320,54 +320,46 @@ It's also worth noting that GDELT and AFINN seem to have similar distributions d
 
 ```{python}
 
-# Add this after your existing code
+import matplotlib.pyplot as plt
 
-# Create a new figure for the scatter plot
 plt.figure(figsize=(8, 5))
 
-# Calculate correlation coefficient
 correlation = df_elections['tone'].corr(df_elections['afinn_tone_score'])
 
-# Create a scatter plot of GDELT vs AFINN (using original scores, not normalized)
 scatter = plt.scatter(
     df_elections['tone'], 
     df_elections['afinn_tone_score'],
     alpha=0.5,
-    c=df_elections['vader_tone_score'],  # Color points by VADER score for comparison
-    cmap='coolwarm'                      # Red for negative VADER, blue for positive
+    color='red' 
 )
-
-# Add a color bar to show VADER scores
-cbar = plt.colorbar(scatter)
-cbar.set_label('VADER Score')
 
 # Add correlation information
 plt.annotate(
     f'Correlation: {correlation:.3f}', 
     xy=(0.05, 0.95), 
     xycoords='axes fraction', 
-    fontsize=6,
+    fontsize=8,
     bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="gray", alpha=0.8)
 )
 
 # Add a horizontal and vertical line at 0 to indicate neutral sentiment
-plt.axhline(y=0, color='gray', linestyle='--', alpha=0.7)
-plt.axvline(x=0, color='gray', linestyle='--', alpha=0.7)
+plt.axhline(y=0, color='blue', linestyle='--', alpha=0.7)
+plt.axvline(x=0, color='blue', linestyle='--', alpha=0.7)
 
 # Label the quadrants
 plt.text(df_elections['tone'].max()*0.7, df_elections['afinn_tone_score'].max()*0.7, 
-         'Both Positive', fontsize=12, ha='center')
+         'Both Positive', fontsize=10, ha='center')
 plt.text(df_elections['tone'].min()*0.7, df_elections['afinn_tone_score'].max()*0.7, 
-         'GDELT Negative\nAFINN Positive', fontsize=9, ha='center')
+         'GDELT Negative\nAFINN Positive', fontsize=8, ha='center')
 plt.text(df_elections['tone'].max()*0.7, df_elections['afinn_tone_score'].min()*0.7, 
-         'GDELT Positive\nAFINN Negative', fontsize=9, ha='center')
+         'GDELT Positive\nAFINN Negative', fontsize=8, ha='center')
 plt.text(df_elections['tone'].min()*0.7, df_elections['afinn_tone_score'].min()*0.7, 
-         'Both Negative', fontsize=12, ha='center')
+         'Both Negative', fontsize=10, ha='center')
 
 # Add labels and title
 plt.xlabel('GDELT Tone Score')
 plt.ylabel('AFINN Tone Score')
-plt.title('Correlation between GDELT and AFINN Sentiment Scores\nColored by VADER Score', fontsize=9)
+plt.title('GDELT vs. AFINN Sentiment Comparison', fontsize=10)
 
 # Add a grid for better readability
 plt.grid(True, alpha=0.3)
@@ -385,3 +377,423 @@ A significant cluster of points falls in the "Both Negative" quadrant, confirmin
 There are very few points in the "GDELT Positive, AFINN Negative" quadrant, suggesting that when GDELT finds positive sentiment, AFINN rarely strongly disagrees.
 
 However, there are a fair number of points in the "GDELT Negative, AFINN Positive" quadrant, indicating some systematic differences in how these two metrics evaluate certain types of content.
+
+```{python}
+
+```{python}
+#| echo: false
+#| label: fig-animated-monthly-tone
+#| fig-cap: "Animated monthly average tone trends by news network (2015-2025)"
+
+import plotly.graph_objects as go
+import pandas as pd
+import numpy as np
+from plotly.subplots import make_subplots
+import datetime as dt
+
+# Network color definitions
+NETWORK_COLORS = {
+    'MSNBC': '#3366CC',
+    'ABC News': '#6633CC', 
+    'Fox News': '#CC3366'
+}
+
+# Create the monthly tone data from df
+# Calculate the monthly averages
+monthly_tone = df.groupby(['month', 'network'])['tone'].mean().unstack()
+
+# Convert month period to datetime for plotting
+monthly_tone_reset = monthly_tone.reset_index()
+monthly_tone_reset['month_datetime'] = monthly_tone_reset['month'].dt.to_timestamp()
+
+# Create figure
+fig = go.Figure()
+
+# Add neutral line
+fig.add_shape(
+    type="line",
+    x0=monthly_tone_reset['month_datetime'].min(),
+    x1=monthly_tone_reset['month_datetime'].max(),
+    y0=0,
+    y1=0,
+    line=dict(
+        color="black",
+        width=2,
+        dash="dash",
+    ),
+    name="Neutral Tone"
+)
+
+# Set up the animation parameters
+num_frames = 60  # Number of frames in the animation
+animation_frames = []
+
+# Get min and max y-values for consistent axis scaling
+y_min = monthly_tone.min().min() - 0.5
+y_max = monthly_tone.max().max() + 0.5
+
+# Create frames for the animation
+for i in range(num_frames):
+    frame_data = []
+    # Calculate how much of the data to show in this frame
+    cutoff_idx = int((i + 1) * len(monthly_tone_reset) / num_frames)
+    
+    # If we're at the last frame, make sure we show all data
+    if i == num_frames - 1:
+        cutoff_idx = len(monthly_tone_reset)
+    
+    # Create a trace for each network
+    for column in monthly_tone.columns:
+        visible_data = monthly_tone_reset.iloc[:cutoff_idx]
+        
+        frame_data.append(
+            go.Scatter(
+                x=visible_data['month_datetime'],
+                y=visible_data[column],
+                mode="lines",
+                name=column,
+                line=dict(color=NETWORK_COLORS[column], width=4),
+                showlegend=(i == num_frames - 1)  # Only show legend on the last frame
+            )
+        )
+    
+    # Add data for this frame
+    animation_frames.append(go.Frame(data=frame_data, name=f"frame_{i}"))
+
+# Add the final state to the initial figure (will be shown before animation starts)
+for column in monthly_tone.columns:
+    fig.add_trace(
+        go.Scatter(
+            x=[monthly_tone_reset['month_datetime'].iloc[0]],  # Start with just the first point
+            y=[monthly_tone_reset[column].iloc[0]],
+            mode="lines",
+            name=column,
+            line=dict(color=NETWORK_COLORS[column], width=4)
+        )
+    )
+
+# Update the figure layout
+fig.update_layout(
+    title=dict(
+        text="Monthly Average Tone by News Network (2015-2025)",
+        font=dict(size=18, family="Arial, sans-serif"),
+        x=0.5,
+        xanchor="center"
+    ),
+    xaxis=dict(
+        title="Date",
+        titlefont=dict(size=14),
+        tickformat="%Y",  # Show just the year
+        gridcolor="#E5E5E5",
+        showgrid=True
+    ),
+    yaxis=dict(
+        title="Average Tone Score",
+        titlefont=dict(size=14),
+        gridcolor="#E5E5E5",
+        showgrid=True,
+        range=[y_min, y_max]  # Consistent y-axis range
+    ),
+    legend=dict(
+        title="News Networks",
+        orientation="h",
+        y=-0.2,
+        x=0.5,
+        xanchor="center"
+    ),
+    plot_bgcolor="white",
+    width=900,
+    height=500,
+    margin=dict(l=50, r=50, t=80, b=100),
+    updatemenus=[
+        dict(
+            type="buttons",
+            showactive=False,
+            buttons=[
+                dict(
+                    label="Play",
+                    method="animate",
+                    args=[
+                        None,
+                        dict(
+                            frame=dict(duration=100, redraw=True),
+                            fromcurrent=True,
+                            transition=dict(duration=50, easing="cubic-in-out")
+                        )
+                    ]
+                ),
+                dict(
+                    label="Pause",
+                    method="animate",
+                    args=[
+                        [None],
+                        dict(
+                            frame=dict(duration=0, redraw=True),
+                            mode="immediate",
+                            transition=dict(duration=0)
+                        )
+                    ]
+                )
+            ],
+            direction="left",
+            pad=dict(r=10, t=10),
+            x=0.1,
+            y=-0.2,  # Moved down from y=0 to y=-0.2
+            xanchor="right",
+            yanchor="top"
+        )
+    ]
+)
+
+# Add frames to the figure
+fig.frames = animation_frames
+
+# Add presidential administration periods (shown as background color)
+administrations = [
+    {"name": "Obama Admin", "start": "2015-01-01", "end": "2017-01-19", "color": "rgba(0, 112, 192, 0.1)"},
+    {"name": "Trump 1st Term", "start": "2017-01-20", "end": "2021-01-19", "color": "rgba(192, 0, 0, 0.1)"},
+    {"name": "Biden Admin", "start": "2021-01-20", "end": "2025-01-19", "color": "rgba(0, 112, 192, 0.1)"},
+    {"name": "Trump 2nd Term", "start": "2025-01-20", "end": "2025-03-31", "color": "rgba(192, 0, 0, 0.1)"}
+]
+
+for admin in administrations:
+    fig.add_shape(
+        type="rect",
+        x0=admin["start"],
+        x1=admin["end"],
+        y0=y_min,
+        y1=y_max,
+        fillcolor=admin["color"],
+        line=dict(width=0),
+        layer="below"
+    )
+    
+    # Add presidency annotations
+    fig.add_annotation(
+        x=pd.to_datetime(admin["start"]) + (pd.to_datetime(admin["end"]) - pd.to_datetime(admin["start"])) / 2,
+        y=y_max - 0.3,
+        text=admin["name"],
+        showarrow=False,
+        font=dict(size=10)
+    )
+
+# Show the figure
+fig.show()
+
+```
+
+```{python}
+#| echo: false
+#| label: fig-static-monthly-afinn-clean
+#| fig-cap: "Monthly average AFINN tone trends by news network (2015–2025)"
+
+import plotly.graph_objects as go
+import pandas as pd
+
+# Ensure 'month' column is datetime
+df['month'] = df['month'].dt.to_timestamp()
+
+# Create a continuous monthly index
+all_months = pd.date_range(start=df['month'].min(), end=df['month'].max(), freq='MS')
+
+# Fill missing months and smooth across gaps
+monthly_afinn_full = (
+    df.set_index('month')
+      .groupby('network')['afinn_tone_score']
+      .resample('MS')
+      .mean()
+      .unstack(0)
+      .reindex(all_months)
+      .reset_index()
+      .rename(columns={'index': 'month'})
+)
+
+# Define colors
+NETWORK_COLORS = {
+    'MSNBC': '#3366CC',
+    'ABC News': '#6633CC',
+    'Fox News': '#CC3366'
+}
+
+# Get y-axis range
+y_min = monthly_afinn_full.iloc[:, 1:].min().min() - 0.5
+y_max = monthly_afinn_full.iloc[:, 1:].max().max() + 0.5
+
+# Create figure
+fig = go.Figure()
+
+# Plot each network's line
+for network in ['MSNBC', 'ABC News', 'Fox News']:
+    fig.add_trace(
+        go.Scatter(
+            x=monthly_afinn_full['month'],
+            y=monthly_afinn_full[network],
+            mode="lines+markers",
+            name=network,
+            line=dict(color=NETWORK_COLORS[network], width=4),
+            connectgaps=True
+        )
+    )
+
+# Neutral tone line at y=0
+fig.add_shape(
+    type="line",
+    x0=monthly_afinn_full['month'].min(),
+    x1=monthly_afinn_full['month'].max(),
+    y0=0,
+    y1=0,
+    line=dict(color="black", width=2, dash="dash")
+)
+
+# Add administration shading
+administrations = [
+    {"name": "Obama Admin", "start": "2015-01-01", "end": "2017-01-19", "color": "rgba(0, 112, 192, 0.1)"},
+    {"name": "Trump 1st Term", "start": "2017-01-20", "end": "2021-01-19", "color": "rgba(192, 0, 0, 0.1)"},
+    {"name": "Biden Admin", "start": "2021-01-20", "end": "2025-01-19", "color": "rgba(0, 112, 192, 0.1)"},
+    {"name": "Trump 2nd Term", "start": "2025-01-20", "end": "2025-03-31", "color": "rgba(192, 0, 0, 0.1)"}
+]
+
+for admin in administrations:
+    fig.add_shape(
+        type="rect",
+        x0=admin["start"],
+        x1=admin["end"],
+        y0=y_min,
+        y1=y_max,
+        fillcolor=admin["color"],
+        line=dict(width=0),
+        layer="below"
+    )
+    fig.add_annotation(
+        x=pd.to_datetime(admin["start"]) + (pd.to_datetime(admin["end"]) - pd.to_datetime(admin["start"])) / 2,
+        y=y_max - 0.3,
+        text=admin["name"],
+        showarrow=False,
+        font=dict(size=10)
+    )
+
+# Final layout
+fig.update_layout(
+    title="Monthly Average AFINN Tone by News Network (2015–2025)",
+    xaxis_title="Date",
+    yaxis_title="AFINN Tone Score",
+    yaxis=dict(range=[y_min, y_max], gridcolor="#E5E5E5"),
+    xaxis=dict(tickformat="%Y", gridcolor="#E5E5E5"),
+    legend_title="News Networks",
+    plot_bgcolor="white",
+    width=900,
+    height=500,
+    margin=dict(l=50, r=50, t=80, b=80)
+)
+
+fig.show()
+
+```
+
+```{python}
+
+#| echo: false
+#| label: fig-static-monthly-vader
+#| fig-cap: "Monthly average VADER tone trends by news network (2015–2025)"
+
+import plotly.graph_objects as go
+import pandas as pd
+
+# Ensure 'month' is timestamp (for Period 
+
+# Create continuous monthly date range
+all_months = pd.date_range(start=df['month'].min(), end=df['month'].max(), freq='MS')
+
+# Fill missing months with NaNs and compute monthly averages
+monthly_vader_full = (
+    df.set_index('month')
+      .groupby('network')['vader_tone_score']
+      .resample('MS')
+      .mean()
+      .unstack(0)
+      .reindex(all_months)
+      .reset_index()
+      .rename(columns={'index': 'month'})
+)
+
+# Define network colors
+NETWORK_COLORS = {
+    'MSNBC': '#3366CC',
+    'ABC News': '#6633CC',
+    'Fox News': '#CC3366'
+}
+
+# Get y-axis range
+y_min = monthly_vader_full.iloc[:, 1:].min().min() - 0.05
+y_max = monthly_vader_full.iloc[:, 1:].max().max() + 0.05
+
+# Initialize plot
+fig = go.Figure()
+
+# Plot each network
+for network in ['MSNBC', 'ABC News', 'Fox News']:
+    fig.add_trace(
+        go.Scatter(
+            x=monthly_vader_full['month'],
+            y=monthly_vader_full[network],
+            mode="lines+markers",
+            name=network,
+            line=dict(color=NETWORK_COLORS[network], width=4),
+            connectgaps=True
+        )
+    )
+
+# Add neutral line at y=0
+fig.add_shape(
+    type="line",
+    x0=monthly_vader_full['month'].min(),
+    x1=monthly_vader_full['month'].max(),
+    y0=0,
+    y1=0,
+    line=dict(color="black", width=2, dash="dash")
+)
+
+# Administration shading
+administrations = [
+    {"name": "Obama Admin", "start": "2015-01-01", "end": "2017-01-19", "color": "rgba(0, 112, 192, 0.1)"},
+    {"name": "Trump 1st Term", "start": "2017-01-20", "end": "2021-01-19", "color": "rgba(192, 0, 0, 0.1)"},
+    {"name": "Biden Admin", "start": "2021-01-20", "end": "2025-01-19", "color": "rgba(0, 112, 192, 0.1)"},
+    {"name": "Trump 2nd Term", "start": "2025-01-20", "end": "2025-03-31", "color": "rgba(192, 0, 0, 0.1)"}
+]
+
+for admin in administrations:
+    fig.add_shape(
+        type="rect",
+        x0=admin["start"],
+        x1=admin["end"],
+        y0=y_min,
+        y1=y_max,
+        fillcolor=admin["color"],
+        line=dict(width=0),
+        layer="below"
+    )
+    fig.add_annotation(
+        x=pd.to_datetime(admin["start"]) + (pd.to_datetime(admin["end"]) - pd.to_datetime(admin["start"])) / 2,
+        y=y_max - 0.02,
+        text=admin["name"],
+        showarrow=False,
+        font=dict(size=10)
+    )
+
+# Final layout
+fig.update_layout(
+    title="Monthly Average VADER Tone by News Network (2015–2025)",
+    xaxis_title="Date",
+    yaxis_title="VADER Tone Score",
+    yaxis=dict(range=[y_min, y_max], gridcolor="#E5E5E5"),
+    xaxis=dict(tickformat="%Y", gridcolor="#E5E5E5"),
+    legend_title="News Networks",
+    plot_bgcolor="white",
+    width=900,
+    height=500,
+    margin=dict(l=50, r=50, t=80, b=80)
+)
+
+fig.show()
+
+```
