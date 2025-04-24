@@ -6036,7 +6036,7 @@ function enhanceMonthCards() {
           // Create a descriptive tooltip
           let toneDescription = "";
           if (toneValue <= -3.0) {
-              toneDescription = "Highly negative";
+              toneDescription = "More negative";
           } else if (toneValue <= -2.5) {
               toneDescription = "Moderately negative";
           } else {
@@ -6345,7 +6345,7 @@ function addSourceToneInfo(source, year, month) {
       // Get tone description
       let toneDescription = "";
       if (toneValue <= -3.0) {
-          toneDescription = "Highly negative";
+          toneDescription = "More negative";
       } else if (toneValue <= -2.5) {
           toneDescription = "Moderately negative";
       } else {
