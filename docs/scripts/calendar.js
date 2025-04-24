@@ -5987,7 +5987,7 @@ function addToneInfoToDetail(year, month) {
       // Create a description based on the tone value
       let toneDescription = "";
       if (toneValue <= -3.0) {
-          toneDescription = "Highly negative coverage";
+          toneDescription = "More negative coverage";
       } else if (toneValue <= -2.5) {
           toneDescription = "Moderately negative coverage";
       } else {
@@ -6036,7 +6036,7 @@ function enhanceMonthCards() {
           // Create a descriptive tooltip
           let toneDescription = "";
           if (toneValue <= -3.0) {
-              toneDescription = "Highly negative";
+              toneDescription = "More negative";
           } else if (toneValue <= -2.5) {
               toneDescription = "Moderately negative";
           } else {
@@ -6342,10 +6342,10 @@ function addSourceToneInfo(source, year, month) {
       // Clamp to 0-100 range
       percentage = Math.max(0, Math.min(100, percentage));
       
-      // Get tone description
+      // Get tone description - make sure to not be too extreme (it's all RELATIVE)
       let toneDescription = "";
       if (toneValue <= -3.0) {
-          toneDescription = "Highly negative";
+          toneDescription = "More negative";
       } else if (toneValue <= -2.5) {
           toneDescription = "Moderately negative";
       } else {

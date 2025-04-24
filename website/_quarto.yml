@@ -12,11 +12,9 @@ website:
       - href: index.qmd
         text: Home
       - href: page-1.qmd
-        text: Network Tone Analysis 1
+        text: Network Tone Analysis
       - href: page-2.qmd
         text: Election Tone Analysis
-      - href: page-3.qmd
-        text: Network Tone Analysis 2
       - href: page-4.qmd
         text: Topic Modeling
       - href: page-5.qmd
