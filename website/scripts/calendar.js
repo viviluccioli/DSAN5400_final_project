@@ -5987,7 +5987,7 @@ function addToneInfoToDetail(year, month) {
       // Create a description based on the tone value
       let toneDescription = "";
       if (toneValue <= -3.0) {
-          toneDescription = "Highly negative coverage";
+          toneDescription = "More negative coverage";
       } else if (toneValue <= -2.5) {
           toneDescription = "Moderately negative coverage";
       } else {
