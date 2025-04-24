@@ -6342,7 +6342,7 @@ function addSourceToneInfo(source, year, month) {
       // Clamp to 0-100 range
       percentage = Math.max(0, Math.min(100, percentage));
       
-      // Get tone description
+      // Get tone description - make sure to not be too extreme (it's all RELATIVE)
       let toneDescription = "";
       if (toneValue <= -3.0) {
           toneDescription = "More negative";
