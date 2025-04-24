@@ -1,0 +1,5226 @@
+{
+  "fox": {
+    "2015": {
+      "2": [
+        {
+          "topic": "obama/says",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "man/new",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "obama/says",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "man/new",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "police/says",
+          "rank": 1
+        },
+        {
+          "topic": "says/state",
+          "rank": 2
+        },
+        {
+          "topic": "arrested/new",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "police/says",
+          "rank": 1
+        },
+        {
+          "topic": "says/state",
+          "rank": 2
+        },
+        {
+          "topic": "arrested/new",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "police/says",
+          "rank": 1
+        },
+        {
+          "topic": "says/state",
+          "rank": 2
+        },
+        {
+          "topic": "arrested/new",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "iran/says",
+          "rank": 1
+        },
+        {
+          "topic": "killed/says",
+          "rank": 2
+        },
+        {
+          "topic": "man/new",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "iran/says",
+          "rank": 1
+        },
+        {
+          "topic": "killed/says",
+          "rank": 2
+        },
+        {
+          "topic": "man/new",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "iran/says",
+          "rank": 1
+        },
+        {
+          "topic": "killed/says",
+          "rank": 2
+        },
+        {
+          "topic": "man/new",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "man/says",
+          "rank": 1
+        },
+        {
+          "topic": "en/la",
+          "rank": 2
+        },
+        {
+          "topic": "new/paris",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "man/says",
+          "rank": 1
+        },
+        {
+          "topic": "en/la",
+          "rank": 2
+        },
+        {
+          "topic": "new/paris",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "man/says",
+          "rank": 1
+        },
+        {
+          "topic": "en/la",
+          "rank": 2
+        },
+        {
+          "topic": "new/paris",
+          "rank": 3
+        }
+      ]
+    },
+    "2016": {
+      "1": [
+        {
+          "topic": "killed/police",
+          "rank": 1
+        },
+        {
+          "topic": "new/trump",
+          "rank": 2
+        },
+        {
+          "topic": "obama/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "killed/police",
+          "rank": 1
+        },
+        {
+          "topic": "new/trump",
+          "rank": 2
+        },
+        {
+          "topic": "obama/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "killed/police",
+          "rank": 1
+        },
+        {
+          "topic": "new/trump",
+          "rank": 2
+        },
+        {
+          "topic": "obama/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "man/says",
+          "rank": 1
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 2
+        },
+        {
+          "topic": "el/la",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "man/says",
+          "rank": 1
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 2
+        },
+        {
+          "topic": "el/la",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "man/says",
+          "rank": 1
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 2
+        },
+        {
+          "topic": "el/la",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "clinton/latest",
+          "rank": 1
+        },
+        {
+          "topic": "la/says",
+          "rank": 2
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "clinton/latest",
+          "rank": 1
+        },
+        {
+          "topic": "la/says",
+          "rank": 2
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "clinton/latest",
+          "rank": 1
+        },
+        {
+          "topic": "la/says",
+          "rank": 2
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "latest/says",
+          "rank": 1
+        },
+        {
+          "topic": "obama/trump",
+          "rank": 2
+        },
+        {
+          "topic": "man/year",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "latest/says",
+          "rank": 1
+        },
+        {
+          "topic": "obama/trump",
+          "rank": 2
+        },
+        {
+          "topic": "man/year",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "latest/says",
+          "rank": 1
+        },
+        {
+          "topic": "obama/trump",
+          "rank": 2
+        },
+        {
+          "topic": "man/year",
+          "rank": 3
+        }
+      ]
+    },
+    "2017": {
+      "1": [
+        {
+          "topic": "new/year",
+          "rank": 1
+        },
+        {
+          "topic": "man/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "new/year",
+          "rank": 1
+        },
+        {
+          "topic": "man/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "new/year",
+          "rank": 1
+        },
+        {
+          "topic": "man/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "new/police",
+          "rank": 1
+        },
+        {
+          "topic": "north/trump",
+          "rank": 2
+        },
+        {
+          "topic": "case/man",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "new/police",
+          "rank": 1
+        },
+        {
+          "topic": "north/trump",
+          "rank": 2
+        },
+        {
+          "topic": "case/man",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "new/police",
+          "rank": 1
+        },
+        {
+          "topic": "north/trump",
+          "rank": 2
+        },
+        {
+          "topic": "case/man",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "trump/trumps",
+          "rank": 1
+        },
+        {
+          "topic": "korea/north",
+          "rank": 2
+        },
+        {
+          "topic": "latest/man",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "trump/trumps",
+          "rank": 1
+        },
+        {
+          "topic": "korea/north",
+          "rank": 2
+        },
+        {
+          "topic": "latest/man",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "trump/trumps",
+          "rank": 1
+        },
+        {
+          "topic": "korea/north",
+          "rank": 2
+        },
+        {
+          "topic": "latest/man",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "says/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "says/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "says/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ]
+    },
+    "2018": {
+      "1": [
+        {
+          "topic": "killed/police",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "killed/police",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "killed/police",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "man/trump",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "says/says html",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "man/trump",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "says/says html",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "man/trump",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "says/says html",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "says/trump",
+          "rank": 1
+        },
+        {
+          "topic": "kavanaugh/say",
+          "rank": 2
+        },
+        {
+          "topic": "new/old",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "says/trump",
+          "rank": 1
+        },
+        {
+          "topic": "kavanaugh/say",
+          "rank": 2
+        },
+        {
+          "topic": "new/old",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "says/trump",
+          "rank": 1
+        },
+        {
+          "topic": "kavanaugh/say",
+          "rank": 2
+        },
+        {
+          "topic": "new/old",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "report/trump",
+          "rank": 2
+        },
+        {
+          "topic": "death/killed",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "report/trump",
+          "rank": 2
+        },
+        {
+          "topic": "death/killed",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "report/trump",
+          "rank": 2
+        },
+        {
+          "topic": "death/killed",
+          "rank": 3
+        }
+      ]
+    },
+    "2019": {
+      "1": [
+        {
+          "topic": "man/woman",
+          "rank": 1
+        },
+        {
+          "topic": "says/trump",
+          "rank": 2
+        },
+        {
+          "topic": "court/police",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "man/woman",
+          "rank": 1
+        },
+        {
+          "topic": "says/trump",
+          "rank": 2
+        },
+        {
+          "topic": "court/police",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "man/woman",
+          "rank": 1
+        },
+        {
+          "topic": "says/trump",
+          "rank": 2
+        },
+        {
+          "topic": "court/police",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "dead/latest",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "dead/latest",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "dead/latest",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "democrats/trump",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "gun/trump",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "democrats/trump",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "gun/trump",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "democrats/trump",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "gun/trump",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "impeachment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "christmas/new",
+          "rank": 2
+        },
+        {
+          "topic": "florida/police",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "impeachment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "christmas/new",
+          "rank": 2
+        },
+        {
+          "topic": "florida/police",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "impeachment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "christmas/new",
+          "rank": 2
+        },
+        {
+          "topic": "florida/police",
+          "rank": 3
+        }
+      ]
+    },
+    "2020": {
+      "1": [
+        {
+          "topic": "coronavirus/outbreak",
+          "rank": 1
+        },
+        {
+          "topic": "impeachment/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/york",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "coronavirus/outbreak",
+          "rank": 1
+        },
+        {
+          "topic": "impeachment/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/york",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "coronavirus/outbreak",
+          "rank": 1
+        },
+        {
+          "topic": "impeachment/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/york",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "coronavirus/police",
+          "rank": 1
+        },
+        {
+          "topic": "coronavirus/trump",
+          "rank": 2
+        },
+        {
+          "topic": "coronavirus/new",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "coronavirus/police",
+          "rank": 1
+        },
+        {
+          "topic": "coronavirus/trump",
+          "rank": 2
+        },
+        {
+          "topic": "coronavirus/new",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "coronavirus/police",
+          "rank": 1
+        },
+        {
+          "topic": "coronavirus/trump",
+          "rank": 2
+        },
+        {
+          "topic": "coronavirus/new",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "coronavirus/police",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "coronavirus/police",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "coronavirus/police",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ]
+    },
+    "2021": {
+      "1": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "covid/covid 19",
+          "rank": 2
+        },
+        {
+          "topic": "2021/meghan",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "covid/covid 19",
+          "rank": 2
+        },
+        {
+          "topic": "2021/meghan",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "covid/covid 19",
+          "rank": 2
+        },
+        {
+          "topic": "2021/meghan",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "biden/harris",
+          "rank": 2
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "biden/harris",
+          "rank": 2
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "biden/harris",
+          "rank": 2
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "afghanistan/taliban",
+          "rank": 1
+        },
+        {
+          "topic": "murder/police",
+          "rank": 2
+        },
+        {
+          "topic": "covid/covid 19",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "afghanistan/taliban",
+          "rank": 1
+        },
+        {
+          "topic": "murder/police",
+          "rank": 2
+        },
+        {
+          "topic": "covid/covid 19",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "afghanistan/taliban",
+          "rank": 1
+        },
+        {
+          "topic": "murder/police",
+          "rank": 2
+        },
+        {
+          "topic": "covid/covid 19",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "new/school",
+          "rank": 1
+        },
+        {
+          "topic": "biden/democrats",
+          "rank": 2
+        },
+        {
+          "topic": "house/white",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "new/school",
+          "rank": 1
+        },
+        {
+          "topic": "biden/democrats",
+          "rank": 2
+        },
+        {
+          "topic": "house/white",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "new/school",
+          "rank": 1
+        },
+        {
+          "topic": "biden/democrats",
+          "rank": 2
+        },
+        {
+          "topic": "house/white",
+          "rank": 3
+        }
+      ]
+    },
+    "2022": {
+      "1": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "biden/house",
+          "rank": 2
+        },
+        {
+          "topic": "biden/china",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "biden/house",
+          "rank": 2
+        },
+        {
+          "topic": "biden/china",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "biden/house",
+          "rank": 2
+        },
+        {
+          "topic": "biden/china",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "border/ukraine",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "border/ukraine",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "border/ukraine",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "house/white",
+          "rank": 1
+        },
+        {
+          "topic": "police/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/president",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "house/white",
+          "rank": 1
+        },
+        {
+          "topic": "police/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/president",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "house/white",
+          "rank": 1
+        },
+        {
+          "topic": "police/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/president",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "biden/police",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/new",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "biden/police",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/new",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "biden/police",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/new",
+          "rank": 3
+        }
+      ]
+    },
+    "2023": {
+      "1": [
+        {
+          "topic": "border/china",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "biden/house",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "border/china",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "biden/house",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "border/china",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "biden/house",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "china/new",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "biden/house",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "china/new",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "biden/house",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "china/new",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "biden/house",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "gop/man",
+          "rank": 1
+        },
+        {
+          "topic": "biden/house",
+          "rank": 2
+        },
+        {
+          "topic": "border/new",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "gop/man",
+          "rank": 1
+        },
+        {
+          "topic": "biden/house",
+          "rank": 2
+        },
+        {
+          "topic": "border/new",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "gop/man",
+          "rank": 1
+        },
+        {
+          "topic": "biden/house",
+          "rank": 2
+        },
+        {
+          "topic": "border/new",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "man/new",
+          "rank": 1
+        },
+        {
+          "topic": "biden/israel",
+          "rank": 2
+        },
+        {
+          "topic": "hamas/report",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "man/new",
+          "rank": 1
+        },
+        {
+          "topic": "biden/israel",
+          "rank": 2
+        },
+        {
+          "topic": "hamas/report",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "man/new",
+          "rank": 1
+        },
+        {
+          "topic": "biden/israel",
+          "rank": 2
+        },
+        {
+          "topic": "hamas/report",
+          "rank": 3
+        }
+      ]
+    },
+    "2024": {
+      "1": [
+        {
+          "topic": "biden/house",
+          "rank": 1
+        },
+        {
+          "topic": "news/trump",
+          "rank": 2
+        },
+        {
+          "topic": "dead/new",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "biden/house",
+          "rank": 1
+        },
+        {
+          "topic": "news/trump",
+          "rank": 2
+        },
+        {
+          "topic": "dead/new",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "biden/house",
+          "rank": 1
+        },
+        {
+          "topic": "news/trump",
+          "rank": 2
+        },
+        {
+          "topic": "dead/new",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/police",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/police",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/police",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "biden/house",
+          "rank": 1
+        },
+        {
+          "topic": "harris/trump",
+          "rank": 2
+        },
+        {
+          "topic": "man/star",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "biden/house",
+          "rank": 1
+        },
+        {
+          "topic": "harris/trump",
+          "rank": 2
+        },
+        {
+          "topic": "man/star",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "biden/house",
+          "rank": 1
+        },
+        {
+          "topic": "harris/trump",
+          "rank": 2
+        },
+        {
+          "topic": "man/star",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "harris/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/news",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "harris/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/news",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "harris/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/news",
+          "rank": 3
+        }
+      ]
+    },
+    "2025": {
+      "1": [
+        {
+          "topic": "trump/trumps",
+          "rank": 1
+        },
+        {
+          "topic": "trump/white",
+          "rank": 2
+        },
+        {
+          "topic": "police/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "trump/trumps",
+          "rank": 1
+        },
+        {
+          "topic": "trump/white",
+          "rank": 2
+        },
+        {
+          "topic": "police/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "trump/trumps",
+          "rank": 1
+        },
+        {
+          "topic": "trump/white",
+          "rank": 2
+        },
+        {
+          "topic": "police/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "says/trump",
+          "rank": 1
+        },
+        {
+          "topic": "expert/new",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trump admin",
+          "rank": 3
+        }
+      ]
+    }
+  },
+  "abc": {
+    "2015": {
+      "2": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "stocks/woman",
+          "rank": 2
+        },
+        {
+          "topic": "gop/state",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "stocks/woman",
+          "rank": 2
+        },
+        {
+          "topic": "gop/state",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "latest/year",
+          "rank": 2
+        },
+        {
+          "topic": "house/obama",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "latest/year",
+          "rank": 2
+        },
+        {
+          "topic": "house/obama",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "latest/year",
+          "rank": 2
+        },
+        {
+          "topic": "house/obama",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "case/year",
+          "rank": 1
+        },
+        {
+          "topic": "death/police",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "case/year",
+          "rank": 1
+        },
+        {
+          "topic": "death/police",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "case/year",
+          "rank": 1
+        },
+        {
+          "topic": "death/police",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "killed/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/police",
+          "rank": 2
+        },
+        {
+          "topic": "latest/police",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "killed/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/police",
+          "rank": 2
+        },
+        {
+          "topic": "latest/police",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "killed/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/police",
+          "rank": 2
+        },
+        {
+          "topic": "latest/police",
+          "rank": 3
+        }
+      ]
+    },
+    "2016": {
+      "1": [
+        {
+          "topic": "man/police",
+          "rank": 1
+        },
+        {
+          "topic": "president/state",
+          "rank": 2
+        },
+        {
+          "topic": "court/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "man/police",
+          "rank": 1
+        },
+        {
+          "topic": "president/state",
+          "rank": 2
+        },
+        {
+          "topic": "court/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "man/police",
+          "rank": 1
+        },
+        {
+          "topic": "president/state",
+          "rank": 2
+        },
+        {
+          "topic": "court/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "obama/trump",
+          "rank": 2
+        },
+        {
+          "topic": "killed/state",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "obama/trump",
+          "rank": 2
+        },
+        {
+          "topic": "killed/state",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "obama/trump",
+          "rank": 2
+        },
+        {
+          "topic": "killed/state",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "court/death",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "court/death",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "court/death",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "death/killed",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "death/killed",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "death/killed",
+          "rank": 1
+        },
+        {
+          "topic": "man/police",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/trump",
+          "rank": 3
+        }
+      ]
+    },
+    "2017": {
+      "1": [
+        {
+          "topic": "latest/man",
+          "rank": 1
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 2
+        },
+        {
+          "topic": "dies/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "latest/man",
+          "rank": 1
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 2
+        },
+        {
+          "topic": "dies/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "latest/man",
+          "rank": 1
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 2
+        },
+        {
+          "topic": "dies/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "latest/trump",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "ban/trump",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "latest/trump",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "ban/trump",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "latest/trump",
+          "rank": 1
+        },
+        {
+          "topic": "killed/police",
+          "rank": 2
+        },
+        {
+          "topic": "ban/trump",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "man/woman",
+          "rank": 1
+        },
+        {
+          "topic": "house/trump",
+          "rank": 2
+        },
+        {
+          "topic": "hurricane/police",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "man/woman",
+          "rank": 1
+        },
+        {
+          "topic": "house/trump",
+          "rank": 2
+        },
+        {
+          "topic": "hurricane/police",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "man/woman",
+          "rank": 1
+        },
+        {
+          "topic": "house/trump",
+          "rank": 2
+        },
+        {
+          "topic": "hurricane/police",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "killed/police",
+          "rank": 1
+        },
+        {
+          "topic": "death/shooting",
+          "rank": 2
+        },
+        {
+          "topic": "president/year",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "killed/police",
+          "rank": 1
+        },
+        {
+          "topic": "death/shooting",
+          "rank": 2
+        },
+        {
+          "topic": "president/year",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "killed/police",
+          "rank": 1
+        },
+        {
+          "topic": "death/shooting",
+          "rank": 2
+        },
+        {
+          "topic": "president/year",
+          "rank": 3
+        }
+      ]
+    },
+    "2018": {
+      "1": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "man/official",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "man/official",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "man/official",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "latest/leader",
+          "rank": 1
+        },
+        {
+          "topic": "house/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "latest/leader",
+          "rank": 1
+        },
+        {
+          "topic": "house/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "latest/leader",
+          "rank": 1
+        },
+        {
+          "topic": "house/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "man/russia",
+          "rank": 1
+        },
+        {
+          "topic": "china/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "man/russia",
+          "rank": 1
+        },
+        {
+          "topic": "china/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "man/russia",
+          "rank": 1
+        },
+        {
+          "topic": "china/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "border/china",
+          "rank": 1
+        },
+        {
+          "topic": "stocks/year",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "border/china",
+          "rank": 1
+        },
+        {
+          "topic": "stocks/year",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "border/china",
+          "rank": 1
+        },
+        {
+          "topic": "stocks/year",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ]
+    },
+    "2019": {
+      "1": [
+        {
+          "topic": "arrested/police",
+          "rank": 1
+        },
+        {
+          "topic": "house/president",
+          "rank": 2
+        },
+        {
+          "topic": "man/texas",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "arrested/police",
+          "rank": 1
+        },
+        {
+          "topic": "house/president",
+          "rank": 2
+        },
+        {
+          "topic": "man/texas",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "arrested/police",
+          "rank": 1
+        },
+        {
+          "topic": "house/president",
+          "rank": 2
+        },
+        {
+          "topic": "man/texas",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "iran/officials",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "iran/officials",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "iran/officials",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "death/police",
+          "rank": 1
+        },
+        {
+          "topic": "china/latest",
+          "rank": 2
+        },
+        {
+          "topic": "dies/trump",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "death/police",
+          "rank": 1
+        },
+        {
+          "topic": "china/latest",
+          "rank": 2
+        },
+        {
+          "topic": "dies/trump",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "death/police",
+          "rank": 1
+        },
+        {
+          "topic": "china/latest",
+          "rank": 2
+        },
+        {
+          "topic": "dies/trump",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/police",
+          "rank": 2
+        },
+        {
+          "topic": "judge/woman",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/police",
+          "rank": 2
+        },
+        {
+          "topic": "judge/woman",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/police",
+          "rank": 2
+        },
+        {
+          "topic": "judge/woman",
+          "rank": 3
+        }
+      ]
+    },
+    "2020": {
+      "1": [
+        {
+          "topic": "coronavirus/virus",
+          "rank": 1
+        },
+        {
+          "topic": "amid/man",
+          "rank": 2
+        },
+        {
+          "topic": "trump/year",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "coronavirus/virus",
+          "rank": 1
+        },
+        {
+          "topic": "amid/man",
+          "rank": 2
+        },
+        {
+          "topic": "trump/year",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "coronavirus/virus",
+          "rank": 1
+        },
+        {
+          "topic": "amid/man",
+          "rank": 2
+        },
+        {
+          "topic": "trump/year",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "coronavirus/virus",
+          "rank": 2
+        },
+        {
+          "topic": "death/virus",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "coronavirus/virus",
+          "rank": 2
+        },
+        {
+          "topic": "death/virus",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "coronavirus/virus",
+          "rank": 2
+        },
+        {
+          "topic": "death/virus",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "china/death",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "china/death",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "china/death",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "death/police",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "death/police",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "death/police",
+          "rank": 3
+        }
+      ]
+    },
+    "2021": {
+      "1": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "court/vaccine",
+          "rank": 2
+        },
+        {
+          "topic": "man/woman",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "court/vaccine",
+          "rank": 2
+        },
+        {
+          "topic": "man/woman",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "covid/covid 19",
+          "rank": 1
+        },
+        {
+          "topic": "court/vaccine",
+          "rank": 2
+        },
+        {
+          "topic": "man/woman",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/virus",
+          "rank": 2
+        },
+        {
+          "topic": "biden/shares",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/virus",
+          "rank": 2
+        },
+        {
+          "topic": "biden/shares",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "police/shooting",
+          "rank": 1
+        },
+        {
+          "topic": "court/virus",
+          "rank": 2
+        },
+        {
+          "topic": "biden/shares",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "covid/covid 19",
+          "rank": 2
+        },
+        {
+          "topic": "china/state",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "covid/covid 19",
+          "rank": 2
+        },
+        {
+          "topic": "china/state",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "covid/covid 19",
+          "rank": 2
+        },
+        {
+          "topic": "china/state",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "vaccine/virus",
+          "rank": 1
+        },
+        {
+          "topic": "dies/police",
+          "rank": 2
+        },
+        {
+          "topic": "climate/shooting",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "vaccine/virus",
+          "rank": 1
+        },
+        {
+          "topic": "dies/police",
+          "rank": 2
+        },
+        {
+          "topic": "climate/shooting",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "vaccine/virus",
+          "rank": 1
+        },
+        {
+          "topic": "dies/police",
+          "rank": 2
+        },
+        {
+          "topic": "climate/shooting",
+          "rank": 3
+        }
+      ]
+    },
+    "2022": {
+      "1": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "house/president",
+          "rank": 2
+        },
+        {
+          "topic": "court/covid",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "house/president",
+          "rank": 2
+        },
+        {
+          "topic": "court/covid",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "house/president",
+          "rank": 2
+        },
+        {
+          "topic": "court/covid",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "abortion/biden",
+          "rank": 2
+        },
+        {
+          "topic": "death/killed",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "abortion/biden",
+          "rank": 2
+        },
+        {
+          "topic": "death/killed",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "abortion/biden",
+          "rank": 2
+        },
+        {
+          "topic": "death/killed",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "case/police",
+          "rank": 1
+        },
+        {
+          "topic": "court/man",
+          "rank": 2
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "case/police",
+          "rank": 1
+        },
+        {
+          "topic": "court/man",
+          "rank": 2
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "case/police",
+          "rank": 1
+        },
+        {
+          "topic": "court/man",
+          "rank": 2
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "judge/twitter",
+          "rank": 1
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 2
+        },
+        {
+          "topic": "russian/ukraine",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "judge/twitter",
+          "rank": 1
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 2
+        },
+        {
+          "topic": "russian/ukraine",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "judge/twitter",
+          "rank": 1
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 2
+        },
+        {
+          "topic": "russian/ukraine",
+          "rank": 3
+        }
+      ]
+    },
+    "2023": {
+      "1": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "dead/man",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "dead/man",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "president/trump",
+          "rank": 2
+        },
+        {
+          "topic": "dead/man",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "court/supreme court",
+          "rank": 1
+        },
+        {
+          "topic": "russia/ukraine",
+          "rank": 2
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "court/supreme court",
+          "rank": 1
+        },
+        {
+          "topic": "russia/ukraine",
+          "rank": 2
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "court/supreme court",
+          "rank": 1
+        },
+        {
+          "topic": "russia/ukraine",
+          "rank": 2
+        },
+        {
+          "topic": "police/shooting",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "death/police",
+          "rank": 1
+        },
+        {
+          "topic": "russia/ukraine",
+          "rank": 2
+        },
+        {
+          "topic": "election/president",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "death/police",
+          "rank": 1
+        },
+        {
+          "topic": "russia/ukraine",
+          "rank": 2
+        },
+        {
+          "topic": "election/president",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "death/police",
+          "rank": 1
+        },
+        {
+          "topic": "russia/ukraine",
+          "rank": 2
+        },
+        {
+          "topic": "election/president",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "gaza/israel",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "gaza/israel",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "gaza/israel",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ]
+    },
+    "2024": {
+      "1": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "man/new",
+          "rank": 1
+        },
+        {
+          "topic": "biden/election",
+          "rank": 2
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "man/new",
+          "rank": 1
+        },
+        {
+          "topic": "biden/election",
+          "rank": 2
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "man/new",
+          "rank": 1
+        },
+        {
+          "topic": "biden/election",
+          "rank": 2
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "harris/trump",
+          "rank": 1
+        },
+        {
+          "topic": "china/israel",
+          "rank": 2
+        },
+        {
+          "topic": "court/new",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "harris/trump",
+          "rank": 1
+        },
+        {
+          "topic": "china/israel",
+          "rank": 2
+        },
+        {
+          "topic": "court/new",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "harris/trump",
+          "rank": 1
+        },
+        {
+          "topic": "china/israel",
+          "rank": 2
+        },
+        {
+          "topic": "court/new",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "man/years",
+          "rank": 2
+        },
+        {
+          "topic": "death/police",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "man/years",
+          "rank": 2
+        },
+        {
+          "topic": "death/police",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "man/years",
+          "rank": 2
+        },
+        {
+          "topic": "death/police",
+          "rank": 3
+        }
+      ]
+    },
+    "2025": {
+      "1": [
+        {
+          "topic": "trump/trump administration",
+          "rank": 1
+        },
+        {
+          "topic": "court/killed",
+          "rank": 2
+        },
+        {
+          "topic": "term/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "trump/trump administration",
+          "rank": 1
+        },
+        {
+          "topic": "court/killed",
+          "rank": 2
+        },
+        {
+          "topic": "term/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "trump/trump administration",
+          "rank": 1
+        },
+        {
+          "topic": "court/killed",
+          "rank": 2
+        },
+        {
+          "topic": "term/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "house/tennessee",
+          "rank": 1
+        },
+        {
+          "topic": "court/death",
+          "rank": 2
+        },
+        {
+          "topic": "trumps/trumps tariff",
+          "rank": 3
+        }
+      ]
+    }
+  },
+  "msnbc": {
+    "2015": {
+      "2": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "2016/new",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "court/police",
+          "rank": 1
+        },
+        {
+          "topic": "2016/new",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "bush/jeb",
+          "rank": 1
+        },
+        {
+          "topic": "paul/trade",
+          "rank": 2
+        },
+        {
+          "topic": "gay/marriage",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "bush/jeb",
+          "rank": 1
+        },
+        {
+          "topic": "paul/trade",
+          "rank": 2
+        },
+        {
+          "topic": "gay/marriage",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "bush/jeb",
+          "rank": 1
+        },
+        {
+          "topic": "paul/trade",
+          "rank": 2
+        },
+        {
+          "topic": "gay/marriage",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "donald trump/trump",
+          "rank": 1
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 2
+        },
+        {
+          "topic": "obama/president",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "donald trump/trump",
+          "rank": 1
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 2
+        },
+        {
+          "topic": "obama/president",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "donald trump/trump",
+          "rank": 1
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 2
+        },
+        {
+          "topic": "obama/president",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "cruz/sanders",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "cruz/sanders",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "cruz/sanders",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 3
+        }
+      ]
+    },
+    "2016": {
+      "1": [
+        {
+          "topic": "clinton/sanders",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "court/rubio",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "clinton/sanders",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "court/rubio",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "clinton/sanders",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "court/rubio",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "gop/trump",
+          "rank": 1
+        },
+        {
+          "topic": "campaign/trump",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "gop/trump",
+          "rank": 1
+        },
+        {
+          "topic": "campaign/trump",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "gop/trump",
+          "rank": 1
+        },
+        {
+          "topic": "campaign/trump",
+          "rank": 2
+        },
+        {
+          "topic": "clinton/hillary clinton",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "clinton/trump",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "presidential/trumps",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "clinton/trump",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "presidential/trumps",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "clinton/trump",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "presidential/trumps",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "trump/trumps",
+          "rank": 1
+        },
+        {
+          "topic": "republican/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "trump/trumps",
+          "rank": 1
+        },
+        {
+          "topic": "republican/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "trump/trumps",
+          "rank": 1
+        },
+        {
+          "topic": "republican/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ]
+    },
+    "2017": {
+      "1": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "campaign/report",
+          "rank": 2
+        },
+        {
+          "topic": "health/health care",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "campaign/report",
+          "rank": 2
+        },
+        {
+          "topic": "health/health care",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "campaign/report",
+          "rank": 2
+        },
+        {
+          "topic": "health/health care",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "house/white",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "campaign/campaign round",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "house/white",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "campaign/campaign round",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "house/white",
+          "rank": 1
+        },
+        {
+          "topic": "donald trump/trump",
+          "rank": 2
+        },
+        {
+          "topic": "campaign/campaign round",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "campaign/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "campaign/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "campaign/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 2
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "tax/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "tax/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "tax/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ]
+    },
+    "2018": {
+      "1": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "stormy/trump",
+          "rank": 2
+        },
+        {
+          "topic": "mueller/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "stormy/trump",
+          "rank": 2
+        },
+        {
+          "topic": "mueller/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "stormy/trump",
+          "rank": 2
+        },
+        {
+          "topic": "mueller/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "campaign/trump",
+          "rank": 1
+        },
+        {
+          "topic": "mueller/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "campaign/trump",
+          "rank": 1
+        },
+        {
+          "topic": "mueller/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "campaign/trump",
+          "rank": 1
+        },
+        {
+          "topic": "mueller/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "manafort/trump",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "manafort/trump",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "manafort/trump",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "president/trump",
+          "rank": 1
+        },
+        {
+          "topic": "campaign/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/trump",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "president/trump",
+          "rank": 1
+        },
+        {
+          "topic": "campaign/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/trump",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "president/trump",
+          "rank": 1
+        },
+        {
+          "topic": "campaign/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/trump",
+          "rank": 3
+        }
+      ]
+    },
+    "2019": {
+      "1": [
+        {
+          "topic": "president/trump",
+          "rank": 1
+        },
+        {
+          "topic": "cohen/trump",
+          "rank": 2
+        },
+        {
+          "topic": "border/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "president/trump",
+          "rank": 1
+        },
+        {
+          "topic": "cohen/trump",
+          "rank": 2
+        },
+        {
+          "topic": "border/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "president/trump",
+          "rank": 1
+        },
+        {
+          "topic": "cohen/trump",
+          "rank": 2
+        },
+        {
+          "topic": "border/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "house/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "house/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "house/trump",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "impeachment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/ukraine",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "impeachment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/ukraine",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "impeachment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/ukraine",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "impeachment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "house/impeachment",
+          "rank": 2
+        },
+        {
+          "topic": "russia/syria",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "impeachment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "house/impeachment",
+          "rank": 2
+        },
+        {
+          "topic": "russia/syria",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "impeachment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "house/impeachment",
+          "rank": 2
+        },
+        {
+          "topic": "russia/syria",
+          "rank": 3
+        }
+      ]
+    },
+    "2020": {
+      "1": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "campaign/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "campaign/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "house/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "campaign/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "president/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "coronavirus/says",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "president/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "coronavirus/says",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "president/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "coronavirus/says",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trump/voters",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trump/voters",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trump/voters",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "election/trump",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "election/trump",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "election/trump",
+          "rank": 3
+        }
+      ]
+    },
+    "2021": {
+      "1": [
+        {
+          "topic": "biden/republican",
+          "rank": 1
+        },
+        {
+          "topic": "impeachment/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "biden/republican",
+          "rank": 1
+        },
+        {
+          "topic": "impeachment/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "biden/republican",
+          "rank": 1
+        },
+        {
+          "topic": "impeachment/trump",
+          "rank": 2
+        },
+        {
+          "topic": "president/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "biden/voting",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "rep/trump",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "biden/voting",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "rep/trump",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "biden/voting",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "rep/trump",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "covid/vaccine",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "texas/voting",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "covid/vaccine",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "texas/voting",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "covid/vaccine",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "texas/voting",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "democrats/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "democrats/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "democrats/trump",
+          "rank": 2
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 3
+        }
+      ]
+    },
+    "2022": {
+      "1": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "russian/ukraine",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "russian/ukraine",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "russia/ukraine",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "russian/ukraine",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "jan/trump",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "election/trump",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "jan/trump",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "election/trump",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "jan/trump",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "election/trump",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "jan/trump",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/republicans",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "jan/trump",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/republicans",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "jan/trump",
+          "rank": 1
+        },
+        {
+          "topic": "election/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/republicans",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "jan/trump",
+          "rank": 2
+        },
+        {
+          "topic": "gop/midterms",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "jan/trump",
+          "rank": 2
+        },
+        {
+          "topic": "gop/midterms",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "jan/trump",
+          "rank": 2
+        },
+        {
+          "topic": "gop/midterms",
+          "rank": 3
+        }
+      ]
+    },
+    "2023": {
+      "1": [
+        {
+          "topic": "indictment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "fox/news",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "indictment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "fox/news",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "indictment/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "fox/news",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "court/supreme court",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "classified/trump",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "court/supreme court",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "classified/trump",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "court/supreme court",
+          "rank": 1
+        },
+        {
+          "topic": "biden/trump",
+          "rank": 2
+        },
+        {
+          "topic": "classified/trump",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/republicans",
+          "rank": 2
+        },
+        {
+          "topic": "debate/gop",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/republicans",
+          "rank": 2
+        },
+        {
+          "topic": "debate/gop",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "biden/republicans",
+          "rank": 2
+        },
+        {
+          "topic": "debate/gop",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "hamas/israel",
+          "rank": 1
+        },
+        {
+          "topic": "2023/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/house speaker",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "hamas/israel",
+          "rank": 1
+        },
+        {
+          "topic": "2023/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/house speaker",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "hamas/israel",
+          "rank": 1
+        },
+        {
+          "topic": "2023/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/house speaker",
+          "rank": 3
+        }
+      ]
+    },
+    "2024": {
+      "1": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "election/trump",
+          "rank": 1
+        },
+        {
+          "topic": "court/supreme court",
+          "rank": 2
+        },
+        {
+          "topic": "new/trump",
+          "rank": 3
+        }
+      ],
+      "4": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "republicans/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trial/trump",
+          "rank": 3
+        }
+      ],
+      "5": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "republicans/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trial/trump",
+          "rank": 3
+        }
+      ],
+      "6": [
+        {
+          "topic": "biden/trump",
+          "rank": 1
+        },
+        {
+          "topic": "republicans/trump",
+          "rank": 2
+        },
+        {
+          "topic": "trial/trump",
+          "rank": 3
+        }
+      ],
+      "7": [
+        {
+          "topic": "harris/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/vance",
+          "rank": 2
+        },
+        {
+          "topic": "speech/trump",
+          "rank": 3
+        }
+      ],
+      "8": [
+        {
+          "topic": "harris/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/vance",
+          "rank": 2
+        },
+        {
+          "topic": "speech/trump",
+          "rank": 3
+        }
+      ],
+      "9": [
+        {
+          "topic": "harris/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/vance",
+          "rank": 2
+        },
+        {
+          "topic": "speech/trump",
+          "rank": 3
+        }
+      ],
+      "10": [
+        {
+          "topic": "harris/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 2
+        },
+        {
+          "topic": "gaetz/trump",
+          "rank": 3
+        }
+      ],
+      "11": [
+        {
+          "topic": "harris/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 2
+        },
+        {
+          "topic": "gaetz/trump",
+          "rank": 3
+        }
+      ],
+      "12": [
+        {
+          "topic": "harris/trump",
+          "rank": 1
+        },
+        {
+          "topic": "trump/trumps",
+          "rank": 2
+        },
+        {
+          "topic": "gaetz/trump",
+          "rank": 3
+        }
+      ]
+    },
+    "2025": {
+      "1": [
+        {
+          "topic": "republicans/trump",
+          "rank": 1
+        },
+        {
+          "topic": "musk/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/trump",
+          "rank": 3
+        }
+      ],
+      "2": [
+        {
+          "topic": "republicans/trump",
+          "rank": 1
+        },
+        {
+          "topic": "musk/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/trump",
+          "rank": 3
+        }
+      ],
+      "3": [
+        {
+          "topic": "republicans/trump",
+          "rank": 1
+        },
+        {
+          "topic": "musk/trump",
+          "rank": 2
+        },
+        {
+          "topic": "house/trump",
+          "rank": 3
+        }
+      ]
+    }
+  }
+}
