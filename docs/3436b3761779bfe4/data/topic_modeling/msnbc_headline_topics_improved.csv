@@ -1,0 +1,323 @@
+month,year,topic,topic_id,rank,count,total_articles,percentage
+1,2016,christie rubio hillary / chaos tell us / releases first tv,0,1,277,724,38.25966850828729
+1,2016,iran reacts prisoner / spring cleric nimr / sure killed four,4,2,25,724,3.4530386740331496
+1,2016,court fight trump / juveniles sentenced life / rncs ballot security,3,3,18,724,2.4861878453038675
+1,2017,christie rubio hillary / chaos tell us / releases first tv,0,1,45,235,19.148936170212767
+1,2017,trump espionage trump / director accused helping / end anytime,1,2,25,235,10.638297872340425
+1,2017,court fight trump / juveniles sentenced life / rncs ballot security,3,3,3,235,1.276595744680851
+1,2018,trump espionage trump / director accused helping / end anytime,1,1,67,372,18.010752688172044
+1,2018,christie rubio hillary / chaos tell us / releases first tv,0,2,65,372,17.473118279569892
+1,2018,trump government shutdown / nyc chick fil / idea adding chaos,7,3,17,372,4.56989247311828
+1,2019,trump government shutdown / nyc chick fil / idea adding chaos,7,1,169,1000,16.900000000000002
+1,2019,trump espionage trump / director accused helping / end anytime,1,2,131,1000,13.100000000000001
+1,2019,christie rubio hillary / chaos tell us / releases first tv,0,3,98,1000,9.8
+1,2020,schnieder impeachment / absolutely still think / chris jansing breaks,2,1,230,1000,23.0
+1,2020,iran reacts prisoner / spring cleric nimr / sure killed four,4,2,164,1000,16.400000000000002
+1,2020,christie rubio hillary / chaos tell us / releases first tv,0,3,67,1000,6.7
+1,2021,despite screening protesters / olympic athlete gwen / bend say buttigieg,5,1,136,1000,13.600000000000001
+1,2021,zika virus outbreak / nigeria plans resettle / 99364933816 cdc lowers,8,2,87,1000,8.7
+1,2021,christie rubio hillary / chaos tell us / releases first tv,0,3,76,1000,7.6
+1,2022,christie rubio hillary / chaos tell us / releases first tv,0,1,86,820,10.487804878048781
+1,2022,zika virus outbreak / nigeria plans resettle / 99364933816 cdc lowers,8,2,64,820,7.804878048780488
+1,2022,trump espionage trump / director accused helping / end anytime,1,3,51,820,6.219512195121951
+1,2023,christie rubio hillary / chaos tell us / releases first tv,0,1,49,704,6.9602272727272725
+1,2023,joe biden run / mattis finds unenviable / clinton indicted goodbye,6,2,46,704,6.534090909090909
+1,2023,court fight trump / juveniles sentenced life / rncs ballot security,3,3,31,704,4.403409090909091
+1,2024,christie rubio hillary / chaos tell us / releases first tv,0,1,151,772,19.559585492227978
+1,2024,court fight trump / juveniles sentenced life / rncs ballot security,3,2,84,772,10.880829015544041
+1,2024,joe biden run / mattis finds unenviable / clinton indicted goodbye,6,3,34,772,4.404145077720207
+1,2025,christie rubio hillary / chaos tell us / releases first tv,0,1,50,827,6.045949214026603
+1,2025,court fight trump / juveniles sentenced life / rncs ballot security,3,2,39,827,4.71584038694075
+1,2025,joe biden run / mattis finds unenviable / clinton indicted goodbye,6,3,33,827,3.990326481257558
+2,2015,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,63,242,26.033057851239672
+2,2015,zika virus us / superbug exposure ucla / 79318085733 markets sink,0,2,5,242,2.066115702479339
+2,2015,clinton sanders debate / iowa looks / moving wrong direction,2,3,5,242,2.066115702479339
+2,2016,clinton sanders debate / iowa looks / moving wrong direction,2,1,168,716,23.463687150837988
+2,2016,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,2,106,716,14.804469273743019
+2,2016,zika virus us / superbug exposure ucla / 79318085733 markets sink,0,3,9,716,1.2569832402234637
+2,2017,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,75,229,32.751091703056765
+2,2017,russia meddle election / bot twitter 1436501059933 / memo cover,1,2,7,229,3.056768558951965
+2,2017,zika virus us / superbug exposure ucla / 79318085733 markets sink,0,3,1,229,0.43668122270742354
+2,2018,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,119,306,38.88888888888889
+2,2018,russia meddle election / bot twitter 1436501059933 / memo cover,1,2,13,306,4.248366013071895
+2,2018,clinton sanders debate / iowa looks / moving wrong direction,2,3,1,306,0.32679738562091504
+2,2019,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,370,1000,37.0
+2,2019,russia meddle election / bot twitter 1436501059933 / memo cover,1,2,45,1000,4.5
+2,2019,clinton sanders debate / iowa looks / moving wrong direction,2,3,16,1000,1.6
+2,2020,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,225,1000,22.5
+2,2020,clinton sanders debate / iowa looks / moving wrong direction,2,2,111,1000,11.1
+2,2020,zika virus us / superbug exposure ucla / 79318085733 markets sink,0,3,99,1000,9.9
+2,2021,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,359,778,46.1439588688946
+2,2021,zika virus us / superbug exposure ucla / 79318085733 markets sink,0,2,75,778,9.640102827763496
+2,2021,russia meddle election / bot twitter 1436501059933 / memo cover,1,3,11,778,1.4138817480719794
+2,2022,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,252,738,34.146341463414636
+2,2022,russia meddle election / bot twitter 1436501059933 / memo cover,1,2,166,738,22.493224932249323
+2,2022,zika virus us / superbug exposure ucla / 79318085733 markets sink,0,3,35,738,4.742547425474255
+2,2023,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,254,801,31.7103620474407
+2,2023,russia meddle election / bot twitter 1436501059933 / memo cover,1,2,65,801,8.114856429463172
+2,2023,clinton sanders debate / iowa looks / moving wrong direction,2,3,7,801,0.8739076154806492
+2,2024,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,382,763,50.06553079947575
+2,2024,russia meddle election / bot twitter 1436501059933 / memo cover,1,2,53,763,6.946264744429882
+2,2024,clinton sanders debate / iowa looks / moving wrong direction,2,3,4,763,0.5242463958060288
+2,2025,snl40 bill cosby / combat gop gerrymanders / guns college campuses,3,1,229,633,36.17693522906793
+2,2025,russia meddle election / bot twitter 1436501059933 / memo cover,1,2,46,633,7.266982622432859
+2,2025,zika virus us / superbug exposure ucla / 79318085733 markets sink,0,3,8,633,1.263823064770932
+3,2015,perry questions hillary / fugitive edward snowden / xl pipeline,2,1,360,764,47.12041884816754
+3,2015,ebola nurse sue / top concern vermont / visit white house,0,2,19,764,2.486910994764398
+3,2015,end russia investigation / plays risky game / house sending mixed,1,3,4,764,0.5235602094240838
+3,2016,perry questions hillary / fugitive edward snowden / xl pipeline,2,1,445,717,62.064156206415625
+3,2016,ebola nurse sue / top concern vermont / visit white house,0,2,9,717,1.2552301255230125
+3,2016,end russia investigation / plays risky game / house sending mixed,1,3,5,717,0.697350069735007
+3,2017,perry questions hillary / fugitive edward snowden / xl pipeline,2,1,116,251,46.21513944223107
+3,2017,end russia investigation / plays risky game / house sending mixed,1,2,5,251,1.9920318725099602
+3,2017,ebola nurse sue / top concern vermont / visit white house,0,3,1,251,0.398406374501992
+3,2018,perry questions hillary / fugitive edward snowden / xl pipeline,2,1,499,817,61.07711138310894
+3,2018,end russia investigation / plays risky game / house sending mixed,1,2,60,817,7.343941248470013
+3,2018,ebola nurse sue / top concern vermont / visit white house,0,3,9,817,1.101591187270502
+3,2019,perry questions hillary / fugitive edward snowden / xl pipeline,2,1,634,1000,63.4
+3,2019,end russia investigation / plays risky game / house sending mixed,1,2,31,1000,3.1
+3,2019,ebola nurse sue / top concern vermont / visit white house,0,3,9,1000,0.8999999999999999
+3,2020,ebola nurse sue / top concern vermont / visit white house,0,1,611,1000,61.1
+3,2020,perry questions hillary / fugitive edward snowden / xl pipeline,2,2,245,1000,24.5
+3,2020,end russia investigation / plays risky game / house sending mixed,1,3,3,1000,0.3
+3,2021,perry questions hillary / fugitive edward snowden / xl pipeline,2,1,483,955,50.57591623036649
+3,2021,ebola nurse sue / top concern vermont / visit white house,0,2,192,955,20.104712041884817
+3,2021,end russia investigation / plays risky game / house sending mixed,1,3,23,955,2.408376963350785
+3,2022,end russia investigation / plays risky game / house sending mixed,1,1,407,801,50.811485642946316
+3,2022,perry questions hillary / fugitive edward snowden / xl pipeline,2,2,263,801,32.83395755305868
+3,2022,ebola nurse sue / top concern vermont / visit white house,0,3,22,801,2.746566791510612
+3,2023,perry questions hillary / fugitive edward snowden / xl pipeline,2,1,541,893,60.58230683090705
+3,2023,end russia investigation / plays risky game / house sending mixed,1,2,28,893,3.135498320268757
+3,2023,ebola nurse sue / top concern vermont / visit white house,0,3,13,893,1.4557670772676372
+3,2024,perry questions hillary / fugitive edward snowden / xl pipeline,2,1,675,933,72.34726688102894
+3,2024,end russia investigation / plays risky game / house sending mixed,1,2,36,933,3.858520900321544
+3,2024,ebola nurse sue / top concern vermont / visit white house,0,3,3,933,0.3215434083601286
+3,2025,perry questions hillary / fugitive edward snowden / xl pipeline,2,1,475,812,58.49753694581281
+3,2025,end russia investigation / plays risky game / house sending mixed,1,2,38,812,4.679802955665025
+3,2025,ebola nurse sue / top concern vermont / visit white house,0,3,23,812,2.832512315270936
+4,2015,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,452,746,60.58981233243968
+4,2015,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,15,746,2.0107238605898123
+4,2016,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,530,691,76.70043415340086
+4,2016,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,12,691,1.7366136034732274
+4,2017,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,113,205,55.1219512195122
+4,2017,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,9,205,4.390243902439024
+4,2018,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,575,1000,57.49999999999999
+4,2018,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,46,1000,4.6
+4,2019,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,823,1000,82.3
+4,2019,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,13,1000,1.3
+4,2020,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,841,1000,84.1
+4,2020,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,3,1000,0.3
+4,2021,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,646,851,75.91069330199764
+4,2021,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,11,851,1.2925969447708578
+4,2022,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,421,768,54.817708333333336
+4,2022,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,172,768,22.395833333333336
+4,2023,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,433,702,61.68091168091168
+4,2023,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,6,702,0.8547008547008548
+4,2024,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,642,843,76.15658362989323
+4,2024,iraq official auschwitz / tsarnaev avoid death / draw closer scrutiny,0,2,21,843,2.491103202846975
+4,2025,law hillary clintons / indiana health crisis / hutchinson address religious,1,1,9,13,69.23076923076923
+5,2015,baltimore arrest protests / freddie gray death / rice investigation drags,2,1,79,652,12.116564417177914
+5,2015,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,2,75,652,11.503067484662576
+5,2015,ben king dead / grow value millennials / transcript lisa monaco,3,3,27,652,4.141104294478527
+5,2016,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,1,196,740,26.486486486486488
+5,2016,baltimore arrest protests / freddie gray death / rice investigation drags,2,2,32,740,4.324324324324325
+5,2016,abortions nebraska poised / labor maryland gov / defunds 1236910147862 judges,0,3,24,740,3.2432432432432434
+5,2017,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,1,71,225,31.555555555555554
+5,2017,program ebola / california city blueprint / service booker political,1,2,3,225,1.3333333333333335
+5,2017,abortions nebraska poised / labor maryland gov / defunds 1236910147862 judges,0,3,1,225,0.4444444444444444
+5,2018,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,1,137,386,35.49222797927461
+5,2018,baltimore arrest protests / freddie gray death / rice investigation drags,2,2,6,386,1.5544041450777202
+5,2018,program ebola / california city blueprint / service booker political,1,3,3,386,0.7772020725388601
+5,2019,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,1,290,1000,28.999999999999996
+5,2019,abortions nebraska poised / labor maryland gov / defunds 1236910147862 judges,0,2,56,1000,5.6000000000000005
+5,2019,ben king dead / grow value millennials / transcript lisa monaco,3,3,27,1000,2.7
+5,2020,program ebola / california city blueprint / service booker political,1,1,353,1000,35.3
+5,2020,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,2,132,1000,13.200000000000001
+5,2020,baltimore arrest protests / freddie gray death / rice investigation drags,2,3,84,1000,8.4
+5,2021,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,1,339,1000,33.900000000000006
+5,2021,program ebola / california city blueprint / service booker political,1,2,64,1000,6.4
+5,2021,baltimore arrest protests / freddie gray death / rice investigation drags,2,3,55,1000,5.5
+5,2022,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,1,142,722,19.667590027700832
+5,2022,abortions nebraska poised / labor maryland gov / defunds 1236910147862 judges,0,2,133,722,18.421052631578945
+5,2022,baltimore arrest protests / freddie gray death / rice investigation drags,2,3,106,722,14.681440443213297
+5,2023,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,1,173,759,22.793148880105402
+5,2023,abortions nebraska poised / labor maryland gov / defunds 1236910147862 judges,0,2,75,759,9.881422924901186
+5,2023,ben king dead / grow value millennials / transcript lisa monaco,3,3,64,759,8.432147562582346
+5,2024,democrats overreacted crime / presidential candidates debate / uk conservatives make,4,1,370,823,44.95747266099636
+5,2024,ben king dead / grow value millennials / transcript lisa monaco,3,2,63,823,7.654921020656136
+5,2024,abortions nebraska poised / labor maryland gov / defunds 1236910147862 judges,0,3,44,823,5.34629404617254
+6,2015,sanders marylands omalley / voting conversation / fifa scandal interpol,2,1,131,715,18.321678321678323
+6,2015,scotus abortion access / abercrombie fitch loses / marijuana charges dropped,1,2,54,715,7.5524475524475525
+6,2015,ferguson corrupt cop / disparity diversity childrens / recovered recession faster,3,3,26,715,3.6363636363636362
+6,2016,sanders marylands omalley / voting conversation / fifa scandal interpol,2,1,166,432,38.425925925925924
+6,2016,ferguson corrupt cop / disparity diversity childrens / recovered recession faster,3,2,24,432,5.555555555555555
+6,2016,scotus abortion access / abercrombie fitch loses / marijuana charges dropped,1,3,15,432,3.4722222222222223
+6,2017,sanders marylands omalley / voting conversation / fifa scandal interpol,2,1,90,213,42.25352112676056
+6,2017,scotus abortion access / abercrombie fitch loses / marijuana charges dropped,1,2,4,213,1.8779342723004695
+6,2017,ferguson corrupt cop / disparity diversity childrens / recovered recession faster,3,3,2,213,0.9389671361502347
+6,2018,sanders marylands omalley / voting conversation / fifa scandal interpol,2,1,118,384,30.729166666666668
+6,2018,ferguson corrupt cop / disparity diversity childrens / recovered recession faster,3,2,12,384,3.125
+6,2018,scotus abortion access / abercrombie fitch loses / marijuana charges dropped,1,3,12,384,3.125
+6,2019,sanders marylands omalley / voting conversation / fifa scandal interpol,2,1,406,1000,40.6
+6,2019,scotus abortion access / abercrombie fitch loses / marijuana charges dropped,1,2,36,1000,3.5999999999999996
+6,2019,ferguson corrupt cop / disparity diversity childrens / recovered recession faster,3,3,23,1000,2.3
+6,2020,ferguson corrupt cop / disparity diversity childrens / recovered recession faster,3,1,270,1000,27.0
+6,2020,sanders marylands omalley / voting conversation / fifa scandal interpol,2,2,171,1000,17.1
+6,2020,trump coronavirus response / charles barkley donates / tornadoes,0,3,125,1000,12.5
+6,2021,sanders marylands omalley / voting conversation / fifa scandal interpol,2,1,429,1000,42.9
+6,2021,ferguson corrupt cop / disparity diversity childrens / recovered recession faster,3,2,61,1000,6.1
+6,2021,trump coronavirus response / charles barkley donates / tornadoes,0,3,44,1000,4.3999999999999995
+6,2022,sanders marylands omalley / voting conversation / fifa scandal interpol,2,1,312,670,46.56716417910447
+6,2022,scotus abortion access / abercrombie fitch loses / marijuana charges dropped,1,2,87,670,12.985074626865673
+6,2022,ferguson corrupt cop / disparity diversity childrens / recovered recession faster,3,3,48,670,7.164179104477612
+6,2023,sanders marylands omalley / voting conversation / fifa scandal interpol,2,1,390,780,50.0
+6,2023,scotus abortion access / abercrombie fitch loses / marijuana charges dropped,1,2,64,780,8.205128205128204
+6,2023,controversy puts hollywood / 2016 race lucky / carol hutchins 114394693829,4,3,35,780,4.487179487179487
+6,2024,sanders marylands omalley / voting conversation / fifa scandal interpol,2,1,380,747,50.870147255689425
+6,2024,scotus abortion access / abercrombie fitch loses / marijuana charges dropped,1,2,96,747,12.851405622489958
+6,2024,ferguson corrupt cop / disparity diversity childrens / recovered recession faster,3,3,41,747,5.4886211512717535
+7,2015,greek debt crisis / scouts take white / clinton emails new,1,1,752,787,95.55273189326556
+7,2015,picking cdc trump / dive louisiana parish / paul slammed blocking,0,2,10,787,1.2706480304955527
+7,2016,greek debt crisis / scouts take white / clinton emails new,1,1,226,266,84.9624060150376
+7,2016,picking cdc trump / dive louisiana parish / paul slammed blocking,0,2,1,266,0.37593984962406013
+7,2017,greek debt crisis / scouts take white / clinton emails new,1,1,143,160,89.375
+7,2018,greek debt crisis / scouts take white / clinton emails new,1,1,881,925,95.24324324324324
+7,2018,picking cdc trump / dive louisiana parish / paul slammed blocking,0,2,5,925,0.5405405405405406
+7,2019,greek debt crisis / scouts take white / clinton emails new,1,1,960,1000,96.0
+7,2019,picking cdc trump / dive louisiana parish / paul slammed blocking,0,2,19,1000,1.9
+7,2020,greek debt crisis / scouts take white / clinton emails new,1,1,723,1000,72.3
+7,2020,picking cdc trump / dive louisiana parish / paul slammed blocking,0,2,275,1000,27.500000000000004
+7,2021,greek debt crisis / scouts take white / clinton emails new,1,1,822,1000,82.19999999999999
+7,2021,picking cdc trump / dive louisiana parish / paul slammed blocking,0,2,171,1000,17.1
+7,2022,greek debt crisis / scouts take white / clinton emails new,1,1,645,664,97.13855421686746
+7,2022,picking cdc trump / dive louisiana parish / paul slammed blocking,0,2,17,664,2.5602409638554215
+7,2023,greek debt crisis / scouts take white / clinton emails new,1,1,709,728,97.39010989010988
+7,2023,picking cdc trump / dive louisiana parish / paul slammed blocking,0,2,11,728,1.510989010989011
+7,2024,greek debt crisis / scouts take white / clinton emails new,1,1,783,790,99.1139240506329
+7,2024,picking cdc trump / dive louisiana parish / paul slammed blocking,0,2,6,790,0.7594936708860759
+8,2015,biden challenge hillary / gop field display / paxton indicted sources,4,1,282,723,39.004149377593365
+8,2015,taylor killed police / dr walter / standoff walmart pulling,3,2,57,723,7.883817427385892
+8,2015,ebola vaccine obama / persists amid epa / health insurance survey,1,3,55,723,7.607192254495159
+8,2016,biden challenge hillary / gop field display / paxton indicted sources,4,1,84,170,49.411764705882355
+8,2016,trumps deportation plan / found truck austria / 1292037187855 judge slams,2,2,9,170,5.294117647058823
+8,2016,ebola vaccine obama / persists amid epa / health insurance survey,1,3,8,170,4.705882352941177
+8,2017,biden challenge hillary / gop field display / paxton indicted sources,4,1,125,208,60.09615384615385
+8,2017,ebola vaccine obama / persists amid epa / health insurance survey,1,2,18,208,8.653846153846153
+8,2017,kabul taliban / ben rhodes current / crashes japans okinawa,0,3,6,208,2.8846153846153846
+8,2018,biden challenge hillary / gop field display / paxton indicted sources,4,1,342,594,57.57575757575758
+8,2018,ebola vaccine obama / persists amid epa / health insurance survey,1,2,25,594,4.208754208754209
+8,2018,trumps deportation plan / found truck austria / 1292037187855 judge slams,2,3,20,594,3.3670033670033668
+8,2019,biden challenge hillary / gop field display / paxton indicted sources,4,1,499,1000,49.9
+8,2019,taylor killed police / dr walter / standoff walmart pulling,3,2,142,1000,14.2
+8,2019,trumps deportation plan / found truck austria / 1292037187855 judge slams,2,3,59,1000,5.8999999999999995
+8,2020,biden challenge hillary / gop field display / paxton indicted sources,4,1,573,1000,57.3
+8,2020,ebola vaccine obama / persists amid epa / health insurance survey,1,2,141,1000,14.099999999999998
+8,2020,taylor killed police / dr walter / standoff walmart pulling,3,3,13,1000,1.3
+8,2021,ebola vaccine obama / persists amid epa / health insurance survey,1,1,208,726,28.650137741046834
+8,2021,biden challenge hillary / gop field display / paxton indicted sources,4,2,186,726,25.6198347107438
+8,2021,kabul taliban / ben rhodes current / crashes japans okinawa,0,3,148,726,20.385674931129476
+8,2022,biden challenge hillary / gop field display / paxton indicted sources,4,1,427,676,63.165680473372774
+8,2022,ebola vaccine obama / persists amid epa / health insurance survey,1,2,32,676,4.733727810650888
+8,2022,kabul taliban / ben rhodes current / crashes japans okinawa,0,3,22,676,3.2544378698224854
+8,2023,biden challenge hillary / gop field display / paxton indicted sources,4,1,490,751,65.24633821571238
+8,2023,taylor killed police / dr walter / standoff walmart pulling,3,2,25,751,3.3288948069241013
+8,2023,ebola vaccine obama / persists amid epa / health insurance survey,1,3,24,751,3.1957390146471374
+8,2024,biden challenge hillary / gop field display / paxton indicted sources,4,1,640,782,81.84143222506394
+8,2024,taylor killed police / dr walter / standoff walmart pulling,3,2,9,782,1.1508951406649617
+8,2024,ebola vaccine obama / persists amid epa / health insurance survey,1,3,8,782,1.0230179028132993
+9,2015,rand paul scraping / biggest threats arent / satellite images show,4,1,507,741,68.42105263157895
+9,2015,texas abortion clinics / criticism majority goverment / father pleads congress,3,2,27,741,3.643724696356275
+9,2015,americas wildfire crisis / water researchers say / airport 14 injured,2,3,20,741,2.699055330634278
+9,2016,rand paul scraping / biggest threats arent / satellite images show,4,1,197,260,75.76923076923077
+9,2016,americas wildfire crisis / water researchers say / airport 14 injured,2,2,4,260,1.5384615384615385
+9,2016,kavanaugh ahead hearings / amanda knox stunning / weakness glaring errors,1,3,1,260,0.38461538461538464
+9,2017,rand paul scraping / biggest threats arent / satellite images show,4,1,134,187,71.65775401069519
+9,2017,americas wildfire crisis / water researchers say / airport 14 injured,2,2,5,187,2.6737967914438503
+9,2018,rand paul scraping / biggest threats arent / satellite images show,4,1,516,1000,51.6
+9,2018,kavanaugh ahead hearings / amanda knox stunning / weakness glaring errors,1,2,243,1000,24.3
+9,2018,americas wildfire crisis / water researchers say / airport 14 injured,2,3,80,1000,8.0
+9,2019,rand paul scraping / biggest threats arent / satellite images show,4,1,788,1000,78.8
+9,2019,americas wildfire crisis / water researchers say / airport 14 injured,2,2,56,1000,5.6000000000000005
+9,2019,kavanaugh ahead hearings / amanda knox stunning / weakness glaring errors,1,3,16,1000,1.6
+9,2020,rand paul scraping / biggest threats arent / satellite images show,4,1,676,1000,67.60000000000001
+9,2020,woodward shows trump / getting flu shot / liberia free,0,2,195,1000,19.5
+9,2020,americas wildfire crisis / water researchers say / airport 14 injured,2,3,42,1000,4.2
+9,2021,rand paul scraping / biggest threats arent / satellite images show,4,1,505,763,66.18610747051113
+9,2021,woodward shows trump / getting flu shot / liberia free,0,2,107,763,14.02359108781127
+9,2021,texas abortion clinics / criticism majority goverment / father pleads congress,3,3,54,763,7.077326343381389
+9,2022,rand paul scraping / biggest threats arent / satellite images show,4,1,461,614,75.0814332247557
+9,2022,americas wildfire crisis / water researchers say / airport 14 injured,2,2,63,614,10.260586319218241
+9,2022,texas abortion clinics / criticism majority goverment / father pleads congress,3,3,29,614,4.723127035830619
+9,2023,rand paul scraping / biggest threats arent / satellite images show,4,1,527,619,85.1373182552504
+9,2023,americas wildfire crisis / water researchers say / airport 14 injured,2,2,14,619,2.2617124394184165
+9,2023,texas abortion clinics / criticism majority goverment / father pleads congress,3,3,9,619,1.4539579967689822
+9,2024,rand paul scraping / biggest threats arent / satellite images show,4,1,590,665,88.7218045112782
+9,2024,texas abortion clinics / criticism majority goverment / father pleads congress,3,2,32,665,4.8120300751879705
+9,2024,americas wildfire crisis / water researchers say / airport 14 injured,2,3,17,665,2.556390977443609
+10,2015,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,655,690,94.92753623188406
+10,2015,iranian journalist protests / kills palestinian woman / air france execs,0,2,13,690,1.884057971014493
+10,2016,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,196,246,79.67479674796748
+10,2016,iranian journalist protests / kills palestinian woman / air france execs,0,2,1,246,0.40650406504065045
+10,2017,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,197,236,83.47457627118644
+10,2017,iranian journalist protests / kills palestinian woman / air france execs,0,2,1,236,0.423728813559322
+10,2018,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,935,1000,93.5
+10,2018,iranian journalist protests / kills palestinian woman / air france execs,0,2,11,1000,1.0999999999999999
+10,2019,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,926,1000,92.60000000000001
+10,2019,iranian journalist protests / kills palestinian woman / air france execs,0,2,6,1000,0.6
+10,2020,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,653,670,97.46268656716418
+10,2020,iranian journalist protests / kills palestinian woman / air france execs,0,2,3,670,0.44776119402985076
+10,2021,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,854,864,98.8425925925926
+10,2021,iranian journalist protests / kills palestinian woman / air france execs,0,2,6,864,0.6944444444444444
+10,2022,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,797,814,97.91154791154791
+10,2022,iranian journalist protests / kills palestinian woman / air france execs,0,2,14,814,1.71990171990172
+10,2023,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,544,806,67.4937965260546
+10,2023,iranian journalist protests / kills palestinian woman / air france execs,0,2,260,806,32.25806451612903
+10,2024,deadliest mass shootings / education deadlines joe / syrian refugees notice,1,1,756,803,94.14694894146949
+10,2024,iranian journalist protests / kills palestinian woman / air france execs,0,2,45,803,5.603985056039851
+11,2015,coli outbreak bernie / charges obama sees / lists debate demands,0,1,394,645,61.08527131782946
+11,2015,attacks tel aviv / velshi biden tools / glad pause much,1,2,6,645,0.9302325581395349
+11,2016,coli outbreak bernie / charges obama sees / lists debate demands,0,1,132,171,77.19298245614034
+11,2017,coli outbreak bernie / charges obama sees / lists debate demands,0,1,214,289,74.0484429065744
+11,2017,attacks tel aviv / velshi biden tools / glad pause much,1,2,1,289,0.34602076124567477
+11,2018,coli outbreak bernie / charges obama sees / lists debate demands,0,1,872,1000,87.2
+11,2019,coli outbreak bernie / charges obama sees / lists debate demands,0,1,848,1000,84.8
+11,2020,coli outbreak bernie / charges obama sees / lists debate demands,0,1,429,468,91.66666666666666
+11,2020,attacks tel aviv / velshi biden tools / glad pause much,1,2,1,468,0.2136752136752137
+11,2021,coli outbreak bernie / charges obama sees / lists debate demands,0,1,631,721,87.51733703190014
+11,2021,attacks tel aviv / velshi biden tools / glad pause much,1,2,1,721,0.13869625520110956
+11,2022,coli outbreak bernie / charges obama sees / lists debate demands,0,1,614,711,86.35724331926863
+11,2022,attacks tel aviv / velshi biden tools / glad pause much,1,2,7,711,0.9845288326300985
+11,2023,coli outbreak bernie / charges obama sees / lists debate demands,0,1,483,686,70.40816326530613
+11,2023,attacks tel aviv / velshi biden tools / glad pause much,1,2,111,686,16.18075801749271
+11,2024,coli outbreak bernie / charges obama sees / lists debate demands,0,1,561,663,84.61538461538461
+11,2024,attacks tel aviv / velshi biden tools / glad pause much,1,2,20,663,3.0165912518853695
+12,2015,donald trump adolf / ransom showing debate / denies texas immigration,2,1,208,667,31.184407796101947
+12,2015,curb gun violence / 2016 candidates reacted / normal part american,3,2,33,667,4.94752623688156
+12,2015,treatmentforall aids documentary / overlapping health plans / responders bill treasury,0,3,16,667,2.39880059970015
+12,2016,donald trump adolf / ransom showing debate / denies texas immigration,2,1,118,206,57.28155339805825
+12,2016,talk impeachment 1392071235881 / understand maxine / basks glow women,1,2,1,206,0.48543689320388345
+12,2016,curb gun violence / 2016 candidates reacted / normal part american,3,3,1,206,0.48543689320388345
+12,2017,donald trump adolf / ransom showing debate / denies texas immigration,2,1,162,361,44.87534626038781
+12,2017,talk impeachment 1392071235881 / understand maxine / basks glow women,1,2,2,361,0.554016620498615
+12,2017,curb gun violence / 2016 candidates reacted / normal part american,3,3,2,361,0.554016620498615
+12,2018,donald trump adolf / ransom showing debate / denies texas immigration,2,1,482,1000,48.199999999999996
+12,2018,talk impeachment 1392071235881 / understand maxine / basks glow women,1,2,16,1000,1.6
+12,2018,curb gun violence / 2016 candidates reacted / normal part american,3,3,7,1000,0.7000000000000001
+12,2019,donald trump adolf / ransom showing debate / denies texas immigration,2,1,295,1000,29.5
+12,2019,talk impeachment 1392071235881 / understand maxine / basks glow women,1,2,291,1000,29.099999999999998
+12,2019,curb gun violence / 2016 candidates reacted / normal part american,3,3,28,1000,2.8000000000000003
+12,2020,donald trump adolf / ransom showing debate / denies texas immigration,2,1,344,832,41.34615384615385
+12,2020,treatmentforall aids documentary / overlapping health plans / responders bill treasury,0,2,248,832,29.807692307692307
+12,2020,curb gun violence / 2016 candidates reacted / normal part american,3,3,5,832,0.6009615384615385
+12,2021,donald trump adolf / ransom showing debate / denies texas immigration,2,1,364,809,44.9938195302843
+12,2021,treatmentforall aids documentary / overlapping health plans / responders bill treasury,0,2,122,809,15.080346106304079
+12,2021,curb gun violence / 2016 candidates reacted / normal part american,3,3,29,809,3.584672435105068
+12,2022,donald trump adolf / ransom showing debate / denies texas immigration,2,1,354,686,51.60349854227405
+12,2022,treatmentforall aids documentary / overlapping health plans / responders bill treasury,0,2,15,686,2.186588921282799
+12,2022,curb gun violence / 2016 candidates reacted / normal part american,3,3,9,686,1.3119533527696794
+12,2023,donald trump adolf / ransom showing debate / denies texas immigration,2,1,405,703,57.61024182076814
+12,2023,curb gun violence / 2016 candidates reacted / normal part american,3,2,19,703,2.7027027027027026
+12,2023,treatmentforall aids documentary / overlapping health plans / responders bill treasury,0,3,6,703,0.8534850640113799
+12,2024,donald trump adolf / ransom showing debate / denies texas immigration,2,1,289,601,48.0865224625624
+12,2024,curb gun violence / 2016 candidates reacted / normal part american,3,2,17,601,2.828618968386023
+12,2024,treatmentforall aids documentary / overlapping health plans / responders bill treasury,0,3,11,601,1.8302828618968388

@@ -126,30 +126,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./page-1.html"> 
-<span class="menu-text">Network Tone Analysis 1</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./page-2.html"> 
-<span class="menu-text">Election Tone Analysis</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./page-3.html"> 
-<span class="menu-text">Network Tone Analysis 2</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./page-4.html"> 
-<span class="menu-text">Topic Modeling</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./page-5.html" aria-current="page"> 
-<span class="menu-text">Half-Life Analysis</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./page-6.html"> 
-<span class="menu-text">Conclusions</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -221,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="overall-half-life-analysis-1" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Overall Half-Life Analysis</h1>
-<div id="b26ab391" class="cell" data-cache="true" data-execution_count="1">
+<div id="90d9c0da" class="cell" data-cache="true" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -254,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="average-topic-half-life" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="average-topic-half-life"><span class="header-section-number">2.1</span> Average Topic Half-Life</h2>
-<div id="0d2b5f82" class="cell" data-cache="true" data-execution_count="2">
+<div id="c1fcb050" class="cell" data-cache="true" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_average_half_life(half_life_df: pd.DataFrame):</span>
@@ -290,7 +266,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Before Clipping: • Average half-life estimates ranged from ~12,700 to over 20,000 days (35–55 years). • These values reflected very flat or non-decreasing topic frequencies, where the model inferred an extremely slow decay rate (λ ≈ 0). • However, such durations are not realistic in the context of news cycles, and likely reflect modeling limitations rather than true editorial behavior.</p>
 <p>After Clipping (Capped at 1000 Days): • The average topic half-life was reduced to ~926 days for Fox News, 931 days for ABC News, and 960 days for MSNBC. • Differences between sources narrowed substantially, with all three clustered within a 35-day range.</p>
 <p>Interpretation: • Before clipping, results were dominated by outliers and model artifacts. • After clipping, the results reflect a more realistic view of typical media attention spans, showing that topic persistence is fairly consistent across major networks when extreme cases are excluded. ## Half-Life over Time</p>
-<div id="2ba6642e" class="cell" data-cache="true" data-execution_count="3">
+<div id="db75cd77" class="cell" data-cache="true" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_yearly_half_life_trends(half_life_df: pd.DataFrame):</span>
@@ -355,7 +331,7 @@ Table&nbsp;1: Statistical significance of half-life between networks - clipped
 </div>
 </figure>
 </div>
-<div id="e579fc71" class="cell" data-execution_count="5">
+<div id="8c98c072" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>half_life_df, x<span class="op">=</span><span class="st">"source"</span>, y<span class="op">=</span><span class="st">"half_life_days"</span>, palette<span class="op">=</span>NETWORK_COLORS)</span>
