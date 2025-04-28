@@ -2,14 +2,28 @@ import pandas as pd
 import glob
 import numpy as np
 import os
+import logging
 from sklearn.linear_model import LinearRegression
+
+# Set up logging
+log_dir = os.path.abspath("logs")
+os.makedirs(log_dir, exist_ok=True)
+
+log_file = os.path.join(log_dir, "half_life_analysis.log")
+logging.basicConfig(
+    filename=log_file,
+    filemode="w",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger()
 
 def load_and_label_data(source_paths: dict) -> pd.DataFrame:
     """Load CSV files and label them by source."""
     df_list = []
     for source_name, file_list in source_paths.items():
         for file in file_list:
-            df = pd.read_csv(file)
+            df = pd.read_csv(file, encoding = "latin1")
             df['source'] = source_name
             df_list.append(df)
     return pd.concat(df_list, ignore_index=True)
@@ -86,19 +100,21 @@ def filter_topic(half_life_df: pd.DataFrame, keyword: str) -> pd.DataFrame:
     """Return subset of topics matching keyword prefix."""
     return half_life_df[half_life_df["topic"].str.startswith(keyword)]
 
-#load sources and export dataframes
+# Load sources
 sources = {
     'msnbc': glob.glob("../data/msnbc/msnbc*.csv"),
     'abc': glob.glob("../data/abc/abc*.csv"),
     'fox': glob.glob("../data/fox/fox*.csv"),
 }
 
-print(f"Loaded {len(raw_df)} rows total")
-print(f"MSNBC files found: {sources['msnbc']}")
-print(f"ABC files found: {sources['abc']}")
-print(f"FOX files found: {sources['fox']}")
+logger.info(f"MSNBC files found: {sources['msnbc']}")
+logger.info(f"ABC files found: {sources['abc']}")
+logger.info(f"FOX files found: {sources['fox']}")
 
+# Process data
 raw_df = load_and_label_data(sources)
+logger.info(f"Loaded {len(raw_df)} rows total")
+
 clean_df = preprocess_combined_df(raw_df)
 topic_df = get_topic_daily(clean_df)
 half_life_df = estimate_half_life(topic_df)
@@ -106,6 +122,7 @@ average_half_life_df = average_half_life_by_source(half_life_df)
 yearly_trends_df = get_yearly_trends(half_life_df)
 topic_tax_df = filter_topic(half_life_df, "TAX")
 
+# Export data
 export_dir = os.path.abspath("nlp_analysis/results/half_life")
 os.makedirs(export_dir, exist_ok=True)
 
@@ -113,3 +130,5 @@ half_life_df.to_csv(os.path.join(export_dir, "half_life_data.csv"), index=False)
 average_half_life_df.to_csv(os.path.join(export_dir, "avg_half_life_by_source.csv"))
 yearly_trends_df.to_csv(os.path.join(export_dir, "yearly_trends.csv"))
 topic_tax_df.to_csv(os.path.join(export_dir, "tax_topics.csv"), index=False)
+
+logger.info(f"Exported results to {export_dir}")
