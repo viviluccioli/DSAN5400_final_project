@@ -38,3 +38,28 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 run-topic-modeling = "src.nlp_analysis.run_topic_modeling:main"
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+select = ["E", "F", "I"]
+ignore = []
+
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pynb?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''

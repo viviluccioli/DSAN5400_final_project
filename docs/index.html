@@ -4745,6 +4745,26 @@ vertical-align: -.125em;
     <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./page-1.html"> 
+<span class="menu-text">Network Tone Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./page-2.html"> 
+<span class="menu-text">Election Tone Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./page-4.html"> 
+<span class="menu-text">Topic Modeling</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./page-5.html"> 
+<span class="menu-text">Half-Life Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./page-6.html"> 
+<span class="menu-text">Conclusions</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -10850,7 +10870,7 @@ function addToneInfoToDetail(year, month) {
       // Create a description based on the tone value
       let toneDescription = "";
       if (toneValue <= -3.0) {
-          toneDescription = "Highly negative coverage";
+          toneDescription = "More negative coverage";
       } else if (toneValue <= -2.5) {
           toneDescription = "Moderately negative coverage";
       } else {
@@ -10899,7 +10919,7 @@ function enhanceMonthCards() {
           // Create a descriptive tooltip
           let toneDescription = "";
           if (toneValue <= -3.0) {
-              toneDescription = "Highly negative";
+              toneDescription = "More negative";
           } else if (toneValue <= -2.5) {
               toneDescription = "Moderately negative";
           } else {
@@ -11205,10 +11225,10 @@ function addSourceToneInfo(source, year, month) {
       // Clamp to 0-100 range
       percentage = Math.max(0, Math.min(100, percentage));
       
-      // Get tone description
+      // Get tone description - make sure to not be too extreme (it's all RELATIVE)
       let toneDescription = "";
       if (toneValue <= -3.0) {
-          toneDescription = "Highly negative";
+          toneDescription = "More negative";
       } else if (toneValue <= -2.5) {
           toneDescription = "Moderately negative";
       } else {

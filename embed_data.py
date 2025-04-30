@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 
+
 def embed_json_in_js():
     """
     Embed JSON data directly in the calendar.js file as a JavaScript variable
@@ -9,64 +10,64 @@ def embed_json_in_js():
     """
     # Find project paths
     script_dir = Path.cwd()
-    
+
     # Try to locate the JSON file
     json_paths = [
         script_dir / "website" / "data" / "media_topics.json",
         script_dir / "data" / "media_topics.json",
-        script_dir / "website" / "_site" / "data" / "media_topics.json"
+        script_dir / "website" / "_site" / "data" / "media_topics.json",
     ]
-    
+
     json_file = None
     for path in json_paths:
         if path.exists():
             json_file = path
             print(f"Found JSON file at: {path}")
             break
-    
+
     if not json_file:
         print("ERROR: Could not find media_topics.json file.")
         print("Please run preprocess_data.py first.")
         return False
-    
+
     # Load the JSON data
     try:
-        with open(json_file, 'r', encoding='utf-8') as f:
+        with open(json_file, "r", encoding="utf-8") as f:
             json_data = json.load(f)
-        
+
         print(f"Successfully loaded JSON data with {len(json_data.keys())} sources.")
     except Exception as e:
         print(f"ERROR loading JSON data: {e}")
         return False
-    
+
     # Find the calendar.js file
     js_paths = [
         script_dir / "website" / "scripts" / "calendar.js",
-        script_dir / "website" / "_site" / "scripts" / "calendar.js"
+        script_dir / "website" / "_site" / "scripts" / "calendar.js",
     ]
-    
+
     js_file = None
     for path in js_paths:
         if path.exists():
             js_file = path
             print(f"Found calendar.js at: {path}")
             break
-    
+
     if not js_file:
         print("ERROR: Could not find calendar.js file.")
         return False
-    
+
     # Read the current JS file
     try:
-        with open(js_file, 'r', encoding='utf-8') as f:
+        with open(js_file, "r", encoding="utf-8") as f:
             js_content = f.read()
     except Exception as e:
         print(f"ERROR reading JS file: {e}")
         return False
-    
+
     # Convert JSON to JavaScript
     json_str = json.dumps(json_data, indent=2)
-    
+
     # Create the new JS content with embedded data
     embedded_js = f"""// calendar.js with embedded data
 
@@ -153,7 +154,7 @@ function generatePlaceholderData() {{
 }}
 
 """
-    
+
     # Append the rest of the original JS (excluding the initial parts we replaced)
     # Look for the first function after the initial setup
     if "function createYearSections()" in js_content:
@@ -163,29 +164,30 @@ function generatePlaceholderData() {{
         print("WARNING: Could not find createYearSections function in JS file.")
         print("The generated file might not work correctly.")
         # Just append everything after our custom code
-    
+
     # Write the new JS file
     output_js = js_file.with_name("calendar_embedded.js")
     try:
-        with open(output_js, 'w', encoding='utf-8') as f:
+        with open(output_js, "w", encoding="utf-8") as f:
             f.write(embedded_js)
         print(f"Successfully created JS file with embedded data at: {output_js}")
-        
+
         # Create backup of original
         backup_js = js_file.with_name("calendar_original.js")
-        with open(backup_js, 'w', encoding='utf-8') as f:
+        with open(backup_js, "w", encoding="utf-8") as f:
             f.write(js_content)
         print(f"Backed up original JS to: {backup_js}")
-        
+
         # Replace the original file
-        with open(js_file, 'w', encoding='utf-8') as f:
+        with open(js_file, "w", encoding="utf-8") as f:
             f.write(embedded_js)
         print(f"Successfully updated original JS file with embedded data.")
-        
+
         return True
     except Exception as e:
         print(f"ERROR writing JS file: {e}")
         return False
+
 
 if __name__ == "__main__":
     print("Embedding JSON data in calendar.js...")

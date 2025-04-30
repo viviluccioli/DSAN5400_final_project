@@ -1,0 +1,17 @@
+[MASTER]
+disable=
+    C0111, # missing docstring
+    C0103, # invalid name
+    C0330, # bad continuation
+    C1801, # len() as condition
+    W0621, # redefining name
+    R0903, # too few public methods
+    R0913, # too many arguments
+    R0914, # too many local variables
+
+[FORMAT]
+max-line-length=88
+
+[SIMILARITIES]
+ignore-comments=yes
+ignore-docstrings=yes
