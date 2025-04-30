@@ -55,7 +55,7 @@ Explore the final site here:
 
 All of these files and folders interact to create a cohesive project. The flow diagram below illustrates how the data and NLP methods flow through the project:
 
-![](flow.drawio.png)
+![](flowchart.png)
 
 The project is composed of three main layers, which will be described in more detail below: 
 
