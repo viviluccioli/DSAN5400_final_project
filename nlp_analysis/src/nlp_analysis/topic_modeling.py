@@ -1,9 +1,7 @@
-#!/usr/bin/env python
+
 """
-Simplified GDELT topic modeling using scikit-learn instead of gensim.
-This version avoids dependency conflicts in conda environments.
-Place this directly in your nlp_analysis/src/nlp_analysis directory and run with:
-$ python topic_modeling.py
+From the source file directory, run this code using from the command line: python topic_modeling.py 
+Or, from the root directory of the python project, run python src/nlp_analysis/topic_modeling.py
 """
 
 import pandas as pd
@@ -20,6 +18,12 @@ import sys
 from pathlib import Path
 import seaborn as sns
 from tqdm import tqdm
+
+logging.basicConfig(
+    filename="../logs/topic_modeling.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
 
 # Set up the paths
 current_dir = Path(__file__).resolve().parent

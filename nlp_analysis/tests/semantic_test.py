@@ -1,4 +1,8 @@
 # tests/semantic_test.py
+"""
+From the root directory of the python project, run poetry run pytest tests/semantic_test.py -v
+"""
+
 import pytest
 import pandas as pd
 import numpy as np

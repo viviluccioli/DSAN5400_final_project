@@ -1,3 +1,9 @@
+
+"""
+From the source file directory, run this code using from the command line: python semantic.py 
+Or, from the root directory of the python project, run python src/nlp_analysis/semantic.py
+"""
+
 import os
 import logging
 import pandas as pd

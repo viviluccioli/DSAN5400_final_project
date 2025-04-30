@@ -1,3 +1,9 @@
+
+"""
+From the source file directory, run this code using from the command line: python half_life.py 
+Or, from the root directory of the python project, run python src/nlp_analysis/half_life.py
+"""
+
 import pandas as pd
 import glob
 import numpy as np
