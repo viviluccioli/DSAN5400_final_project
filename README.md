@@ -52,6 +52,11 @@ Explore the final site here:
 └── environment.yml                 # Conda environment file
 ```
 
+
+All of these files and folders interact to create a cohesive project. The flow diagram below illustrates how the data and NLP methods flow through the project:
+
+![](flow.drawio.png)
+
 The project is composed of three main layers, which will be described in more detail below: 
 
 1. Data Extraction
@@ -67,7 +72,6 @@ The project is composed of three main layers, which will be described in more de
 
 - A Quarto-based site that visualizes the analysis with interactive, time-aware components for user education
 
-📌 [See Diagram.png] ← Include a diagram here showing how data flows from extraction → analysis → website rendering (e.g., draw.io).
 
 
 ## Key Features 
