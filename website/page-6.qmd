@@ -10,3 +10,12 @@ execute:
 ---
 
 
+Overall, this project presents a multi-dimensional analysis of political news coverage from 2015 to 2025 across Fox News, MSNBC, and ABC News, using tone scoring, topic modeling, and half-life estimation to uncover how networks differ and align in their reporting behavior.
+
+Our tone analysis showed that all three networks tended to become less negative immediately after presidential elections. This pattern was consistent across 2016, 2020, and 2024, suggesting a temporary tone moderation during periods of political transition.
+
+Topic modeling revealed clear content distinctions. Fox News mentioned Biden frequently and emphasized crime and law enforcement topics; MSNBC overwhelmingly focused on Trump-related themes, including impeachment and election controversies; and ABC News, as a more centrist source, featured a broader mix of topics covering general public safety, deaths, and political leadership.
+
+Despite these differences in framing and focus, our half-life modeling showed that the duration of attention given to political themes was similar across networks. After capping inflated values, average topic half-lives clustered closely, indicating that Fox News, MSNBC, and ABC News sustain political narratives for roughly the same amount of time, even if the narratives themselves differ.
+
+While these findings offer insight into editorial differences across individual networks, they are not sufficient to generalize about broader media ideologies. Future research should expand the scope to include larger groupings of news outlets within each political leaning to enable more robust comparisons between ideological clusters. Only then can we draw stronger conclusions about the systemic patterns in partisan media behavior.

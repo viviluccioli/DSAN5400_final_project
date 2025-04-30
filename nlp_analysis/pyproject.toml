@@ -27,6 +27,7 @@ nltk = "^3.8.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
+pytest-cov = "^6.1.1"  # Updated to be compatible with pytest 8.3.5
 black = "^23.3.0"
 isort = "^5.12.0"
 flake8 = "^6.0.0"
@@ -39,12 +40,29 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.scripts]
 run-topic-modeling = "src.nlp_analysis.run_topic_modeling:main"
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "*_test.py"
+python_functions = "test_*"
+python_classes = "Test*"
+
+[tool.coverage.run]
+source = ["src/nlp_analysis"]
+omit = ["tests/*", "**/__init__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
+
 [tool.ruff]
 line-length = 88
 target-version = "py38"
 select = ["E", "F", "I"]
 ignore = []
-
 
 [tool.black]
 line-length = 88

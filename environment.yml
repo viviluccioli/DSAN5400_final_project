@@ -25,9 +25,12 @@ dependencies:
   - google-cloud-bigquery
   - os
   - datetime
+  - afinn
+  - half_life
+  - tqdm
+  - logging
 # code cleaners, linters, and formatters:
   - black
   - pylint
   - ruff
-  # Optional: pre-commit for git hooks
   - pre-commit
