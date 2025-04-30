@@ -16,11 +16,12 @@ Built using Python 3.12 and poetry, the toolkit is designed with reproducibility
 
 ## Project Structure
 
+```
 .
 ├── pyproject.toml              # Project configuration
 ├── poetry.lock                 # Package lock file
 ├── environment.yml             # Conda environment specification
-├── README.md                   # This file
+├── README.md                   
 ├── logs/                       # Script-generated logs
 ├── src/
 │   └── nlp_analysis/
@@ -33,7 +34,7 @@ Built using Python 3.12 and poetry, the toolkit is designed with reproducibility
     ├── topic_modeling_test.py     # Unit tests for topic modeling
     ├── half_life_test.py          # Unit tests for decay modeling
     └── semantic_test.py           # Unit tests for sentiment functions
-.
+```
 
 ## Setup Instructions
 
