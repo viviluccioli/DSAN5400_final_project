@@ -20,6 +20,7 @@ Explore the final site here:
 
 ## Project architecture 
 
+```
 .
 ├── EDA                             # Exploratory Data Analysis 
 ├── data                            # Data files
@@ -49,7 +50,7 @@ Explore the final site here:
 ├── docs                            # Rendered Quarto website
 ├── README.md
 └── environment.yml                 # Conda environment file
-
+```
 
 The project is composed of three main layers, which will be described in more detail below: 
 
