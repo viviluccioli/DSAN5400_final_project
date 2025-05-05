@@ -4,10 +4,9 @@
 
 This project analyzes long-term media trends and potential biases in U.S. political news coverage using natural language processing (NLP). We extracted over 300,000 news article records from the GDELT Global Knowledge Graph, sampling headlines monthly from FOX News (right-leaning), MSNBC (left-leaning), and ABC News (centrist). Our final product is a dynamic, interactive website that visualizes sentiment, topic modeling, and half-life analysis across news sources over a ten-year period.
 
-The goal is to provide a transparent, data-driven view of media discourse, helping users explore how topics rise, persist, or fade across political ideologies—especially around major events like presidential elections and the COVID-19 pandemic.
+The goal is to provide a transparent, data-driven view of media discourse, helping users explore how topics rise, persist, or fade across political ideologies, especially around major events like presidential elections and the COVID-19 pandemic.
 
-Explore the final site here:
-👉 [Our Website](https://viviluccioli.github.io/DSAN5400_final_project/)
+Explore the final site [here](https://viviluccioli.github.io/DSAN5400_final_project/)!
 
 
 ## The Team 
